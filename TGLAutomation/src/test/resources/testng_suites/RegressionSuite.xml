@@ -1,0 +1,22 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+<suite name="TFA Regression Automation" verbose="2" >
+
+	<!-- ctrl+Shift+/ -->
+	
+	<listeners>
+     <!-- listener class-name="org.uncommons.reportng.HTMLReporter"/> -->
+      <!-- <listener class-name="org.uncommons.reportng.JUnitXMLReporter"/> -->
+  	</listeners>
+	
+	<test name="Regression Testing">
+	
+		<classes>
+
+			<class name="org.tfa.tgl.tests.TglLoginTest" />  
+		
+		</classes>
+
+	</test>
+
+
+</suite>
