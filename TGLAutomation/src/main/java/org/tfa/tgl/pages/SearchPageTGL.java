@@ -72,8 +72,25 @@ public class SearchPageTGL {
 		
 		 List <WebElement>searchresults=datahook.findElements(By.xpath("//tr"));
 		 
-		 int size=searchresults.size();
+		 int size;
 		 
+		 if(searchresults.size()<4){
+				webUtil.setTextBoxValue("Tgl_firstname", "e");
+				datahook=webUtil.getDriver().findElement(By.xpath("//tbody[@data-hook='results']"));
+				searchresults=datahook.findElements(By.xpath("//tr"));
+		 }
+			
+		if(searchresults.size()<4){
+				webUtil.setTextBoxValue("Tgl_firstname", "d");
+				datahook=webUtil.getDriver().findElement(By.xpath("//tbody[@data-hook='results']"));
+				searchresults=datahook.findElements(By.xpath("//tr"));
+		}
+			
+		if(searchresults.size()<4){
+				log.info("not enough search results");return false;}
+		 
+		
+		size=searchresults.size();
 		 searchresults.clear();
 		 int i=1;
 		 String s;
@@ -83,16 +100,7 @@ public class SearchPageTGL {
 		 searchresults.add(datahook.findElement(By.xpath("//tr["+s+"]/td[1]/a")));
 		 i++;}
 		 
-		if(searchresults.size()<4){
-			webUtil.setTextBoxValue("Tgl_firstname", "e");
-			searchresults=webUtil.getDriver().findElements(By.xpath("//tbody[@data-hook='results']"));}
 		
-		if(searchresults.size()<4){
-			webUtil.setTextBoxValue("Tgl_firstname", "d");
-			searchresults=webUtil.getDriver().findElements(By.xpath("//tbody[@data-hook='results']"));}
-		
-		if(searchresults.size()<4){
-			log.info("not enough search results");return false;}
 			
 		
 		for(WebElement w: searchresults){
@@ -157,5 +165,53 @@ public class SearchPageTGL {
 		
 		return flag;
 	}
-
+	
+	public boolean verifyRowIsLinked(){
+		boolean flag=false;
+		
+		
+		webUtil.setTextBoxValue("Tgl_firstname", "a");
+		webUtil.click("Home_Tgl_Search2_btn");
+		By firstrowxpath=By.xpath("//tbody[@data-hook='results']/tr[1]/td/a");
+		WebDriverWait localwait=new WebDriverWait(webUtil.getDriver(), 30);
+		localwait.until(ExpectedConditions.visibilityOfElementLocated(firstrowxpath));
+		
+		WebElement firstrow=webUtil.getDriver().findElement(By.xpath("//tbody[@data-hook='results']/tr[1]/td/a"));
+		String rowname=webUtil.getDriver().findElement(By.xpath("//tbody[@data-hook='results']/tr[1]/td/a")).getText();
+		
+		
+		firstrow.click();
+		
+		By firstrowdetailxpath=By.xpath("//h2[@class='applicant-context-heading']/div");
+		localwait.until(ExpectedConditions.visibilityOfElementLocated(firstrowdetailxpath));
+		
+		if(webUtil.getDriver().getCurrentUrl().contains("details"))
+			flag=true;
+		else
+			return flag=false;
+		
+		
+		String name=webUtil.getDriver().findElement(By.xpath("//h2[@class='applicant-context-heading']/div")).getText();
+		
+		if(name.contains(rowname))
+			flag=true;
+		else
+			return flag=false;
+		
+		return flag;
+	}
+	
+	
 }
+
+
+
+
+
+
+
+
+
+
+
+
