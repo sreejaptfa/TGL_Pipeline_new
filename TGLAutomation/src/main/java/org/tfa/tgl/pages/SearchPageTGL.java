@@ -10,7 +10,9 @@ import org.apache.log4j.Logger;
 import org.tfa.framework.core.WebDriverUtil;
 import org.tfa.framework.utilities.testdata.TestData;
 import org.openqa.selenium.*;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class SearchPageTGL {
 	
@@ -128,7 +130,12 @@ public class SearchPageTGL {
 	
 	public boolean verifyColumnHeaders() throws InterruptedException{
 		boolean flag=false;
-		Thread.sleep(1000);
+		//Thread.sleep(1000);
+		
+		By headerlocator=By.xpath("//tr[@data-hook='column-headers']//th");
+		WebDriverWait localwait = new WebDriverWait(webUtil.getDriver(), 30);
+		localwait.until(ExpectedConditions.visibilityOfElementLocated(headerlocator));
+		
 		List <WebElement> we=webUtil.getDriver().findElements(By.xpath("//tr[@data-hook='column-headers']//th"));
 		int size=we.size();
 		int i=1;
