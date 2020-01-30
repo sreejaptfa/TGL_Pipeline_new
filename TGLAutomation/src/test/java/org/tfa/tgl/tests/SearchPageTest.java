@@ -27,6 +27,7 @@ public class SearchPageTest extends BaseTestMethods {
 			soft.assertTrue(search.verifymorelinkclick(), "More Link fields test failed");
 			soft.assertTrue(search.verifydefaultsort(),"Default sort test failed");	
 			soft.assertTrue(search.verifyColumnHeaders(),"Column headers test failed.");
+			soft.assertTrue(search.verifyRowIsLinked(), "Row link test failed");
 			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
