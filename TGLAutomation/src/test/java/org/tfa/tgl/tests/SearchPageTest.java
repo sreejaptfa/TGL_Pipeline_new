@@ -23,11 +23,12 @@ public class SearchPageTest extends BaseTestMethods {
 		loginpage=new LoginPageTgl();
 		try {
 			soft.assertTrue(loginpage.enterLoginInfo(), "TGL login failed");
-			soft.assertTrue(search.verifyAppYearDefaultSelection(), "App Year Default Selection failed");
+	/*		soft.assertTrue(search.verifyAppYearDefaultSelection(), "App Year Default Selection failed");
 			soft.assertTrue(search.verifymorelinkclick(), "More Link fields test failed");
 			soft.assertTrue(search.verifydefaultsort(),"Default sort test failed");	
 			soft.assertTrue(search.verifyColumnHeaders(),"Column headers test failed.");
-			soft.assertTrue(search.verifyRowIsLinked(), "Row link test failed");
+			soft.assertTrue(search.verifyRowIsLinked(), "Row link test failed");*/
+			soft.assertTrue(search.verifyEachFilter());
 			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

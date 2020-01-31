@@ -1,5 +1,6 @@
 package org.tfa.tgl.pages;
 
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
@@ -21,6 +22,7 @@ public class SearchPageTGL {
 	private boolean flag;
 	Logger log=Logger.getLogger("rootLogger");
 	ArrayList <String> names=new ArrayList <String>() ;
+	WebDriverWait localwait;
 	
 	public boolean verifyAppYearDefaultSelection()
 	{
@@ -141,7 +143,7 @@ public class SearchPageTGL {
 		//Thread.sleep(1000);
 		
 		By headerlocator=By.xpath("//tr[@data-hook='column-headers']//th");
-		WebDriverWait localwait = new WebDriverWait(webUtil.getDriver(), 30);
+		localwait = new WebDriverWait(webUtil.getDriver(), 30);
 		localwait.until(ExpectedConditions.visibilityOfElementLocated(headerlocator));
 		
 		List <WebElement> we=webUtil.getDriver().findElements(By.xpath("//tr[@data-hook='column-headers']//th"));
@@ -197,6 +199,65 @@ public class SearchPageTGL {
 			flag=true;
 		else
 			return flag=false;
+		
+		return flag;
+	}
+	public boolean verifyEachFilter() throws InterruptedException{
+		boolean flag=false;
+		String s;
+		int size,i=1;
+		localwait=new WebDriverWait(webUtil.getDriver(), 30);
+		By rowdetailxpath=By.xpath("//tbody[@data-hook='results']/tr[2]");
+		//localwait.until(ExpectedConditions.visibilityOfElementLocated(rowdetailxpath));
+		
+		webUtil.getElement("Tgl_InterviewDeadlinefilter_txt").click();
+		webUtil.getDriver().findElement(By.xpath("(//div[@data-value='02/28/20'])[1]")).click();
+		Thread.sleep(500);
+		webUtil.click("Home_Tgl_Search2_btn");
+		//Thread.sleep(1000);	
+		localwait.until(ExpectedConditions.visibilityOfElementLocated(rowdetailxpath));
+		
+			
+		List <WebElement>searchresults=webUtil.getDriver().findElements(By.xpath("//tbody[@data-hook='results']//tr"));
+		size=searchresults.size();
+		
+		while(i<=size){
+			
+		WebElement row=webUtil.getDriver().findElement(By.xpath("//tbody[@data-hook='results']/tr["+String.valueOf(i)+"]/td[4]/a"));
+			s=row.getText();		
+			if(s.contains("02/28/20"))
+				flag=true;
+			else
+				return flag=false;
+			
+			i++;
+		}
+		
+	
+		webUtil.getDriver().navigate().refresh();
+		Thread.sleep(500);
+		//webUtil.getDriver().findElement(By.xpath("(//div[@class='selectize-input items not-full has-options']/input)[1]")).clear();
+		webUtil.getElement("Tgl_TGLStatus_txt").click();
+		Thread.sleep(500);
+		webUtil.getDriver().findElement(By.xpath("//div[@data-value='COMPLETE']")).click();
+		Thread.sleep(500);
+		webUtil.click("Home_Tgl_Search2_btn");
+		localwait.until(ExpectedConditions.visibilityOfElementLocated(rowdetailxpath));
+		
+		searchresults=webUtil.getDriver().findElements(By.xpath("//tbody[@data-hook='results']//tr"));
+		size=searchresults.size();
+		
+		for (i=1;i<=size || i<25 ;i++){
+			
+		WebElement row=webUtil.getDriver().findElement(By.xpath("//tbody[@data-hook='results']/tr["+String.valueOf(i)+"]/td[3]/a"));
+			s=row.getText();		
+			if(s.contains("COMPLETE"))
+				flag=true;
+			else
+				return flag=false;
+			
+			
+		}
 		
 		return flag;
 	}
