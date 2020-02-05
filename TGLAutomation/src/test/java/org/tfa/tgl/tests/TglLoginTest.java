@@ -18,13 +18,12 @@ public class TglLoginTest extends BaseTestMethods{
 	public void TGL100ValidateTglLogin() throws Exception
 	{	
 		boolean result;
-		try{
-			
+		try{			
 			loginpage = new LoginPageTgl();
 			result=loginpage.verifyInvalidLogin();
 			Assert.assertTrue(result, "verifyInvalidLogin method failed");
-			Assert.assertTrue(loginpage.enterLoginInfo(), "enterLoginInfo method failed");	
-							
+			
+			Assert.assertTrue(loginpage.enterLoginInfo(), "enterLoginInfo method failed");								
 		
 		}catch(Exception e){
 			

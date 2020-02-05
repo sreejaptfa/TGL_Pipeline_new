@@ -4,6 +4,9 @@ package org.tfa.tgl.pages;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
+import org.openqa.selenium.By;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.tfa.framework.core.WebDriverUtil;
 import org.tfa.framework.utilities.testdata.TestData;
 
@@ -15,6 +18,7 @@ public class LoginPageTgl
 	private TestData data;
 	private boolean flag;
 	Logger log;
+	WebDriverWait explicitwait;
 	
     public LoginPageTgl()
     {
@@ -24,14 +28,17 @@ public class LoginPageTgl
     	flag=false;
     	log=Logger.getLogger("rootLogger");
     	webUtil.openURL((String) data.getEnvironmentDataMap().get("ApplicationURL"));
+    	explicitwait= new WebDriverWait(webUtil.getDriver(), 30);
+    	    	
     } 
 	public boolean enterLoginInfo() throws Exception
 	{
+		By homepagecontrol=By.cssSelector(".tfa-button-text");
 		webUtil.setTextBoxValueTestData("LoginTgl_username_ED", "Login_UserName");
 		webUtil.setTextBoxValueTestData("LoginTgl_password_ED", "Login_Password");
 		webUtil.click("LoginTgl_Signin_btn");
 		
-		
+		explicitwait.until(ExpectedConditions.visibilityOfElementLocated(homepagecontrol));
 		if (webUtil.getDriver().getCurrentUrl().contains("tgl"))
 		{
 			flag= true;
@@ -85,6 +92,10 @@ public class LoginPageTgl
 		boolean flag=false;
 		
 		webUtil.waitForBrowserToLoadCompletely();
+		By signinbutton=By.xpath("//button[@class='btn btn-primary']");
+		//explicitwait=new WebDriverWait(webUtil.getDriver(), 30);
+		
+		//explicitwwait.until(ExpectedConditions.visi);
 		// User active but no admin role | correct username correct password
 		webUtil.setTextBoxValue("LoginTgl_username_ED", "nisharma");
 		webUtil.setTextBoxValue("LoginTgl_password_ED", "password");
@@ -95,9 +106,13 @@ public class LoginPageTgl
 		else
 			return flag=false;
 		
-		
+
+		//explicitwwait.until(ExpectedConditions.invisibilityOfElementLocated(signinbutton));
 		
 		// Right username wrong password
+		
+		webUtil.waitUntilElementVisible("LoginTgl_Signin_btn", 30);
+		
 		webUtil.setTextBoxValueTestData("LoginTgl_username_ED", "Login_UserName");
 		webUtil.setTextBoxValue("LoginTgl_password_ED", "wrongpassword");
 		webUtil.click("LoginTgl_Signin_btn");
@@ -107,8 +122,10 @@ public class LoginPageTgl
 		else
 			return flag=false;
 		
+		//explicitwwait.until(ExpectedConditions.invisibilityOfElementLocated(signinbutton));
 		
 		// Right username wrong password
+		webUtil.waitUntilElementVisible("LoginTgl_Signin_btn", 30);
 		webUtil.setTextBoxValue("LoginTgl_username_ED", "wronguser");
 		webUtil.setTextBoxValue("LoginTgl_password_ED", "password");
 		webUtil.click("LoginTgl_Signin_btn");
