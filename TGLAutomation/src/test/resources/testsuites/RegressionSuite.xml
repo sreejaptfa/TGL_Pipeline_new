@@ -13,6 +13,7 @@
 		<classes>
 
 			<class name="org.tfa.tgl.tests.TglLoginTest" />  
+			<class name="org.tfa.tgl.tests.SearchPageTest" />  
 		
 		</classes>
 
