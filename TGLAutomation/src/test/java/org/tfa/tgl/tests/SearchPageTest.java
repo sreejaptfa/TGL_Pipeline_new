@@ -17,6 +17,12 @@ public class SearchPageTest extends BaseTestMethods {
 	SoftAssert soft=new SoftAssert();
 	SearchPageTGL search=new SearchPageTGL();
 	
+	/*@Desc: below test verifies filters and ensures search results are expected
+	 *@Parameters: Login credential with admin role 
+	 *@Important Note: Random search is implemented on InterviewDeadline and TGLStatus together
+	 * records are searched and researched until there is minimum one record with given deadline and status
+	 *@Author: Nitin Sharma 
+	 */
 	@Test
 	public void TGL101verifySearchResults(){
 		
