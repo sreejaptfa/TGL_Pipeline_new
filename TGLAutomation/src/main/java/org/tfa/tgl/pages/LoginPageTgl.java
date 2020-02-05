@@ -18,7 +18,7 @@ public class LoginPageTgl
 	private TestData data;
 	private boolean flag;
 	Logger log;
-	WebDriverWait explicitwwait;
+	WebDriverWait explicitwait;
 	
     public LoginPageTgl()
     {
@@ -28,15 +28,17 @@ public class LoginPageTgl
     	flag=false;
     	log=Logger.getLogger("rootLogger");
     	webUtil.openURL((String) data.getEnvironmentDataMap().get("ApplicationURL"));
+    	explicitwait= new WebDriverWait(webUtil.getDriver(), 30);
+    	    	
     } 
 	public boolean enterLoginInfo() throws Exception
 	{
-		By homepagecontrol=By.cssSelector("#search-controller");
+		By homepagecontrol=By.cssSelector(".tfa-button-text");
 		webUtil.setTextBoxValueTestData("LoginTgl_username_ED", "Login_UserName");
 		webUtil.setTextBoxValueTestData("LoginTgl_password_ED", "Login_Password");
 		webUtil.click("LoginTgl_Signin_btn");
 		
-		explicitwwait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(homepagecontrol));
+		explicitwait.until(ExpectedConditions.visibilityOfElementLocated(homepagecontrol));
 		if (webUtil.getDriver().getCurrentUrl().contains("tgl"))
 		{
 			flag= true;
@@ -91,7 +93,7 @@ public class LoginPageTgl
 		
 		webUtil.waitForBrowserToLoadCompletely();
 		By signinbutton=By.xpath("//button[@class='btn btn-primary']");
-		explicitwwait=new WebDriverWait(webUtil.getDriver(), 30);
+		//explicitwait=new WebDriverWait(webUtil.getDriver(), 30);
 		
 		//explicitwwait.until(ExpectedConditions.visi);
 		// User active but no admin role | correct username correct password
