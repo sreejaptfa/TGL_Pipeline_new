@@ -17,17 +17,23 @@ public class SearchPageTest extends BaseTestMethods {
 	SoftAssert soft=new SoftAssert();
 	SearchPageTGL search=new SearchPageTGL();
 	
+	/*@Desc: below test verifies filters and ensures search results are expected
+	 *@Parameters: Login credential with admin role 
+	 *@Important Note: Random search is implemented on InterviewDeadline and TGLStatus together
+	 * records are searched and researched until there is minimum one record with given deadline and status
+	 *@Author: Nitin Sharma 
+	 */
 	@Test
 	public void TGL101verifySearchResults(){
 		
 		loginpage=new LoginPageTgl();
 		try {
 			soft.assertTrue(loginpage.enterLoginInfo(), "TGL login failed");
-	/*		soft.assertTrue(search.verifyAppYearDefaultSelection(), "App Year Default Selection failed");
+			soft.assertTrue(search.verifyAppYearDefaultSelection(), "App Year Default Selection failed");
 			soft.assertTrue(search.verifymorelinkclick(), "More Link fields test failed");
 			soft.assertTrue(search.verifydefaultsort(),"Default sort test failed");	
 			soft.assertTrue(search.verifyColumnHeaders(),"Column headers test failed.");
-			soft.assertTrue(search.verifyRowIsLinked(), "Row link test failed");*/
+			soft.assertTrue(search.verifyRowIsLinked(), "Row link test failed");
 			soft.assertTrue(search.verifyEachFilter());
 			
 		} catch (Exception e) {
