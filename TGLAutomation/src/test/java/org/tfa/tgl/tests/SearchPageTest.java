@@ -51,7 +51,6 @@ public class SearchPageTest extends BaseTestMethods {
 		}
 		
 		
-		
 	}
 	
 	@Override
