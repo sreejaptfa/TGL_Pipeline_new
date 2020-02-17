@@ -28,12 +28,26 @@ public class SearchPageTest extends BaseTestMethods {
 		
 		loginpage=new LoginPageTgl();
 		try {
+			
+			// Step1: Below assert logs into the application
 			soft.assertTrue(loginpage.enterLoginInfo(), "TGL login failed");
+			
+			//Step2: Below assert ensures  default appyear selection 
 			soft.assertTrue(search.verifyAppYearDefaultSelection(), "App Year Default Selection failed");
+			
+			//Step3: Below assert ensures right fields show up on click of "more search options"
 			soft.assertTrue(search.verifymorelinkclick(), "More Link fields test failed");
+			
+			//Step4: Below assert ensures that table has default sort on the name field
 			soft.assertTrue(search.verifydefaultsort(),"Default sort test failed");	
+			
+			//Step5: Below assert ensures that right colums are listed in search results table
 			soft.assertTrue(search.verifyColumnHeaders(),"Column headers test failed.");
+			
+			//Step6: Below assert esures that clicking on search result row, opens the details for the given record
 			soft.assertTrue(search.verifyRowIsLinked(), "Row link test failed");
+			
+			//Step7: Below assert ensures that each Filter is working as expected
 			soft.assertTrue(search.verifyEachFilter());
 			
 		} catch (Exception e) {

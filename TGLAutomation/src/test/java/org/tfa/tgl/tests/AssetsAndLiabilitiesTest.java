@@ -14,7 +14,13 @@ public class AssetsAndLiabilitiesTest extends BaseTestMethods{
 	LoginPageTgl loginpage;
 	Logger log=Logger.getLogger("rootLogger");
 	SoftAssert soft = new SoftAssert();
-		
+	
+	/*@Desc: This test verifies Assets and Liabilities section labels
+	 *@Parameters: Login credential with admin role 
+	 *
+	 * 
+	 *@Author: Nitin Sharma 
+	 */
 	@Test
 	public void TGL102ValidateAssetsAndLiabilitiesSection() throws Exception
 	{	
@@ -24,8 +30,12 @@ public class AssetsAndLiabilitiesTest extends BaseTestMethods{
 		boolean result;
 		try{			
 			loginpage = new LoginPageTgl();
-			result=loginpage.enterLoginInfo();
-			soft.assertTrue(result, "EnterloginInfo method failed");			
+			
+			//Below assert ensures success login
+			result=loginpage.enterLoginInfo();		
+			soft.assertTrue(result, "EnterloginInfo method failed");
+			
+			//Below assert ensures searched record as assets and libilities section showing as expected
 			soft.assertTrue(assetsliabilities.verifyAssetAndLiabilitySection(), "verifyAssetAndLiability method failed");								
 		
 		}catch(Exception e){
