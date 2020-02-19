@@ -33,6 +33,7 @@ public class AssetsAndLiabilitiesSection {
     	String pid=SearchPageTGL.getpersonid();
     	By assetandliabilitylocator=By.xpath("(//div[@class='verification-views'])//div[3]/h2");
     	
+    	// This code will not be applicable when entire test suite will be run, this is temporary Person Id Search in case test is run directly
     	if(pid==null)
     			pid="4228467";
     	

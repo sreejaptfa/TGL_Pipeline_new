@@ -52,7 +52,7 @@ public class SearchPageTest extends BaseTestMethods {
 			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			//e.printStackTrace();
 			
 			soft.fail("Exception Occured"+e);
 			log.error("Exception Occured"+e);
