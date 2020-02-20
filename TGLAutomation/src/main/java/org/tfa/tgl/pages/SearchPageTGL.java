@@ -25,7 +25,16 @@ public class SearchPageTGL {
 	ArrayList <String> names=new ArrayList <String>() ;
 	WebDriverWait localwait;
 	private Random r;
-	
+	protected static String randompersonid;
+	By inputcontainerlocator;
+	By datahooklocator;
+	By columnheaderslocator;
+	By firstrowxpath;
+	By firstrownamelocator;
+	By firstrowfullnamelocator;
+	By firstrowpersonidlocator;
+	By searchresultstable;
+	By applicantnameheading;
 	
 	/* All the locator hardcoding to be replaced with TestData Sheets - Pending
 	 * 
@@ -34,6 +43,15 @@ public class SearchPageTGL {
 	public SearchPageTGL(){
 		
 		r=new Random();
+		inputcontainerlocator = By.xpath("//div[@data-hook='extended-content']//input-container");
+		datahooklocator=By.xpath("//tbody[@data-hook='results']");
+		columnheaderslocator=By.xpath("//tr[@data-hook='column-headers']//th");
+		firstrowxpath=By.xpath("//tbody[@data-hook='results']/tr[1]/td/a");
+		firstrownamelocator=By.xpath("//tbody[@data-hook='results']/tr[1]/td/a");
+		firstrowfullnamelocator=By.xpath("//tbody[@data-hook='results']/tr[1]/td[1]/a");
+		firstrowpersonidlocator=By.xpath("//tbody[@data-hook='results']/tr[1]/td[2]/a");
+		searchresultstable=By.xpath("//tbody[@data-hook='results']//tr");
+		applicantnameheading=By.xpath("//h2[@class='applicant-context-heading']/div");
 	}
 	public boolean verifyAppYearDefaultSelection()
 	{
@@ -56,7 +74,7 @@ public class SearchPageTGL {
 		boolean flag=false;
 		
 		webUtil.click("Tgl_moreSearchOptionsLink");
-		List <WebElement> webelementcontainer= webUtil.getDriver().findElements(By.xpath("//div[@data-hook='extended-content']//input-container"));
+		List <WebElement> webelementcontainer= webUtil.getDriver().findElements(inputcontainerlocator);
 		
 		for(WebElement element : webelementcontainer){
 			
@@ -81,7 +99,7 @@ public class SearchPageTGL {
 		webUtil.click("Home_Tgl_Search2_btn");
 		Thread.sleep(1000);
 		
-		 WebElement datahook=webUtil.getDriver().findElement(By.xpath("//tbody[@data-hook='results']"));
+		 WebElement datahook=webUtil.getDriver().findElement(datahooklocator);
 		
 		 List <WebElement>searchresults=datahook.findElements(By.xpath("//tr"));
 		 
@@ -89,13 +107,13 @@ public class SearchPageTGL {
 		 
 		 if(searchresults.size()<4){
 				webUtil.setTextBoxValue("Tgl_firstname", "e");
-				datahook=webUtil.getDriver().findElement(By.xpath("//tbody[@data-hook='results']"));
+				datahook=webUtil.getDriver().findElement(datahooklocator);
 				searchresults=datahook.findElements(By.xpath("//tr"));
 		 }
 			
 		if(searchresults.size()<4){
 				webUtil.setTextBoxValue("Tgl_firstname", "d");
-				datahook=webUtil.getDriver().findElement(By.xpath("//tbody[@data-hook='results']"));
+				datahook=webUtil.getDriver().findElement(datahooklocator);
 				searchresults=datahook.findElements(By.xpath("//tr"));
 		}
 			
@@ -157,7 +175,7 @@ public class SearchPageTGL {
 		localwait = new WebDriverWait(webUtil.getDriver(), 15);
 		localwait.until(ExpectedConditions.visibilityOfElementLocated(headerlocator));
 		
-		List <WebElement> we=webUtil.getDriver().findElements(By.xpath("//tr[@data-hook='column-headers']//th"));
+		List <WebElement> we=webUtil.getDriver().findElements(columnheaderslocator);
 		int size=we.size();
 		int i=1;
 		List <String> headers=new ArrayList(); 
@@ -185,11 +203,11 @@ public class SearchPageTGL {
 		
 		webUtil.setTextBoxValue("Tgl_firstname", "a");
 		webUtil.click("Home_Tgl_Search2_btn");
-		By firstrowxpath=By.xpath("//tbody[@data-hook='results']/tr[1]/td/a");
+		
 		WebDriverWait localwait=new WebDriverWait(webUtil.getDriver(), 15);
 		localwait.until(ExpectedConditions.visibilityOfElementLocated(firstrowxpath));
 		
-		WebElement firstrow=webUtil.getDriver().findElement(By.xpath("//tbody[@data-hook='results']/tr[1]/td/a"));
+		WebElement firstrow=webUtil.getDriver().findElement(firstrownamelocator);
 		String rowname=webUtil.getElement("Tgl_firstrow_name").getText();
 		
 		
@@ -204,7 +222,7 @@ public class SearchPageTGL {
 			return flag=false;
 		
 		
-		String name=webUtil.getDriver().findElement(By.xpath("//h2[@class='applicant-context-heading']/div")).getText();
+		String name=webUtil.getDriver().findElement(applicantnameheading).getText();
 		
 		if(name.contains(rowname))
 			flag=true;
@@ -257,7 +275,7 @@ public class SearchPageTGL {
 			//Thread.sleep(1000);	
 			try{
 				localwait.until(ExpectedConditions.visibilityOfElementLocated(rowdetailxpath));
-				searchresults=webUtil.getDriver().findElements(By.xpath("//tbody[@data-hook='results']//tr"));
+				searchresults=webUtil.getDriver().findElements(searchresultstable);
 				size=searchresults.size();
 				if(size<2)
 					continue;
@@ -289,7 +307,7 @@ public class SearchPageTGL {
 			try{
 				size=0;
 				localwait.until(ExpectedConditions.visibilityOfElementLocated(rowdetailxpath));
-				searchresults=webUtil.getDriver().findElements(By.xpath("//tbody[@data-hook='results']//tr"));
+				searchresults=webUtil.getDriver().findElements(searchresultstable);
 				size=searchresults.size();
 				
 			}catch(Exception e){
@@ -339,9 +357,10 @@ public class SearchPageTGL {
 		webUtil.click("Home_Tgl_Search2_btn");
 		
 		
-		String fullnameresult=webUtil.getDriver().findElement(By.xpath("//tbody[@data-hook='results']/tr[1]/td[1]/a")).getText();
-		String personidresult=webUtil.getDriver().findElement(By.xpath("//tbody[@data-hook='results']/tr[1]/td[2]/a")).getText();
-
+		String fullnameresult=webUtil.getDriver().findElement(firstrowfullnamelocator).getText();
+		String personidresult=webUtil.getDriver().findElement(firstrowpersonidlocator).getText();
+		//to be used by other classes
+		randompersonid=personidresult;
 				
 		if(fullname.equals(fullnameresult))
 			flag=true;
@@ -359,7 +378,10 @@ public class SearchPageTGL {
 		return flag;
 	}
 	
-	
+	public static String getpersonid(){
+		
+		return randompersonid;
+	}
 }
 
 
