@@ -114,7 +114,7 @@ public class TaxInformationSection extends PFactory{
 			return flag=false;
 		
 		// Add test comments in notes section
-		webUtil.getElement("Tgl_TaxInfoAppTaxReturnAppNotes_txt").sendKeys("Test Comments");
+		//webUtil.getElement("Tgl_TaxInfoAppTaxReturnAppNotes_txt").sendKeys("Test Comments");
 		
 		// Verify Tax Information Document section - W2 or Income Statement
 		if(webUtil.getElement("Tgl_TaxInfoIncome_lbl").getText().contains("W-2 or Income Statement"))
@@ -141,7 +141,7 @@ public class TaxInformationSection extends PFactory{
 			return flag=false;
 		
 		// Add test comments in notes section
-		webUtil.getElement("Tgl_TaxInfoIncomeAppNotes_txt").sendKeys("Test Comments");
+		//webUtil.getElement("Tgl_TaxInfoIncomeAppNotes_txt").sendKeys("Test Comments");
 		
 		// Verify Tax Information Document section - Parent's Tax Return
 		if(webUtil.getElement("Tgl_TaxInfoParentsTaxReturn_lbl").getText().contains("Parent's Tax Return"))
@@ -168,7 +168,7 @@ public class TaxInformationSection extends PFactory{
 			return flag=false;
 		
 		// Add test comments in notes section
-		webUtil.getElement("Tgl_TaxInfoPTRAppNotes_txt").sendKeys("Test Comments");
+		//webUtil.getElement("Tgl_TaxInfoPTRAppNotes_txt").sendKeys("Test Comments");
 		
 		// Verify Tax Information Document section - Parent's Tax Return
 		if(webUtil.getElement("Tgl_TaxInfoPIS_lbl").getText().contains("Parent Income Statement"))
@@ -195,20 +195,20 @@ public class TaxInformationSection extends PFactory{
 			return flag=false;
 		
 		// Add test comments in notes section
-		webUtil.getElement("Tgl_TaxInfoPISAppNotes_txt").sendKeys("Test Comments");
+		//webUtil.getElement("Tgl_TaxInfoPISAppNotes_txt").sendKeys("Test Comments");
 		
 		webUtil.getDriver().navigate().refresh();
 		webUtil.waitForBrowserToLoadCompletely();
 		
 		
-		if((webUtil.getElement("Tgl_TaxInfoPISAppNotes_txt").getText().contains("Test Comments"))
+		/*if((webUtil.getElement("Tgl_TaxInfoPISAppNotes_txt").getText().contains("Test Comments"))
 			&& (webUtil.getElement("Tgl_TaxInfoPTRAppNotes_txt").getText().contains("Test Comments"))
 			&& (webUtil.getElement("Tgl_TaxInfoIncomeAppNotes_txt").getText().contains("Test Comments"))
 			&& (webUtil.getElement("Tgl_TaxInfoAppTaxReturnAppNotes_txt").getText().contains("Test Comments")))
 			
 			flag=true;
 		else
-			return flag=false;
+			return flag=false;*/
 		
 		
 		return flag;
