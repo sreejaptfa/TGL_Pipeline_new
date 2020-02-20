@@ -33,6 +33,7 @@ public class LoginPageTgl
     } 
 	public boolean enterLoginInfo() throws Exception
 	{
+		webUtil.holdOn(10);
 		By homepagecontrol=By.cssSelector(".tfa-button-text");
 		webUtil.setTextBoxValueTestData("LoginTgl_username_ED", "Login_UserName");
 		webUtil.setTextBoxValueTestData("LoginTgl_password_ED", "Login_Password");
@@ -125,6 +126,7 @@ public class LoginPageTgl
 		//explicitwwait.until(ExpectedConditions.invisibilityOfElementLocated(signinbutton));
 		
 		// Right username wrong password
+		webUtil.holdOn(5);
 		webUtil.waitUntilElementVisible("LoginTgl_Signin_btn", 30);
 		webUtil.setTextBoxValue("LoginTgl_username_ED", "wronguser");
 		webUtil.setTextBoxValue("LoginTgl_password_ED", "password");

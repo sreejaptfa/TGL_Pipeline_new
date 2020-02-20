@@ -42,7 +42,7 @@ public class AssetsAndLiabilitiesTest extends BaseTestMethods{
 			
 			soft.fail();	
 			log.error(e);
-			System.out.println("Exception occured:"+e);
+			//System.out.println("Exception occured:"+e);
 		}finally{
 			
 			soft.assertAll();

@@ -35,7 +35,7 @@ public class TaxInformationSectionTest extends BaseTestMethods{
 			
 			Assert.fail();	
 			log.error(e);
-			System.out.println("Exception occured:"+e);
+			//System.out.println("Exception occured:"+e);
 		}finally{
 			
 			
