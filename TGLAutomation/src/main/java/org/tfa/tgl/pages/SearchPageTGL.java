@@ -382,6 +382,19 @@ public class SearchPageTGL {
 		
 		return randompersonid;
 	}
+	
+	public SearchDetailsPageTGL clickFirstRowColumnOnSearchResults(){
+		
+		webUtil.click("Tgl_FirstRowColumn_TB");
+		webUtil.holdOn(5);
+		return new SearchDetailsPageTGL();
+	}
+	public void clickOnRemoveBtn(){
+		webUtil.click("Tgl_Remove_btn");
+	}
+	public void clickOnSearchBtn(){
+		webUtil.click("Tgl_Search_btn");
+	}
 }
 
 
