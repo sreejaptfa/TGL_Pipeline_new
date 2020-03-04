@@ -1,0 +1,132 @@
+#!usr/bin/groovy
+ 
+pipeline {
+agent any
+parameters {
+string(name: 'GIT_REPO', defaultValue: 'https://bitbucket.tfanet.org/scm/qa/tgl-selenium-automation.git', description: 'GIT repository name')
+choice(name: 'Test_Suite', choices: 'RegressionSuite', description: 'Test Suite type')
+string(name: 'GIT_BRANCH', defaultValue: 'master', description: 'GIT repository branch')
+string(name: 'TEST_CLASS', defaultValue: '', description: 'Specify fully classified name of the class to run tests ONLY from that single class')
+ 
+}
+environment{
+TEST_AUTOMATION_HOME='/data/nfs/TGLADMIN_TEST_AUTOMATION';
+GRADLE_COMMAND='';
+GRADLE_CLEANUP_COMMAND="\"/opt/tests/TGLAutomation/gradlew -p /opt/tests/TGLAutomation clean\"";
+GRADLE_CLEANUP_DIR_COMMAND="rm -rf /opt/tests/TGLAutomation/.gradle";
+}
+stages{
+stage('Fetch code'){
+steps {
+println params.Test_Suite
+git branch: "${params.GIT_BRANCH}", credentialsId: 'jenkins-bitbucket', url: params.GIT_REPO
+}
+}
+stage('Run Tests'){
+steps {
+println "Set up Docker and Run tests"
+sh 'mkdir ${TEST_AUTOMATION_HOME}/${BUILD_NUMBER}'
+sh 'cp -r ${WORKSPACE}/TGLAutomation/ ${TEST_AUTOMATION_HOME}/${BUILD_NUMBER}/'
+sh 'chmod -R 777 ${TEST_AUTOMATION_HOME}/${BUILD_NUMBER}'
+ 
+script {
+env.GRADLE_COMMAND=getGradleCommand();
+}
+ 
+sh 'ssh ${DOCKER_HOST_SSH} docker run -P --name ${JOB_NAME}-${BUILD_NUMBER} -v ${TEST_AUTOMATION_HOME}/${BUILD_NUMBER}/:/opt/tests/ -d --shm-size=4g tfaselenium';
+sh 'ssh ${DOCKER_HOST_SSH} docker logs ${JOB_NAME}-${BUILD_NUMBER}'
+sh 'ssh ${DOCKER_HOST_SSH} docker inspect ${JOB_NAME}-${BUILD_NUMBER}'
+script {
+def gradleOutput=sh returnStatus: true, script: "ssh ${DOCKER_HOST_SSH} docker exec ${JOB_NAME}-${BUILD_NUMBER} " + GRADLE_COMMAND ; // run command in docker
+println "gradleOutput: " + gradleOutput;
+sh 'curl -O http://${DOCKER_HOST}:4243/containers/${JOB_NAME}-${BUILD_NUMBER}/archive?path=/data/logs'
+sh 'tar xvf logs'
+sh 'cat logs/TGL-selenium.log'
+}
+}
+}
+stage('Publish Test results'){
+steps {
+println "Publish test results"
+// get results
+sh 'mkdir ${WORKSPACE}/test-results'
+sh 'cp -r ${TEST_AUTOMATION_HOME}/${BUILD_NUMBER}/TGLAutomation/build/test-results/ ${WORKSPACE}/'
+sh 'ls ${WORKSPACE}/test-results/test'
+junit 'test-results/test/*.xml'
+}
+}
+}
+post {
+always {
+echo 'One way or another, I have finished'
+}
+success {
+echo 'I succeeeded!'
+}
+unstable {
+echo 'I am unstable :/'
+script {
+ 
+// notify when build is unstable
+sh 'mkdir screenshots_${BUILD_NUMBER}'
+// download screenshots to Jenkins
+sh 'cd screenshots_${BUILD_NUMBER} && curl -O http://${DOCKER_HOST}:4243/containers/${JOB_NAME}-${BUILD_NUMBER}/archive?path=/opt/tests/TGLAutomation'
+sh 'cd screenshots_${BUILD_NUMBER} && tar xvf TGLAutomation'
+zip dir: "screenshots_${BUILD_NUMBER}/TGLAutomation/test-output/",glob: '**/*.png', zipFile: "${JOB_NAME}-${BUILD_NUMBER}_test-output.zip"
+sh "pwd"
+sh "ls"
+def fileFound=fileExists "${JOB_NAME}-${BUILD_NUMBER}_test-output.zip"
+ 
+emailext attachmentsPattern: '**/*.zip', body: "See <${BUILD_URL}console>", subject: "Jenkins build is unstable: ${JOB_NAME} #${BUILD_NUMBER}", to: 'sulekha.sharma@teachforamerica.org,Nitin.sharma@teachforamerica.org,surya.chatradi@teachforamerica.org'
+ 
+}
+}
+failure {
+echo 'I failed :('
+}
+changed {
+echo 'Things were different before...'
+}
+cleanup {
+echo 'Cleaning up ...'
+cleanUp();
+deleteDir();
+}
+}
+}
+ 
+ 
+def getGradleCommand(){
+if (params.TEST_CLASS) {
+ 
+GRADLE_COMMAND="\"/opt/tests/TGLAutomation/gradlew -Dwebdriver.chrome.driver='/usr/bin/' -Dwebdriver.gecko.driver='/usr/bin/' clean build test -p /opt/tests/TGLAutomation -P${Test_Suite} --tests ${params.TEST_CLASS}\"";
+println "TEST_CLASS param passed" ;
+println "GRADLE_COMMAND: ${env.GRADLE_COMMAND}" ;
+ 
+}else{
+ 
+GRADLE_COMMAND="\"/opt/tests/TGLAutomation/gradlew -Dwebdriver.chrome.driver='/usr/bin/' -Dwebdriver.gecko.driver='/usr/bin/' clean build test -p /opt/tests/TGLAutomation -P${Test_Suite}\"";
+println "TEST_CLASS param is not passed" ;
+println "GRADLE_COMMAND: ${env.GRADLE_COMMAND}" ;
+ 
+}
+println "GRADLE_COMMAND: ${env.GRADLE_COMMAND}";
+return env.GRADLE_COMMAND;
+}
+ 
+ 
+def cleanUp(){
+// now clean up on docker the files which are created by root user on docker container
+sh returnStatus: true, script: 'ssh ${DOCKER_HOST_SSH} docker exec ${JOB_NAME}-${BUILD_NUMBER} ' + GRADLE_CLEANUP_COMMAND ; // run clean up command in docker
+sh returnStatus: true, script: 'ssh ${DOCKER_HOST_SSH} docker exec ${JOB_NAME}-${BUILD_NUMBER} ' + GRADLE_CLEANUP_DIR_COMMAND;
+ 
+sh returnStatus: true, script: 'ssh ${DOCKER_HOST_SSH} docker exec ${JOB_NAME}-${BUILD_NUMBER} rm -rf /opt/tests/TGLAutomation/test-output' // clean up the test output folder which may have screenshots of failed tests
+ 
+ 
+// clean up the folder on nfs mount
+sh returnStatus: true, script: 'rm -rf ${TEST_AUTOMATION_HOME}/${BUILD_NUMBER}/'
+ 
+// clean up docker container
+sh returnStatus: true, script: 'ssh ${DOCKER_HOST_SSH} docker stop ${JOB_NAME}-${BUILD_NUMBER}';
+sh returnStatus: true, script: 'ssh ${DOCKER_HOST_SSH} docker rm ${JOB_NAME}-${BUILD_NUMBER}';
+}
