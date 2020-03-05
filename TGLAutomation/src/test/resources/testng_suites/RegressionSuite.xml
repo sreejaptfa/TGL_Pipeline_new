@@ -12,7 +12,7 @@
 	
 		<classes>
 			<class name="org.tfa.tgl.tests.TglLoginTest" />  
-			<class name="org.tfa.tgl.tests.SearchPageTest" />  
+			<!-- <class name="org.tfa.tgl.tests.SearchPageTest" />   -->
 			<!-- <class name="org.tfa.tgl.tests.TaxInformationSectionTest" />
 			<class name="org.tfa.tgl.tests.AdditionalInformationSectionTest" />
 			<class name="org.tfa.tgl.tests.AssetsAndLiabilitiesTest" />
