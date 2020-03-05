@@ -27,6 +27,7 @@ public class LoginPageTgl
     	data=TestData.getObject();
     	flag=false;
     	log=Logger.getLogger("rootLogger");
+    	// TestCase - LoginPage - Step1
     	webUtil.openURL((String) data.getEnvironmentDataMap().get("ApplicationURL"));
     	explicitwait= new WebDriverWait(webUtil.getDriver(), 30);
     	    	
@@ -35,6 +36,7 @@ public class LoginPageTgl
 	{
 		webUtil.holdOn(10);
 		By homepagecontrol=By.cssSelector(".tfa-button-text");
+		// TestCase - LoginPage - Step - 2
 		webUtil.setTextBoxValueTestData("LoginTgl_username_ED", "Login_UserName");
 		webUtil.setTextBoxValueTestData("LoginTgl_password_ED", "Login_Password");
 		webUtil.click("LoginTgl_Signin_btn");
@@ -52,40 +54,7 @@ public class LoginPageTgl
 			log.info("Home Page not found!");
 			return flag;
 			
-		}
-	/*	webUtil.waitUntilElementVisible("Home_Tgl_Search2_btn", 40);
-		webUtil.selectByIndex("Home_tgl_applicationyear_select", 2);
-				
-		//webUtil.click("Home_Tgl_Search_btn");
-		webUtil.click("Home_Tgl_Search2_btn");
-		
-		//Thread.sleep(200);
-		webUtil.waitUntilElementVisible("Home_tgl_FirstRecord", 50);
-		webUtil.click("Home_tgl_FirstRecord");
-		
-		if (webUtil.getDriver().getCurrentUrl().contains("details"))
-		{
-			flag = true;
-			log.info("First record opened!");
-			
 		}		
-		else
-		{
-			log.info("Record could not be opened!");
-			flag = false;
-			return flag;
-		
-		}
-		
-		
-		webUtil.click("Tgl_logout");
-		Thread.sleep(700);
-		
-		if (webUtil.getDriver().getCurrentUrl().contains("signedOut"))
-			flag=true;
-		else
-			{flag=false; return flag;}*/
-		
 		return flag;
 	}
 	
@@ -98,6 +67,7 @@ public class LoginPageTgl
 		
 		//explicitwwait.until(ExpectedConditions.visi);
 		// User active but no admin role | correct username correct password
+		// TestCase - LoginPage - Step4
 		webUtil.setTextBoxValue("LoginTgl_username_ED", "nisharma");
 		webUtil.setTextBoxValue("LoginTgl_password_ED", "password");
 		webUtil.click("LoginTgl_Signin_btn");
@@ -111,6 +81,7 @@ public class LoginPageTgl
 		//explicitwwait.until(ExpectedConditions.invisibilityOfElementLocated(signinbutton));
 		
 		// Right username wrong password
+		// TestCase - LoginPage - Step3
 		
 		webUtil.waitUntilElementVisible("LoginTgl_Signin_btn", 30);
 		
@@ -128,6 +99,7 @@ public class LoginPageTgl
 		// Right username wrong password
 		webUtil.holdOn(5);
 		webUtil.waitUntilElementVisible("LoginTgl_Signin_btn", 30);
+		// TestCase - LoginPage - Step3
 		webUtil.setTextBoxValue("LoginTgl_username_ED", "wronguser");
 		webUtil.setTextBoxValue("LoginTgl_password_ED", "password");
 		webUtil.click("LoginTgl_Signin_btn");

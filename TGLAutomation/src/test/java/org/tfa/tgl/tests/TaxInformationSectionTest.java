@@ -29,7 +29,8 @@ public class TaxInformationSectionTest extends BaseTestMethods{
 			Assert.assertTrue(result, "EnterloginInfo method failed");	
 			
 			// Below Assert ensures that searched user has additional information section showing
-			Assert.assertTrue(taxinfosection.verifyTaxInformationSection(), "verifyTaxInformation method failed");								
+			Assert.assertTrue(taxinfosection.verifyTaxInformationSection(), "verifyTaxInformation method failed");	
+			Assert.assertTrue(taxinfosection.verifyHelpLinks(),"VerifyHelpLinks method failed");
 		
 		}catch(Exception e){
 			

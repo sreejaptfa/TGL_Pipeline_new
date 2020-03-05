@@ -32,7 +32,8 @@ public class AdditionalInformationSection extends PFactory{
     
     public boolean verifyAdditionalInformationSection(){
     	boolean flag=false;
-
+    	
+    	// TestCase - Additional Information Section - Step 2
     	String pid=SearchPageTGL.getpersonid();
     	By assetandliabilitylocator=By.xpath("(//div[@class='verification-views'])//div[3]/h2");
     	
@@ -43,11 +44,12 @@ public class AdditionalInformationSection extends PFactory{
     	webUtil.click("Tgl_moreSearchOptionsLink");  	
     	webUtil.setTextBoxValue("Tgl_personid", pid);
 		webUtil.click("Home_Tgl_Search2_btn");	
-		WebElement firstrow=webUtil.getDriver().findElement(firstrowlocator);				
+		WebElement firstrow=webUtil.getDriver().findElement(firstrowlocator);	
+		// TestCase - Additional Information Section - Step 3
 		firstrow.click();	
 		explicitwait.until(ExpectedConditions.visibilityOfElementLocated(assetandliabilitylocator));
 		
-		
+		// TestCase - Additional Information Section - Step 4, Step - 5
     	if((webUtil.getElement("Tgl_AdditionalInformationSection_lbl").isDisplayed())
     		&& (webUtil.getElement("Tgl_AdditionalInformationSection_lbl").getText().contains("Additional Information"))){
     	

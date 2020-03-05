@@ -53,6 +53,7 @@ public class SearchPageTGL {
 		searchresultstable=By.xpath("//tbody[@data-hook='results']//tr");
 		applicantnameheading=By.xpath("//h2[@class='applicant-context-heading']/div");
 	}
+	// TestCase - SearchPage - Step 6
 	public boolean verifyAppYearDefaultSelection()
 	{
 		boolean flag=false;
@@ -63,12 +64,11 @@ public class SearchPageTGL {
 			return flag=true;
 		else
 			flag=false;
-			
-		
+					
 		return flag;
 		
 	}
-	
+	// TestCase - SearchPage - Step 7
 	public boolean verifymorelinkclick()
 	{
 		boolean flag=false;
@@ -89,7 +89,7 @@ public class SearchPageTGL {
 		//webUtil.getElement(arg0)
 		return flag;
 	}
-	
+	// TestCase - SearchPage - Step 2
 	public boolean verifydefaultsort() throws InterruptedException{
 		boolean flag=false;
 		
@@ -166,7 +166,7 @@ public class SearchPageTGL {
 		
 
 	}
-	
+	// TestCase - SearchPage - Step 9
 	public boolean verifyColumnHeaders() throws InterruptedException{
 		boolean flag=false;
 		//Thread.sleep(1000);
@@ -196,7 +196,7 @@ public class SearchPageTGL {
 		
 		return flag;
 	}
-	
+	// TestCase - SearchPage - Step 10
 	public boolean verifyRowIsLinked(){
 		boolean flag=false;
 		
@@ -232,7 +232,7 @@ public class SearchPageTGL {
 		return flag;
 	}
 	
-	
+	// TestCase - SearchPage - Step 11, 12, 13
 	public boolean verifyEachFilter() throws InterruptedException{
 		boolean flag=false, validofferdeadline=true;
 		String s,deadline;
@@ -283,55 +283,73 @@ public class SearchPageTGL {
 			}catch (Exception e){
 			
 			log.info("No records found with Interview Deadline:"+intvwdeadlineselection);
-			System.out.println("No records found with Interview Deadline:"+intvwdeadlineselection);
+			//System.out.println("No records found with Interview Deadline:"+intvwdeadlineselection);
 			//don't execute remaining code and startover again
 			continue;
 			//webUtil.getDriver().navigate().refresh();
 			}
+			/*int sizefirstfilter=size;
+				if(sizefirstfilter>15){	
+					do{
+						webUtil.waitForBrowserToLoadCompletely();			
+						webUtil.getElement("Tgl_TGLStatus_txt").click();
+						Thread.sleep(500);			
+						random=r.nextInt(5);
+						random++;			
+						webUtil.getDriver().findElement(By.xpath("(//div[@class='selectize-dropdown-content'])[2]/div["+String.valueOf(random)+"]")).click();
+						//webUtil.getDriver().findElement(By.xpath("//div[@data-value='COMPLETE']")).click();
+						Thread.sleep(500);
+						webUtil.click("Home_Tgl_Search2_btn");
+						statusselection=webUtil.getDriver().findElement(By.xpath("(//div[@class='selectize-input items not-full has-options has-items'])[2]/div")).getText();		
+						try{
+							size=0;
+							localwait.until(ExpectedConditions.visibilityOfElementLocated(rowdetailxpath));
+							searchresults=webUtil.getDriver().findElements(searchresultstable);
+							size=searchresults.size();				
+						}catch(Exception e){			
+							log.info("Exception occured in results for status selection:"+ statusselection);
+							//System.out.println("Exception occured in results for status selection:"+ statusselection);
+							continue;		
+						}
+					}while(size<2);
+					
+				}else{*/
+					
+					webUtil.waitForBrowserToLoadCompletely();			
+					webUtil.getElement("Tgl_TGLStatus_txt").click();
+					Thread.sleep(500);			
+					random=r.nextInt(5);
+					random++;			
+					webUtil.getDriver().findElement(By.xpath("(//div[@class='selectize-dropdown-content'])[2]/div["+String.valueOf(random)+"]")).click();
+					//webUtil.getDriver().findElement(By.xpath("//div[@data-value='COMPLETE']")).click();
+					Thread.sleep(500);
+					webUtil.click("Home_Tgl_Search2_btn");
+					statusselection=webUtil.getDriver().findElement(By.xpath("(//div[@class='selectize-input items not-full has-options has-items'])[2]/div")).getText();		
+					try{
+						size=0;
+						localwait.until(ExpectedConditions.visibilityOfElementLocated(rowdetailxpath));
+						searchresults=webUtil.getDriver().findElements(searchresultstable);
+						size=searchresults.size();				
+					}catch(Exception e){			
+						log.info("Exception occured in results for status selection:"+ statusselection);
+						//System.out.println("Exception occured in results for status selection:"+ statusselection);
+						continue;		
+					}
+				//}
 			
-			
-			webUtil.waitForBrowserToLoadCompletely();
-			
-			webUtil.getElement("Tgl_TGLStatus_txt").click();
-			Thread.sleep(500);
-			
-			random=r.nextInt(5);
-			random++;
-			
-			webUtil.getDriver().findElement(By.xpath("(//div[@class='selectize-dropdown-content'])[2]/div["+String.valueOf(random)+"]")).click();
-			//webUtil.getDriver().findElement(By.xpath("//div[@data-value='COMPLETE']")).click();
-			Thread.sleep(500);
-			webUtil.click("Home_Tgl_Search2_btn");
-			statusselection=webUtil.getDriver().findElement(By.xpath("(//div[@class='selectize-input items not-full has-options has-items'])[2]/div")).getText();
-		
-			try{
-				size=0;
-				localwait.until(ExpectedConditions.visibilityOfElementLocated(rowdetailxpath));
-				searchresults=webUtil.getDriver().findElements(searchresultstable);
-				size=searchresults.size();
-				
-			}catch(Exception e){
-			
-			log.info("Exception occured in results for status selection:"+ statusselection);
-			System.out.println("Exception occured in results for status selection:"+ statusselection);
-			continue;
-			
-			}
-		
-			
-		}while(size<2);
-		
-		for (i=1;i<=size;i++){
-			
+		}while(size<2);		
+		for (i=1;i<=size;i++){			
 		WebElement rowstatus=webUtil.getDriver().findElement(By.xpath("//tbody[@data-hook='results']/tr["+String.valueOf(i)+"]/td[3]/a"));
 		WebElement rowdeadline=webUtil.getDriver().findElement(By.xpath("//tbody[@data-hook='results']/tr["+String.valueOf(i)+"]/td[4]/a"));
 			s=rowstatus.getText();	
-			deadline=rowdeadline.getText();
-			
-			if(s.contains(statusselection)&&deadline.contains(intvwdeadlineselection))
-				flag=true;
-			else
-				return flag=false;
+			deadline=rowdeadline.getText();	
+		
+		if(statusselection.equals("MANAGER REVIEW"))
+				statusselection="MGRREVIEW";
+		if(s.contains(statusselection)&&deadline.contains(intvwdeadlineselection))
+			flag=true;
+		else
+			return flag=false;
 						
 		}
 		

@@ -30,6 +30,8 @@ public class AssetsAndLiabilitiesSection {
     
     public boolean verifyAssetAndLiabilitySection(){
     	boolean flag=false;
+    	
+    	// TestCase - Assets & Liabilities Section - Step 2
     	String pid=SearchPageTGL.getpersonid();
     	By assetandliabilitylocator=By.xpath("(//div[@class='verification-views'])//div[3]/h2");
     	
@@ -41,16 +43,20 @@ public class AssetsAndLiabilitiesSection {
     	//fetch person id saved in last testcase
     	webUtil.setTextBoxValue("Tgl_personid",pid );
 		webUtil.click("Home_Tgl_Search2_btn");
+		
+		// TestCase - Assets & Liabilities Section - Step 3
     	webUtil.getDriver().findElement(By.xpath("//tbody[@data-hook='results']/tr[1]/td[1]/a")).click();
     	
     	explicitwait.until(ExpectedConditions.visibilityOfElementLocated(assetandliabilitylocator));
+    	
+    	// TestCase - Assets & Liabilities Section - Step 4
     	if(webUtil.getElement("Tgl_AssetsAndLiabilitiesLabel_lbl").getText().contains("Assets and Liabilities")){
     		flag=true;		
     	}
     	else{
     		log.info("Asset and Libility section not visible");return flag=false;}
     	
-    	
+    	// TestCase - Assets & Liabilities Section - Step 5,6
     	if(webUtil.getElement("Tgl_OwnsLaptop_lbl").getText().contains("Owns Laptop:")){
     		flag=true;		
     	}
@@ -76,6 +82,7 @@ public class AssetsAndLiabilitiesSection {
     	else
     		return flag=false;
     	
+    	// TestCase - Assets & Liabilities Section - Step 7
     	if(webUtil.getElement("Tgl_SavingsCheckingsStock_lbl").getText().contains("Savings/Checking/Stocks Amount")){
     		flag=true;
     		
@@ -112,7 +119,7 @@ public class AssetsAndLiabilitiesSection {
     	log.info("Assets & Libilities: Savings section verified");
     	System.out.println("Assets & Libilities: Savings section verified");
     	
-    	
+    	// TestCase - Assets & Liabilities Section - Step 8
     	if(webUtil.getElement("Tgl_CreditStock_lbl").getText().contains("Credit Card Debt Amount")){
     		flag=true;
     		
@@ -147,6 +154,7 @@ public class AssetsAndLiabilitiesSection {
     	
     	//verify "original" values dont change for Savings and Credit card when Adjusted values are changed
     	
+    	// TestCase - Assets & Liabilities Section - Step 9
     	String originalvalue=webUtil.getElement("Tgl_SavingsOriginal_lbl").getText();
     	webUtil.setTextBoxValue("Tgl_SavingsAdjusted_text", "1000");
     	if(originalvalue.contains(webUtil.getElement("Tgl_SavingsOriginal_lbl").getText())){
@@ -156,7 +164,7 @@ public class AssetsAndLiabilitiesSection {
     	else{
     		log.info("changing adjusted value for Savings caused error");return flag=false;}
     	
-    	
+    	// TestCase - Assets & Liabilities Section - Step 9
     	originalvalue=webUtil.getElement("Tgl_CreaditOriginal_lbl").getText();
     	webUtil.setTextBoxValue("Tgl_CreaditAdjusted_text", "1000");
     	if(originalvalue.contains(webUtil.getElement("Tgl_CreaditOriginal_lbl").getText())){
