@@ -236,7 +236,7 @@ public class SearchPageTGL {
 	public boolean verifyEachFilter() throws InterruptedException{
 		boolean flag=false, validofferdeadline=true;
 		String s,deadline;
-		int size=0,i=1,random=0;
+		int size=0,i=1,random=0, randomStatus=0;
 		localwait=new WebDriverWait(webUtil.getDriver(), 15);
 		String intvwdeadlineselection;
 		List <WebElement>searchresults;
@@ -288,15 +288,14 @@ public class SearchPageTGL {
 			continue;
 			//webUtil.getDriver().navigate().refresh();
 			}
-			/*int sizefirstfilter=size;
+			int sizefirstfilter=size;
 				if(sizefirstfilter>15){	
-					do{
-						webUtil.waitForBrowserToLoadCompletely();			
+					do{			
 						webUtil.getElement("Tgl_TGLStatus_txt").click();
 						Thread.sleep(500);			
-						random=r.nextInt(5);
-						random++;			
-						webUtil.getDriver().findElement(By.xpath("(//div[@class='selectize-dropdown-content'])[2]/div["+String.valueOf(random)+"]")).click();
+						randomStatus=r.nextInt(5);
+						randomStatus++;			
+						webUtil.getDriver().findElement(By.xpath("(//div[@class='selectize-dropdown-content'])[2]/div["+String.valueOf(randomStatus)+"]")).click();
 						//webUtil.getDriver().findElement(By.xpath("//div[@data-value='COMPLETE']")).click();
 						Thread.sleep(500);
 						webUtil.click("Home_Tgl_Search2_btn");
@@ -305,7 +304,19 @@ public class SearchPageTGL {
 							size=0;
 							localwait.until(ExpectedConditions.visibilityOfElementLocated(rowdetailxpath));
 							searchresults=webUtil.getDriver().findElements(searchresultstable);
-							size=searchresults.size();				
+							size=searchresults.size();
+							/*if(size==0)
+								continue;*/
+							if(size<2){
+								webUtil.getDriver().navigate().refresh();
+								webUtil.waitForBrowserToLoadCompletely();
+								webUtil.selectByIndex("Tgl_appyear_dd", 0);
+								webUtil.getElement("Tgl_InterviewDeadlinefilter_txt").click();
+								InterviewDeadlinedd= webUtil.getDriver().findElement(By.xpath("//div[@class='selectize-dropdown-content']/div["+String.valueOf(random)+"]"));
+								InterviewDeadlinedd.click();
+								Thread.sleep(500);						
+								webUtil.waitForBrowserToLoadCompletely();								
+							}
 						}catch(Exception e){			
 							log.info("Exception occured in results for status selection:"+ statusselection);
 							//System.out.println("Exception occured in results for status selection:"+ statusselection);
@@ -313,7 +324,7 @@ public class SearchPageTGL {
 						}
 					}while(size<2);
 					
-				}else{*/
+				}else{
 					
 					webUtil.waitForBrowserToLoadCompletely();			
 					webUtil.getElement("Tgl_TGLStatus_txt").click();
@@ -329,13 +340,15 @@ public class SearchPageTGL {
 						size=0;
 						localwait.until(ExpectedConditions.visibilityOfElementLocated(rowdetailxpath));
 						searchresults=webUtil.getDriver().findElements(searchresultstable);
-						size=searchresults.size();				
+						size=searchresults.size();	
+						/*if(size==0)
+							continue;*/
 					}catch(Exception e){			
 						log.info("Exception occured in results for status selection:"+ statusselection);
 						//System.out.println("Exception occured in results for status selection:"+ statusselection);
 						continue;		
 					}
-				//}
+				}
 			
 		}while(size<2);		
 		for (i=1;i<=size;i++){			
