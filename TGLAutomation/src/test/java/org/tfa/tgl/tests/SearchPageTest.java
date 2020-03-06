@@ -35,6 +35,9 @@ public class SearchPageTest extends BaseTestMethods {
 			//Step2: Below assert ensures  default appyear selection 
 			soft.assertTrue(search.verifyAppYearDefaultSelection(), "App Year Default Selection failed");
 			
+			// Below assert ensures validation for incorrect input in Person Id field
+			soft.assertTrue(search.verifyErrorMessageForPersonID(), "Method verifyErrorMessageForPersonID Selection failed");
+			
 			//Step3: Below assert ensures right fields show up on click of "more search options"
 			soft.assertTrue(search.verifymorelinkclick(), "More Link fields test failed");
 			

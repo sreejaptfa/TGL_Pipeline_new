@@ -73,6 +73,9 @@ public class SearchPageTGL {
 	{
 		boolean flag=false;
 		
+		webUtil.getDriver().navigate().refresh();
+		webUtil.waitForBrowserToLoadCompletely();
+		webUtil.holdOn(4);
 		webUtil.click("Tgl_moreSearchOptionsLink");
 		List <WebElement> webelementcontainer= webUtil.getDriver().findElements(inputcontainerlocator);
 		
@@ -81,9 +84,7 @@ public class SearchPageTGL {
 			if(element.isDisplayed()&&element.isEnabled())
 					flag=true;
 			else
-					return flag=false;
-			
-			
+					return flag=false;			
 		}
 		
 		//webUtil.getElement(arg0)
@@ -414,6 +415,18 @@ public class SearchPageTGL {
 		return randompersonid;
 	}
 	
+	public boolean verifyErrorMessageForPersonID(){
+		boolean flag=false;
+		webUtil.click("Tgl_moreSearchOptionsLink");
+		webUtil.setTextBoxValue("Tgl_personid", "abc");
+		//webUtil.click("Home_Tgl_Search2_btn");
+		if(webUtil.getElement("Tgl_SearchPIDValidation_lbl").getText().contains("Please enter a number."))
+			flag= true;
+		else
+			return flag=false;	
+		
+		return flag;
+	}
 	public SearchDetailsPageTGL clickFirstRowColumnOnSearchResults(){
 		
 		webUtil.click("Tgl_FirstRowColumn_TB");
