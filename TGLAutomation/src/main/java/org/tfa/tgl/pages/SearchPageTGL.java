@@ -367,7 +367,7 @@ public class SearchPageTGL {
 		}
 		
 		log.info(size+" no of records searched for interview deadline : "+intvwdeadlineselection+" and application status: "+statusselection);
-		System.out.println(size+" no of records searched for interview deadline : "+intvwdeadlineselection+ " and application status: "+statusselection);
+		//System.out.println(size+" no of records searched for interview deadline : "+intvwdeadlineselection+ " and application status: "+statusselection);
 		
 		// Verify First Name, Last Name and PersonID search:
 		
@@ -404,7 +404,7 @@ public class SearchPageTGL {
 			{log.info("Search result doesnot match for PersonId");return flag=false;}
 		
 		log.info("Searched for name:"+fullname +" and personid:"+personid);
-		System.out.println("Searched for name:"+fullname +" and personid:"+personid);
+		//System.out.println("Searched for name:"+fullname +" and personid:"+personid);
 		
 		return flag;
 	}
