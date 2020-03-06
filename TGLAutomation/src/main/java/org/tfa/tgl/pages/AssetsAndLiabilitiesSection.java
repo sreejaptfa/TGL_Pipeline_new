@@ -117,7 +117,7 @@ public class AssetsAndLiabilitiesSection {
     	
     	
     	log.info("Assets & Libilities: Savings section verified");
-    	System.out.println("Assets & Libilities: Savings section verified");
+    	//System.out.println("Assets & Libilities: Savings section verified");
     	
     	// TestCase - Assets & Liabilities Section - Step 8
     	if(webUtil.getElement("Tgl_CreditStock_lbl").getText().contains("Credit Card Debt Amount")){
