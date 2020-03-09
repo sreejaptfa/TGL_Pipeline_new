@@ -3,7 +3,6 @@ package org.tfa.tgl.tests;
 
 import java.util.List;
 import org.apache.log4j.Logger;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -140,24 +139,10 @@ public class TGLPortalUploadTest extends BaseTestMethods {
 		webUtil.holdOn(2);
 		searchPage.clickOnRemoveBtn();
 		webUtil.holdOn(2);
-		Assert.assertFalse(objectIsVisible("Tgl_DocumentName_ST"),"verified document removed");
+		Assert.assertFalse(webUtil.objectIsVisible("Tgl_DocumentName_ST"),"verified document removed");
 	
 		//Step - 14 -------- End 
 
-	}
-
-	private boolean objectIsVisible(String locatorName){
-		By locator=null;
-		locator=webUtil.getLocatorBy(locatorName);
-		try{
-			if(webUtil.getDriver().findElement(locator).isDisplayed()){
-				return true;
-			}else{
-				return false;
-			}
-		}catch(Exception e){
-			return false;
-		}	
 	}
 		
 	@Override

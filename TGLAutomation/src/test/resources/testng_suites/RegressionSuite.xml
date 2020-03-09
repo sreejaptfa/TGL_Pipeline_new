@@ -17,7 +17,10 @@
 			<class name="org.tfa.tgl.tests.AdditionalInformationSectionTest" />
 			<class name="org.tfa.tgl.tests.AssetsAndLiabilitiesTest" />
 			<!-- <class name="org.tfa.tgl.tests.TGLPortalUploadTest" /> -->
-			<class name="org.tfa.tgl.tests.TotalAwardSectionTest" />					
+			<class name="org.tfa.tgl.tests.TotalAwardSectionTest" />
+			<class name="org.tfa.tgl.tests.GroupCalculationFieldValidationTest" />
+			<class name="org.tfa.tgl.tests.SendEmailTextboxTest" />
+			<class name="org.tfa.tgl.tests.TimeLineTest" />					
 		</classes>
 
 	</test>

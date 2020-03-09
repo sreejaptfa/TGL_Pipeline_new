@@ -97,6 +97,37 @@ public class TGLWebUtil extends WebDriverUtil{
 
 		return locatorValue;
 	}
+	public void setTextBoxClear(String locatorName){
+		By locator=null;
+		locator=webUtil.getLocatorBy(locatorName);
+		webUtil.getDriver().findElement(locator).clear();
+	}
+	public boolean objectIsVisible(String locatorName){
+		By locator=null;
+		locator=webUtil.getLocatorBy(locatorName);
+		try{
+			if(webUtil.getDriver().findElement(locator).isDisplayed()){
+				return true;
+			}else{
+				return false;
+			}
+		}catch(Exception e){
+			return false;
+		}	
+	}
+	public boolean objectIsEnabled(String locatorName){
+		By locator=null;
+		locator=webUtil.getLocatorBy(locatorName);
+		try{
+			if(webUtil.getDriver().findElement(locator).isEnabled()){
+				return true;
+			}else{
+				return false;
+			}
+		}catch(Exception e){
+			return false;
+		}	
+	}
 
 	/**
 	 * This function is to get the object of WebdriverUtil.

@@ -435,4 +435,22 @@ public class SearchPageTGL {
 	public void clickOnSearchBtn(){
 		webUtil.click("Tgl_Search_btn");
 	}
+	public void clickOnAwardCalculatorBtn(){
+		webUtil.click("Tgl_AwardCalculator_btn");
+	}
+	public void enterSendEmailNotes(String locatorName,String emailNotes){
+		webUtil.setTextBoxValue(locatorName, emailNotes);		
+	}
+	public void clickOnSendEmailBtn(){
+		webUtil.click("Tgl_SendEmail_Btn");
+	}
+	public void clickOnConfirmSendBtn(){
+		webUtil.click("Tgl_ConfirmSend_Btn");
+	}	
+	public void clickOnTGLStatusDD(){
+		webUtil.click("Tgl_TGLStatus_DD");
+	}
+	public void clickOnCompleteLink(){
+		webUtil.click("Tgl_Complete_LK");
+	}
 }

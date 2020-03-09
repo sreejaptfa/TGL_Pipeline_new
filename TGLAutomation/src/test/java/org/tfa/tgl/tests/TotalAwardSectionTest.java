@@ -113,7 +113,7 @@ public class TotalAwardSectionTest extends BaseTestMethods{
 		//Step - 13 --------  Now click on Remove Adjusted amount
 		searchDetailsPage.clickOnRemoveAdjustmentButton();
 		searchDetailsPage.clickOnYesRemoveAdjustmentButton();
-		Assert.assertFalse(objectIsVisible("Tgl_RemoveAdjustment_btn"),"verified Adjustment removed");
+		Assert.assertFalse(webUtil.objectIsVisible("Tgl_RemoveAdjustment_btn"),"verified Adjustment removed");
 
 		//Step - 14 --------  Now again click on Manual Adjusted link again and enter invalid loan and grant amount(such as dfdfd 
 		searchDetailsPage.clickOnManuallyAdjustButton();
@@ -132,19 +132,7 @@ public class TotalAwardSectionTest extends BaseTestMethods{
 
 		//Step - 16 -------- End
 	}
-	private boolean objectIsVisible(String locatorName){
-		By locator=null;
-		locator=webUtil.getLocatorBy(locatorName);
-		try{
-			if(webUtil.getDriver().findElement(locator).isEnabled()){
-				return true;
-			}else{
-				return false;
-			}
-		}catch(Exception e){
-			return false;
-		}	
-	}
+
 	@Override
 	public TGLConstants getConstants(){
 		return new TGLConstants();

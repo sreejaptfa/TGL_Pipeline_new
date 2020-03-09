@@ -49,4 +49,8 @@ public class SearchDetailsPageTGL {
 		webUtil.click("Tgl_YesRemoveAdjustment_btn");
 		webUtil.holdOn(2);
 	}
+	public void clickOnTimeLineButton(){
+		webUtil.click("Tgl_ViewTimeLine_Btn");
+		webUtil.holdOn(2);
+	}
 }
