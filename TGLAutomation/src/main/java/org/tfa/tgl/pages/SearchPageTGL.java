@@ -23,6 +23,8 @@ public class SearchPageTGL {
 	private boolean flag;
 	Logger log=Logger.getLogger("rootLogger");
 	ArrayList <String> names=new ArrayList <String>() ;
+	ArrayList <String> namesnew=new ArrayList <String>() ;
+	
 	WebDriverWait localwait;
 	private Random r;
 	protected static String randompersonid;
@@ -72,11 +74,8 @@ public class SearchPageTGL {
 	public boolean verifymorelinkclick()
 	{
 		boolean flag=false;
-		
-		webUtil.getDriver().navigate().refresh();
-		webUtil.waitForBrowserToLoadCompletely();
-		webUtil.holdOn(4);
-		webUtil.click("Tgl_moreSearchOptionsLink");
+		//More link is already clicked in previous test steps
+		//webUtil.click("Tgl_moreSearchOptionsLink");
 		List <WebElement> webelementcontainer= webUtil.getDriver().findElements(inputcontainerlocator);
 		
 		for(WebElement element : webelementcontainer){
@@ -84,7 +83,9 @@ public class SearchPageTGL {
 			if(element.isDisplayed()&&element.isEnabled())
 					flag=true;
 			else
-					return flag=false;			
+					return flag=false;
+			
+			
 		}
 		
 		//webUtil.getElement(arg0)
@@ -94,11 +95,16 @@ public class SearchPageTGL {
 	public boolean verifydefaultsort() throws InterruptedException{
 		boolean flag=false;
 		
-			
+		webUtil.getDriver().navigate().refresh();
+		webUtil.waitForBrowserToLoadCompletely();
+		webUtil.selectByIndex("Tgl_appyear_dd", 0);
+		webUtil.click("Tgl_moreSearchOptionsLink");
 		webUtil.getDriver().manage().window().maximize();
+		webUtil.holdOn(3);
 		webUtil.setTextBoxValue("Tgl_firstname", "a");
+		webUtil.holdOn(2);
 		webUtil.click("Home_Tgl_Search2_btn");
-		Thread.sleep(1000);
+		webUtil.holdOn(3);
 		
 		 WebElement datahook=webUtil.getDriver().findElement(datahooklocator);
 		
@@ -134,14 +140,21 @@ public class SearchPageTGL {
 		 
 		
 			
-		
+		int p=0;
+		// Verify sort only for first 25 records
 		for(WebElement w: searchresults){
 			
 			names.add(w.getText());
+			if(p++>25)
+				break;
 			
 		}
 		
-		flag=isSorted(names);
+		for (int k=0;k<names.size();k++)
+			namesnew.add(names.get(k).substring(0,3));
+		
+		
+		flag=isSorted(namesnew);
 		
 		
 		return flag;
@@ -203,17 +216,12 @@ public class SearchPageTGL {
 		
 		
 		webUtil.setTextBoxValue("Tgl_firstname", "a");
-		webUtil.click("Home_Tgl_Search2_btn");
-		
+		webUtil.click("Home_Tgl_Search2_btn");		
 		WebDriverWait localwait=new WebDriverWait(webUtil.getDriver(), 15);
-		localwait.until(ExpectedConditions.visibilityOfElementLocated(firstrowxpath));
-		
+		localwait.until(ExpectedConditions.visibilityOfElementLocated(firstrowxpath));		
 		WebElement firstrow=webUtil.getDriver().findElement(firstrownamelocator);
-		String rowname=webUtil.getElement("Tgl_firstrow_name").getText();
-		
-		
-		firstrow.click();
-		
+		String rowname=webUtil.getElement("Tgl_firstrow_name").getText();		
+		firstrow.click();		
 		By tableheading=By.xpath("//h2[@class='applicant-context-heading']/div");
 		localwait.until(ExpectedConditions.visibilityOfElementLocated(tableheading));
 		
@@ -221,10 +229,8 @@ public class SearchPageTGL {
 			flag=true;
 		else
 			return flag=false;
-		
-		
-		String name=webUtil.getDriver().findElement(applicantnameheading).getText();
-		
+				
+		String name=webUtil.getDriver().findElement(applicantnameheading).getText();		
 		if(name.contains(rowname))
 			flag=true;
 		else
@@ -246,12 +252,9 @@ public class SearchPageTGL {
 		
 		webUtil.getDriver().navigate().to("https://qamerlin.teachforamerica.org/ada/tgl");
 		webUtil.waitForBrowserToLoadCompletely();
-		WebElement InterviewDeadlinedd=webUtil.getElement("Tgl_InterviewDeadlinefilter_txt");
-		
-		
+		WebElement InterviewDeadlinedd=webUtil.getElement("Tgl_InterviewDeadlinefilter_txt");		
 		//localwait.until(ExpectedConditions.visibilityOfElementLocated(rowdetailxpath));
-		rowdetailxpath=By.xpath("//tbody[@data-hook='results']/tr[1]");
-		
+		rowdetailxpath=By.xpath("//tbody[@data-hook='results']/tr[1]");		
 		do{
 			validofferdeadline=true;
 			webUtil.getDriver().navigate().refresh();
@@ -264,14 +267,11 @@ public class SearchPageTGL {
 				Thread.sleep(500);
 				InterviewDeadlinedd= webUtil.getDriver().findElement(By.xpath("//div[@class='selectize-dropdown-content']/div["+String.valueOf(random)+"]"));
 				if(!InterviewDeadlinedd.getText().contains("2045"))
-				validofferdeadline=false;
-					
-			}
-			
+				validofferdeadline=false;					
+			}			
 			InterviewDeadlinedd.click();
 			Thread.sleep(500);
-			webUtil.click("Home_Tgl_Search2_btn");
-		
+			webUtil.click("Home_Tgl_Search2_btn");		
 			intvwdeadlineselection=webUtil.getDriver().findElement(By.xpath("//div[@class='selectize-control multi']/div/div")).getAttribute("data-value");
 			//Thread.sleep(1000);	
 			try{
@@ -279,10 +279,8 @@ public class SearchPageTGL {
 				searchresults=webUtil.getDriver().findElements(searchresultstable);
 				size=searchresults.size();
 				if(size<2)
-					continue;
-				
-			}catch (Exception e){
-			
+					continue;				
+			}catch (Exception e){			
 			log.info("No records found with Interview Deadline:"+intvwdeadlineselection);
 			//System.out.println("No records found with Interview Deadline:"+intvwdeadlineselection);
 			//don't execute remaining code and startover again
@@ -303,30 +301,30 @@ public class SearchPageTGL {
 						statusselection=webUtil.getDriver().findElement(By.xpath("(//div[@class='selectize-input items not-full has-options has-items'])[2]/div")).getText();		
 						try{
 							size=0;
-							localwait.until(ExpectedConditions.visibilityOfElementLocated(rowdetailxpath));
+							//localwait.until(ExpectedConditions.visibilityOfElementLocated(rowdetailxpath));
 							searchresults=webUtil.getDriver().findElements(searchresultstable);
 							size=searchresults.size();
-							/*if(size==0)
-								continue;*/
 							if(size<2){
-								webUtil.getDriver().navigate().refresh();
-								webUtil.waitForBrowserToLoadCompletely();
-								webUtil.selectByIndex("Tgl_appyear_dd", 0);
-								webUtil.getElement("Tgl_InterviewDeadlinefilter_txt").click();
-								InterviewDeadlinedd= webUtil.getDriver().findElement(By.xpath("//div[@class='selectize-dropdown-content']/div["+String.valueOf(random)+"]"));
-								InterviewDeadlinedd.click();
-								Thread.sleep(500);						
-								webUtil.waitForBrowserToLoadCompletely();								
+								log.info(size+" no of records searched for interview deadline : "+intvwdeadlineselection+" and application status: "+statusselection);							
 							}
+							else
+								break;
+							
 						}catch(Exception e){			
 							log.info("Exception occured in results for status selection:"+ statusselection);
 							//System.out.println("Exception occured in results for status selection:"+ statusselection);
-							continue;		
-						}
-					}while(size<2);
-					
-				}else{
-					
+							//continue;		
+						}						
+						webUtil.getDriver().navigate().refresh();
+						webUtil.waitForBrowserToLoadCompletely();
+						webUtil.selectByIndex("Tgl_appyear_dd", 0);
+						webUtil.getElement("Tgl_InterviewDeadlinefilter_txt").click();
+						InterviewDeadlinedd= webUtil.getDriver().findElement(By.xpath("//div[@class='selectize-dropdown-content']/div["+String.valueOf(random)+"]"));
+						InterviewDeadlinedd.click();
+						Thread.sleep(500);						
+						webUtil.waitForBrowserToLoadCompletely();							
+					}while(size<2);					
+				}else{				
 					webUtil.waitForBrowserToLoadCompletely();			
 					webUtil.getElement("Tgl_TGLStatus_txt").click();
 					Thread.sleep(500);			
@@ -339,11 +337,13 @@ public class SearchPageTGL {
 					statusselection=webUtil.getDriver().findElement(By.xpath("(//div[@class='selectize-input items not-full has-options has-items'])[2]/div")).getText();		
 					try{
 						size=0;
-						localwait.until(ExpectedConditions.visibilityOfElementLocated(rowdetailxpath));
+						//localwait.until(ExpectedConditions.visibilityOfElementLocated(rowdetailxpath));
 						searchresults=webUtil.getDriver().findElements(searchresultstable);
 						size=searchresults.size();	
-						/*if(size==0)
-							continue;*/
+						if(size<2){							
+							log.info("Less than two ro no records for Status:"+ statusselection+" and deadline"+ intvwdeadlineselection);
+							continue;
+						}							
 					}catch(Exception e){			
 						log.info("Exception occured in results for status selection:"+ statusselection);
 						//System.out.println("Exception occured in results for status selection:"+ statusselection);
@@ -368,21 +368,17 @@ public class SearchPageTGL {
 		}
 		
 		log.info(size+" no of records searched for interview deadline : "+intvwdeadlineselection+" and application status: "+statusselection);
-		//System.out.println(size+" no of records searched for interview deadline : "+intvwdeadlineselection+ " and application status: "+statusselection);
-		
-		// Verify First Name, Last Name and PersonID search:
-		
+		//System.out.println(size+" no of records searched for interview deadline : "+intvwdeadlineselection+ " and application status: "+statusselection);		
+		// Verify First Name, Last Name and PersonID search:		
 		random=r.nextInt(size);
 		random++;
 		String fullname=webUtil.getDriver().findElement(By.xpath("//tbody[@data-hook='results']/tr["+String.valueOf(random)+"]/td[1]/a")).getText();
 		String personid=webUtil.getDriver().findElement(By.xpath("//tbody[@data-hook='results']/tr["+String.valueOf(random)+"]/td[2]/a")).getText();
-		String[] name=fullname.split(",");
-		
+		String[] name=fullname.split(",");		
 		name[0]=name[0].trim();
 		name[1]=name[1].trim();
 		webUtil.click("Tgl_moreSearchOptionsLink");
 		webUtil.waitUntilElementVisible("Home_Tgl_Search2_btn", 20);
-
 		webUtil.setTextBoxValue("Tgl_firstname", name[1]);
 		webUtil.setTextBoxValue("Tgl_lastname", name[0]);	
 		webUtil.setTextBoxValue("Tgl_personid", personid);
@@ -426,7 +422,7 @@ public class SearchPageTGL {
 			return flag=false;	
 		
 		return flag;
-	}
+	}	
 	public SearchDetailsPageTGL clickFirstRowColumnOnSearchResults(){
 		
 		webUtil.click("Tgl_FirstRowColumn_TB");
@@ -440,15 +436,3 @@ public class SearchPageTGL {
 		webUtil.click("Tgl_Search_btn");
 	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
