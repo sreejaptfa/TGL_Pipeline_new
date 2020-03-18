@@ -117,7 +117,7 @@ public class AssetsAndLiabilitiesSection {
     	
     	
     	log.info("Assets & Libilities: Savings section verified");
-    	//System.out.println("Assets & Libilities: Savings section verified");
+    	//System.out.println("Assets & Liabilities: Savings section verified");
     	
     	// TestCase - Assets & Liabilities Section - Step 8
     	if(webUtil.getElement("Tgl_CreditStock_lbl").getText().contains("Credit Card Debt Amount")){
@@ -127,7 +127,7 @@ public class AssetsAndLiabilitiesSection {
     	else
     		return flag=false;
     	
-    	if(webUtil.getElement("Tgl_CredirRequired_Chkbx").isEnabled())
+    	if(webUtil.getElement("Tgl_CreditRequired_Chkbx").isEnabled())
     		flag=true;
     	else
     		return flag=false;
