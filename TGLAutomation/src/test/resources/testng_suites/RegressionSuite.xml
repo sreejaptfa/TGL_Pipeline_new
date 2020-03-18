@@ -16,11 +16,14 @@
 			<class name="org.tfa.tgl.tests.TaxInformationSectionTest" />
 			<class name="org.tfa.tgl.tests.AdditionalInformationSectionTest" />
 			<class name="org.tfa.tgl.tests.AssetsAndLiabilitiesTest" />
+		<!-- 	<class name="org.tfa.tgl.tests.IncomeAndTotalNoDependencyTest" />	 -->
+			<class name="org.tfa.tgl.tests.LeftNavTest" />
 			<!-- <class name="org.tfa.tgl.tests.TGLPortalUploadTest" /> -->
 			<class name="org.tfa.tgl.tests.TotalAwardSectionTest" />
 			<class name="org.tfa.tgl.tests.GroupCalculationFieldValidationTest" />
 			<class name="org.tfa.tgl.tests.SendEmailTextboxTest" />
-			<class name="org.tfa.tgl.tests.TimeLineTest" />					
+			<class name="org.tfa.tgl.tests.TimeLineTest" />			
+					
 		</classes>
 
 	</test>

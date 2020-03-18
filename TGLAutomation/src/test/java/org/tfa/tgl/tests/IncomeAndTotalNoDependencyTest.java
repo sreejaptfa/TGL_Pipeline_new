@@ -23,7 +23,7 @@ public class IncomeAndTotalNoDependencyTest extends BaseTestMethods {
 	 *@Author: Nitin Sharma 
 	 */
 	@Test
-	public void TGL105ValidateAssetsAndLiabilitiesSection() throws Exception
+	public void TGL109ValidateIncomeAndDependency() throws Exception
 	{	
 		IncomeAndTotalNoDependencySection income = new IncomeAndTotalNoDependencySection();
 

@@ -27,12 +27,30 @@ public class IncomeAndTotalNoDependencySection extends PFactory {
 	public boolean verifyIncomeAndTotalNodependencySection(){
 		boolean flag=false;
 		WebElement rowstatus;
+		
+		webUtil.getDriver().navigate().refresh();
+		webUtil.waitForBrowserToLoadCompletely();
+		webUtil.selectByIndex("Tgl_appyear_dd", 0);
+		webUtil.holdOn(3);
+		webUtil.getElement("Tgl_TGLStatusSingle_txt").click();
+		webUtil.getDriver().findElement(By.xpath("(//div[@class='selectize-dropdown-content'])[2]/div[2]")).click();
 		webUtil.click("Home_Tgl_Search2_btn");	
 		List <WebElement> searchresults=webUtil.getDriver().findElements(searchresultstable);
 		size=searchresults.size();
+		if(size==0){
+			webUtil.getElement("Tgl_TGLStatusHasItems_txt").click();
+			webUtil.getDriver().findElement(By.xpath("(//div[@class='selectize-dropdown-content'])[2]/div[3]")).click();
+			webUtil.click("Home_Tgl_Search2_btn");	
+			searchresults=webUtil.getDriver().findElements(searchresultstable);
+			size=searchresults.size();
+			// If Still there is no result return false
+			if(size==0){
+				log.info("No records found with InProgress or Incomplete Status"); return false;
+			}
+		}
 		
 		// TestCase [Step-2]
-		for(int i=1;i<size;i++){
+		for(int i=1;i<=size;i++){
 			rowstatus=webUtil.getDriver().findElement(By.xpath("//tbody[@data-hook='results']/tr["+String.valueOf(i)+"]/td[3]/a"));
 		
 			if((rowstatus.getText().contains("INCOMPLETE")) || rowstatus.getText().contains("INPROGRESS")){			
@@ -45,9 +63,8 @@ public class IncomeAndTotalNoDependencySection extends PFactory {
 		// If Income and NoOfDependent fields are empty set values for them
 		webUtil.setTextBoxValue("Tgl_Taxinfoincome_txt", "2500");
 		webUtil.setTextBoxValue("Tgl_TaxInfonoofdependents_txt", "2");
-		
-		// Mark All documents that are required as Valid
-		
+		webUtil.holdOn(3);
+		// Mark All documents that are required as Valid		
 		if(webUtil.getElement("Tgl_EducationCost_privateloanrequired_chk").isSelected())
 			while(!webUtil.getElement("Tgl_EducationCost_privateloanValid_chk").isSelected())
 					webUtil.getElement("Tgl_EducationCost_privateloanValid_chk").click();
@@ -90,21 +107,30 @@ public class IncomeAndTotalNoDependencySection extends PFactory {
 		else
 			return flag=false;	
 		
+	/*	webUtil.setTextBoxValue("Tgl_Taxinfoincome_txt", "1000");
+		webUtil.setTextBoxValue("Tgl_TaxInfonoofdependents_txt", "2");
+		webUtil.holdOn(2);
+		webUtil.selectByVisibleText("Tgl_TGLStatus_dd", "Complete");*/
 		///TestCase [Step-4]
 		// Verify validations show
-		webUtil.setTextBoxValue("Tgl_Taxinfoincome_txt", "");
-		webUtil.setTextBoxValue("Tgl_TaxInfonoofdependents_txt", "");
 		webUtil.selectByVisibleText("Tgl_TGLStatus_dd", "In Progress");
+		webUtil.holdOn(2);
+		//webUtil.setTextBoxValue("Tgl_Taxinfoincome_txt", "");
+		//webUtil.setTextBoxValue("Tgl_TaxInfonoofdependents_txt", "");
+		webUtil.getElement("Tgl_Taxinfoincome_txt").clear();
+		webUtil.getElement("Tgl_TaxInfonoofdependents_txt").clear();
+		
 		webUtil.holdOn(4);
 		
 		//TestCase [Step-5]
 		webUtil.selectByVisibleText("Tgl_TGLStatus_dd", "Complete");
-		
+		webUtil.holdOn(2);
+			
 		validations = webUtil.getDriver().findElements(statusvalidations);		
 		if(validations.size()>0){
 			flag=true;}
-		else
-			return flag=false;	
+		else{
+			log.info("Validation should Show but it does NOT!");return flag=false;	}
 		if(validations.get(0).getText().contains("Status cannot be changed to complete if Income or Total # of Dependents is blank."))
 			flag = true;
 		else
@@ -116,14 +142,18 @@ public class IncomeAndTotalNoDependencySection extends PFactory {
 		webUtil.selectByVisibleText("Tgl_TGLStatus_dd", "Complete");
 		
 		validations = webUtil.getDriver().findElements(statusvalidations);		
-		if(validations.size()>0){
+		if(validations.size()==0){
 			flag=true;}
-		else
-			return flag=false;	
+		else{
+			log.info("Validation should not show but it does!");return flag=false;	}
 		
 		return flag;
 	}
 	
 	
 
+
 }
+
+
+
