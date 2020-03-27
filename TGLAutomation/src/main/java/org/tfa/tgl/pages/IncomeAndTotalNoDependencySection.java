@@ -107,18 +107,18 @@ public class IncomeAndTotalNoDependencySection extends PFactory {
 		else
 			return flag=false;	
 		
-	/*	webUtil.setTextBoxValue("Tgl_Taxinfoincome_txt", "1000");
-		webUtil.setTextBoxValue("Tgl_TaxInfonoofdependents_txt", "2");
-		webUtil.holdOn(2);
-		webUtil.selectByVisibleText("Tgl_TGLStatus_dd", "Complete");*/
-		///TestCase [Step-4]
+		// TestCase - IncomeAndTotalNoDependency [Step-4]
 		// Verify validations show
 		webUtil.selectByVisibleText("Tgl_TGLStatus_dd", "In Progress");
 		webUtil.holdOn(2);
-		//webUtil.setTextBoxValue("Tgl_Taxinfoincome_txt", "");
-		//webUtil.setTextBoxValue("Tgl_TaxInfonoofdependents_txt", "");
 		webUtil.getElement("Tgl_Taxinfoincome_txt").clear();
+		webUtil.getElement("Tgl_Taxinfoincome_txt").sendKeys(" ");
 		webUtil.getElement("Tgl_TaxInfonoofdependents_txt").clear();
+		webUtil.getElement("Tgl_TaxInfonoofdependents_txt").sendKeys(" ");
+		
+		/*if(webUtil.getElement("Tgl_Taxinfoincome_txt").getAttribute("value")!=null){
+			log.info("Value is not cleared from Income textbox"); return false;
+		}*/
 		
 		webUtil.holdOn(4);
 		
@@ -139,6 +139,7 @@ public class IncomeAndTotalNoDependencySection extends PFactory {
 		//TestCase [Step-4]
 		webUtil.setTextBoxValue("Tgl_Taxinfoincome_txt", "0");
 		webUtil.setTextBoxValue("Tgl_TaxInfonoofdependents_txt", "0");
+		webUtil.holdOn(4);
 		webUtil.selectByVisibleText("Tgl_TGLStatus_dd", "Complete");
 		
 		validations = webUtil.getDriver().findElements(statusvalidations);		

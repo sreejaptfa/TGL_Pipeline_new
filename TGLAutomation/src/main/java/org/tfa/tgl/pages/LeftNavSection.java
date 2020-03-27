@@ -75,6 +75,9 @@ public class LeftNavSection extends PFactory{
 		webUtil.getElement("Tgl_Taxinfoincome_txt").clear();
 		webUtil.getElement("Tgl_TaxInfonoofdependents_txt").clear();		
 		webUtil.holdOn(4);
+		webUtil.getElement("Tgl_Taxinfoincome_txt").sendKeys(" ");
+		webUtil.getElement("Tgl_TaxInfonoofdependents_txt").sendKeys(" ");
+		webUtil.holdOn(4);
 		
 		//Verify there is no validation when the Status is updated as New
 		webUtil.selectByVisibleText("Tgl_TGLStatus_dd", "New");
