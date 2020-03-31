@@ -1,21 +1,35 @@
 package org.tfa.tgl.pages;
 
+import java.io.File;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.logging.Level;
 
+import org.apache.commons.lang3.SystemUtils;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Dimension;
+import org.openqa.selenium.UnexpectedAlertBehaviour;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.logging.LogType;
+import org.openqa.selenium.logging.LoggingPreferences;
+import org.openqa.selenium.remote.CapabilityType;
+import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.tfa.framework.core.WebDriverUtil;
 import org.tfa.framework.utilities.testdata.TestData;
 import org.tfa.tgl.utilities.web.TGLWebUtil;
 
-public class TGLAppCenterIntergrationPoints extends PFactory{
+import com.google.common.io.PatternFilenameFilter;
+
+public class TGLAppCenterIntergrationPoints extends WebDriverUtil{
 	
 	//private WebDriverUtil webUtil=WebDriverUtil.getObject();
 	private TestData data=TestData.getObject();
@@ -27,12 +41,14 @@ public class TGLAppCenterIntergrationPoints extends PFactory{
 	private static AssetsAndLiabilitiesSection assetsandliabilitiessection;
 	private static SearchDetailsPageTGL searchDetailsPage;
 	private LoginPageAppCenter login;
+	protected By firstrownamelocator=By.xpath("//tbody[@data-hook='results']/tr[1]/td/a");
 	String downloadedFilePath;
 	String tglApplicantTaxReturnCHK = "Tgl_ApplicantTaxReturn_CHK";
 	String tglUploadedFileIconImg= "Tgl_UploadedFileIcon_Img";
 	DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
 	Date date;
 	LocalDateTime now = LocalDateTime.now();
+	String downloadFilepath=System.getProperty("user.home")+"\\downoads\\";
 	
 	
 	public TGLAppCenterIntergrationPoints() {
@@ -226,6 +242,130 @@ public class TGLAppCenterIntergrationPoints extends PFactory{
 		}	
 		return flag;
 	}
+	
+	public boolean verifyFileDownload() throws Exception
+	{
+		
+		boolean flag=false;
+		//This link is clicking Reports Tab
+		
+		try{
+			final File folder = new File(downloadFilepath);
+			log.info("File path is -> "+folder.getAbsolutePath());
+		
+			log.info("Find any existing report:");
+			File[] files = folder.listFiles(new PatternFilenameFilter("TestPdfFile.*\\.pdf"));
+
+			log.info("Number of existing files to be deleted: "+files.length);
+		
+		
+			int i=1;
+			for ( final File file : files ) {
+			
+				log.info(i+" file(s) deleted.");
+				if ( !file.delete() ) {
+					// System.err.println( "Can't remove " + file.getAbsolutePath() );
+					log.info("Can't remove ( file )" + file.getAbsolutePath());
+				}
+			}
+		
+			// THIS CODE IS ADDED TO REMOVE ANY CORRUPT EXISTING FILES THAT COULD HAVE BEEN RESULT OF HALF DOWNLOAD
+			files = folder.listFiles(new PatternFilenameFilter("TestPdfFile.*\\.*download"));
+			log.info("incomplete existing files to be deleted before fresh report download=> "+files.length);
+			for ( final File file : files ) {
+				if ( !file.delete() ) {
+					// System.err.println( "Can't remove " + file.getAbsolutePath() );
+					log.info("Can't remove ( file )" + file.getAbsolutePath());}
+			}
+						
+				//webUtil.getElement("Placement_downloadReport_link").click();
+				//webUtil.getDriver().findElement(By.xpath("//a[@id='pdf-corps-members-general']")).
+			
+				webUtil.getDriver().findElement(By.xpath("(//tbody[@data-hook='tgl-documents-uploaded']/tr)[1]/td[3]/a")).click();
+				log.info("Placement_downloadReport Link Clicked");
+				log.info("=====Browser Logs after clicking report download link=====");
+				//logBrowserConsoleLogs();
+				//logBrowserConsoleLogs();
+				
+				Thread.sleep(30000);				
+				files = folder.listFiles(new PatternFilenameFilter("TestPdfFile.*\\.*download"));
+		
+				//invoke URL and provide location to save, search such classes
+				log.info("Searching for .download file extentions at: "+folder.getAbsolutePath());
+				log.info("files with .download extention here:"+files.length);
+				while ( files.length>0 ) {
+					files = folder.listFiles(new PatternFilenameFilter("TestPdfFile.*\\.*download"));
+					Thread.sleep(2000);
+					log.info(".download extention file is found at:"+folder.getAbsolutePath());
+				}		
+				files = folder.listFiles(new PatternFilenameFilter("TestPdfFile.*\\.pdf"));
+				//files = folder.listFiles(new PatternFilenameFilter("Corps_Member__General.*/.pdf"));		
+				log.info("Searching for .pdf file extentions at: "+folder.getAbsolutePath());
+				log.info("files with .pdf extention here:"+files.length);
+		
+				if (files.length>0)
+					{flag=true; log.info( "File Downloaded");}
+				else
+					{flag=false; log.info("File not downloaded");log.info("file searched at path ->"+folder.getAbsolutePath()); return flag;}		
+				//This method makes sure that file is not corrupt and it is in a readable form
+				if(files[0].canRead())
+					{flag=true;log.info("Report is readable");}
+				else
+					{flag=false;log.info("File is unreadable"); return flag;}	
+				
+			
+		
+		}
+		catch(Exception e){
+			flag=false;
+			log.error("Exception occured while creating a file object on given location: "+e);
+			
+		}
+		
+		log.info("=====Browser Logs at the end of the verify report method=====");
+		//logBrowserConsoleLogs();
+		return flag;
+		
+		
+	}
+	public void setChromeProperties()
+	{
+		
+		ChromeOptions options = new ChromeOptions();
+        DesiredCapabilities capabilities = new DesiredCapabilities();
+        LoggingPreferences logPrefs = new LoggingPreferences();
+        logPrefs.enable(LogType.BROWSER, Level.ALL);
+        //String downloadFilepath = "d:\\TestDownloads";
+        //downloadFilepath = System.getProperty("user.dir")+"/src/test/resources/TestData/";
+                
+        capabilities.setCapability(CapabilityType.ForSeleniumServer.ENSURING_CLEAN_SESSION, true);
+        capabilities.setCapability(CapabilityType.UNEXPECTED_ALERT_BEHAVIOUR, UnexpectedAlertBehaviour.IGNORE);
+        capabilities.setCapability(CapabilityType.LOGGING_PREFS, logPrefs);
+        options.addArguments("test-type");
+       
+        if(SystemUtils.IS_OS_LINUX){
+        	 options.addArguments("--headless"); // this options is for linux environment on docker
+        }
+        
+        HashMap<String, Object> chromePrefs = new HashMap<String, Object>();
+        chromePrefs.put("profile.default_content_settings.popups", 0);
+        // Setting the file download location for Chrome
+        log.info("setting chrome download path:"+downloadFilepath);
+        chromePrefs.put("download.default_directory", downloadFilepath);
+        options.setExperimentalOption("prefs", chromePrefs);
+        
+        options.addArguments("--no-sandbox");
+        options.addArguments("--disable-dev-shm-usage");
+        setDriver(new ChromeDriver(options));
+        Dimension dim=new Dimension(1382, 744);
+        //driver.manage().window().setSize(dim);
+        webUtil.getDriver().manage().window().setSize(dim);
+        log.info( "Chrome Browser has been launched successfully");
+		
+		
+	}
+	
+
 	
 }
 

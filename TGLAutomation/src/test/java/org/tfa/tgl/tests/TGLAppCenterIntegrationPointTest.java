@@ -18,11 +18,12 @@ public class TGLAppCenterIntegrationPointTest extends BaseTestMethods{
 	 * @Param: TGL Admin credentials and a valid applicant email and person id in TestData
 	 * @Author: Nitin Sharma
 	 */
-	@Test(priority=1, enabled = false)
+	@Test(priority=1, enabled = true)
 	public void TGL108ValidateIntegrationPoints(){
 		LoginPageTgl loginpage = new LoginPageTgl();
 		TGLAppCenterIntergrationPoints integrationpoints= new TGLAppCenterIntergrationPoints();
 		try{		
+		//integrationpoints.setChromeProperties();
 		// TestCase - Integration Point - assets and liabilities - Step 1
 		Assert.assertTrue(loginpage.enterLoginInfo(),"EnterLoginInfo method failed");
 		// TestCase - Integration point - assets and liabilities - Step2 and Step 3
@@ -33,6 +34,8 @@ public class TGLAppCenterIntegrationPointTest extends BaseTestMethods{
 		Assert.assertTrue(integrationpoints.checkValidcheckBoxApplicantTaxReturn(), "checkValidcheckBoxApplicantTaxReturn failed");
 		// TestCase - Integration point - assets and liabilities - step 7
 		Assert.assertTrue(integrationpoints.verifyApplicantCenterDocumentsDetails(true), "verifyApplicantCenterDocumentsDetails falied");
+		// TestCase - Integration point - assets and liabilities - step 8
+		Assert.assertTrue(integrationpoints.verifyFileDownload(), "File download in app center failed");
 		}
 		catch(Exception e){			
 			Assert.fail();
@@ -70,7 +73,7 @@ public class TGLAppCenterIntegrationPointTest extends BaseTestMethods{
 	 * @Param: TGL Admin credentials and a valid applicant email and person id in TestData
 	 * @Author: Nitin Sharma
 	 */
-	@Test(priority=3, enabled = true)
+	@Test(priority=3, enabled = false)
 	public void TGL111ValidateIntegrationPoints(){
 		LoginPageTgl loginpage = new LoginPageTgl();
 		TGLAppCenterIntergrationPoints integrationpoints= new TGLAppCenterIntergrationPoints();
