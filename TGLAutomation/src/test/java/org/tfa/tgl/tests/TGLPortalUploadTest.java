@@ -64,13 +64,13 @@ public class TGLPortalUploadTest extends BaseTestMethods {
 		Thread.sleep(5);
 		
 		driver.findElement(By.xpath("//span[text()='Search']")).click();
-		Thread.sleep(5);
-	
+		Thread.sleep(500);
+		
 		driver.findElement(By.xpath("//tbody[@data-hook='results']/tr[1]/td[1]/a")).click();
-		Thread.sleep(10);
+		Thread.sleep(500);
 
 		driver.findElement(By.xpath("//div[@class='support-document']//ancestor::div[@data-hook='applicant-tax-section']//following-sibling::table[@class='documents-table']//tbody/tr[1]//a")).click();
-		Thread.sleep(5);
+		Thread.sleep(500);
 
 		String downloadedFilePath1="//natfs/Teams/Technology/ApplicationDevelopment/QA/TFA Automation/Data Files/JAVA APPLICATIONS/Downloads//TGLUploadDocument.pdf";
 		File file=new File(downloadedFilePath1);
