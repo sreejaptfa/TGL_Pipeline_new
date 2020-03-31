@@ -48,7 +48,7 @@ public class TGLPortalUploadTest extends BaseTestMethods {
 	@Test
 	public void TGL105TestTGLPortalUpload() throws Exception {
 		
-		String  downloadedFilePath ="\\\\natfs\\Teams\\Technology\\ApplicationDevelopment\\QA\\TFA Automation\\Data Files\\JAVA APPLICATIONS\\Downloads";
+		String  downloadedFilePath ="\\\\natfs\\Teams\\Technology\\ApplicationDevelopment\\QA\\TFA Automation\\Data Files\\EBI\\APIReports";
 		HashMap<String, Object> chromePrefs = new HashMap<String, Object>();	
 		System.out.println(System.getProperty("user.dir"));
 		chromePrefs.put("download.default_directory", downloadedFilePath);
