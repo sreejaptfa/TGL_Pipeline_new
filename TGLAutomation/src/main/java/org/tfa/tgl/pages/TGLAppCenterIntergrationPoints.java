@@ -48,7 +48,7 @@ public class TGLAppCenterIntergrationPoints extends WebDriverUtil{
 	DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
 	Date date;
 	LocalDateTime now = LocalDateTime.now();
-	String downloadFilepath=System.getProperty("user.home")+"\\downoads\\";
+	String downloadFilepath=System.getProperty("user.home")+"\\downloads\\";
 	
 	
 	public TGLAppCenterIntergrationPoints() {
@@ -68,14 +68,13 @@ public class TGLAppCenterIntergrationPoints extends WebDriverUtil{
 		flag=removeExistingDocumentsfromApplicantTaxReturn();
 		if (flag==false){
 			return flag;
-		}
-		
+		}		
 		//  Add comments in Applicant Tax return's comment box
 		webUtil.getElement("Tgl_TaxInfoAppTaxReturnAppNotes_txt").sendKeys("Test Comments"+dateFormat.format(date));
-		webUtil.holdOn(3);
-		
+		webUtil.holdOn(3);		
 		// Click Upload TGL Documents button
 		searchDetailsPage.clickOnUploadTGLDouments();
+		webUtil.holdOn(4);
 		// Check Applicant Tax Return option
 		searchDetailsPage.clickOnTypeOfDocumentChk(tglApplicantTaxReturnCHK);
 		// Choose the file location and click upload button
@@ -112,8 +111,7 @@ public class TGLAppCenterIntergrationPoints extends WebDriverUtil{
 		} 
 		catch (Exception e) {
 			flag = false;
-			log.info("Exception occuring in opening applicant details");
-			
+			log.info("Exception occuring in opening applicant details");			
 		}
 		flag=true;
 		return flag;
@@ -247,28 +245,23 @@ public class TGLAppCenterIntergrationPoints extends WebDriverUtil{
 	{
 		
 		boolean flag=false;
-		//This link is clicking Reports Tab
-		
+		//This link is clicking Reports Tab		
 		try{
 			final File folder = new File(downloadFilepath);
 			log.info("File path is -> "+folder.getAbsolutePath());
 		
 			log.info("Find any existing report:");
 			File[] files = folder.listFiles(new PatternFilenameFilter("TestPdfFile.*\\.pdf"));
-
-			log.info("Number of existing files to be deleted: "+files.length);
-		
-		
-			int i=1;
-			for ( final File file : files ) {
+			log.info("Number of existing files to be deleted: "+files.length);	
 			
+			int i=1;
+			for ( final File file : files ) {			
 				log.info(i+" file(s) deleted.");
 				if ( !file.delete() ) {
 					// System.err.println( "Can't remove " + file.getAbsolutePath() );
 					log.info("Can't remove ( file )" + file.getAbsolutePath());
 				}
-			}
-		
+			}		
 			// THIS CODE IS ADDED TO REMOVE ANY CORRUPT EXISTING FILES THAT COULD HAVE BEEN RESULT OF HALF DOWNLOAD
 			files = folder.listFiles(new PatternFilenameFilter("TestPdfFile.*\\.*download"));
 			log.info("incomplete existing files to be deleted before fresh report download=> "+files.length);
@@ -277,17 +270,8 @@ public class TGLAppCenterIntergrationPoints extends WebDriverUtil{
 					// System.err.println( "Can't remove " + file.getAbsolutePath() );
 					log.info("Can't remove ( file )" + file.getAbsolutePath());}
 			}
-						
-				//webUtil.getElement("Placement_downloadReport_link").click();
-				//webUtil.getDriver().findElement(By.xpath("//a[@id='pdf-corps-members-general']")).
-			
-				webUtil.getDriver().findElement(By.xpath("(//tbody[@data-hook='tgl-documents-uploaded']/tr)[1]/td[3]/a")).click();
-				log.info("Placement_downloadReport Link Clicked");
-				log.info("=====Browser Logs after clicking report download link=====");
-				//logBrowserConsoleLogs();
-				//logBrowserConsoleLogs();
-				
-				Thread.sleep(30000);				
+				webUtil.getDriver().findElement(By.xpath("(//tbody[@data-hook='tgl-documents-uploaded']/tr)[1]/td[3]/a")).click();				
+				webUtil.holdOn(5);				
 				files = folder.listFiles(new PatternFilenameFilter("TestPdfFile.*\\.*download"));
 		
 				//invoke URL and provide location to save, search such classes
@@ -295,7 +279,7 @@ public class TGLAppCenterIntergrationPoints extends WebDriverUtil{
 				log.info("files with .download extention here:"+files.length);
 				while ( files.length>0 ) {
 					files = folder.listFiles(new PatternFilenameFilter("TestPdfFile.*\\.*download"));
-					Thread.sleep(2000);
+					Thread.sleep(2);
 					log.info(".download extention file is found at:"+folder.getAbsolutePath());
 				}		
 				files = folder.listFiles(new PatternFilenameFilter("TestPdfFile.*\\.pdf"));
@@ -312,9 +296,7 @@ public class TGLAppCenterIntergrationPoints extends WebDriverUtil{
 					{flag=true;log.info("Report is readable");}
 				else
 					{flag=false;log.info("File is unreadable"); return flag;}	
-				
-			
-		
+						
 		}
 		catch(Exception e){
 			flag=false;
