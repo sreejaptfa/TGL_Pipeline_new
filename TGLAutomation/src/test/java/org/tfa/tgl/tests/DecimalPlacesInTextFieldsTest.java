@@ -1,14 +1,9 @@
 package org.tfa.tgl.tests;
 
-import java.util.List;
-
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.tfa.framework.core.BaseTestMethods;
 import org.tfa.tgl.pages.LoginPageTgl;
-import org.tfa.tgl.pages.SearchDetailsPageTGL;
 import org.tfa.tgl.pages.SearchPageTGL;
 import org.tfa.tgl.utilities.web.TGLConstants;
 import org.tfa.tgl.utilities.web.TGLWebUtil;
