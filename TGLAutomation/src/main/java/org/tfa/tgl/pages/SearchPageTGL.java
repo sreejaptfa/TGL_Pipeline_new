@@ -1,16 +1,12 @@
 package org.tfa.tgl.pages;
 
-import java.awt.event.KeyEvent;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
-import java.util.ListIterator;
 import java.util.Random;
 
 import org.apache.log4j.Logger;
 import org.tfa.framework.core.WebDriverUtil;
-import org.tfa.framework.utilities.testdata.TestData;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
@@ -19,8 +15,6 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 public class SearchPageTGL {
 	
 	private WebDriverUtil webUtil=WebDriverUtil.getObject();
-	private TestData data=TestData.getObject();
-	private boolean flag;
 	Logger log=Logger.getLogger("rootLogger");
 	ArrayList <String> names=new ArrayList <String>() ;
 	ArrayList <String> namesnew=new ArrayList <String>() ;
@@ -162,8 +156,6 @@ public class SearchPageTGL {
 	
 	
 	public boolean isSorted(ArrayList<String> s){
-		boolean flag=false;
-		
 		Iterator<String> iter= s.iterator();
 		
 		String current, previous = iter.next();
