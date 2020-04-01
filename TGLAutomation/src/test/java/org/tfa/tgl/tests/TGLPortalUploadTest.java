@@ -48,41 +48,7 @@ public class TGLPortalUploadTest extends BaseTestMethods {
 	@Test
 	public void TGL105TestTGLPortalUpload() throws Exception {
 		
-		String  downloadedFilePath ="\\\\natfs\\Teams\\Technology\\ApplicationDevelopment\\QA\\TFA Automation\\Data Files\\EBI\\APIReports";
-		HashMap<String, Object> chromePrefs = new HashMap<String, Object>();	
-		System.out.println(System.getProperty("user.dir"));
-		chromePrefs.put("download.default_directory", downloadedFilePath);
-		
-		ChromeOptions options = new ChromeOptions();
-		options.setExperimentalOption("prefs", chromePrefs);
-		WebDriver driver = new ChromeDriver(options);
-		
-		driver.get("https://qamerlin.teachforamerica.org/ada/sign-in");
-		driver.findElement(By.id("username")).sendKeys("ssharma");
-		driver.findElement(By.id("password")).sendKeys("Rockstar1");
-		driver.findElement(By.xpath("//button[@class='btn btn-primary']")).click();
-		Thread.sleep(5);
-		
-		driver.findElement(By.xpath("//span[text()='Search']")).click();
-		Thread.sleep(500);
-		
-		driver.findElement(By.xpath("//tbody[@data-hook='results']/tr[1]/td[1]/a")).click();
-		Thread.sleep(500);
-
-		driver.findElement(By.xpath("//div[@class='support-document']//ancestor::div[@data-hook='applicant-tax-section']//following-sibling::table[@class='documents-table']//tbody/tr[1]//a")).click();
-		Thread.sleep(500);
-
-		String downloadedFilePath1="//natfs/Teams/Technology/ApplicationDevelopment/QA/TFA Automation/Data Files/JAVA APPLICATIONS/Downloads//TGLUploadDocument.pdf";
-		File file=new File(downloadedFilePath1);
-		if(file.exists()) {
-			file.delete();
-				Assert.assertTrue(true);
-			}else{
-				Assert.assertFalse(true);
-		}
-	
-/*		//Step - 1 -------- Login to TGL Portal >  Search for any applicant and than click on any applicant
-​
+		//Step - 1 -------- Login to TGL Portal >  Search for any applicant and than click on any applicant
 		loginpage=new LoginPageTgl();
 		loginpage.enterLoginInfo();
 		searchPage.clickOnSearchBtn();
@@ -103,7 +69,7 @@ public class TGLPortalUploadTest extends BaseTestMethods {
 		expectedErrorMessage=testDataMap.get("errorMessage_Validation_2");
 		actualErrorMessage = webUtil.getText("Tgl_validationErrorMsgDocType_ST");
 		Assert.assertEquals(actualErrorMessage, expectedErrorMessage,"Verified the Check Box error ");
-​
+
 		//Step - 5 -------- Now Just select check box and try to upload
 		searchDetailsPage.clickOnTypeOfDocumentChk(tglApplicantTaxReturnCHK);
 		searchDetailsPage.clickOnUploadButton();
@@ -118,7 +84,7 @@ public class TGLPortalUploadTest extends BaseTestMethods {
 		expectedErrorMessage=testDataMap.get("errorMessage_Validation_2");
 		actualErrorMessage = webUtil.getText("Tgl_validationErrorMsgDocType_ST");
 		Assert.assertEquals(actualErrorMessage, expectedErrorMessage,"Verified the Check Box error ");
-​
+
 		//Step - 7 -------- Try to upload file other than .gif, .jpg, or .pdf files
 		searchDetailsPage.clickOnTypeOfDocumentChk(tglApplicantTaxReturnCHK);
 		webUtil.uploadFile("uploadDocFilePath",tglUploadedFileIconImg);
@@ -126,7 +92,7 @@ public class TGLPortalUploadTest extends BaseTestMethods {
 		expectedErrorMessage=testDataMap.get("errorMessage_Validation_1");
 		actualErrorMessage = webUtil.getText("Tgl_validationErrorMsgWitoutEnterAnyDoc_ST");
 		Assert.assertEquals(actualErrorMessage, expectedErrorMessage,"Verified the Document Upload error");
-​
+
 		//Step - 8 -------- Verify You see valid document type to upload the file
 		List<WebElement> allDocTypeSectionList=webUtil.getElementsList("Tgl_DocumentTypeSection_ST");
 		for( int j=0; j<=allDocTypeSectionList.size()-1; j++) {
@@ -175,7 +141,7 @@ public class TGLPortalUploadTest extends BaseTestMethods {
 		Assert.assertFalse(webUtil.objectIsVisible("Tgl_DocumentName_ST"),"verified document removed");
 	
 		//Step - 14 -------- End 
-*/
+
 	}
 		
 	@Override
