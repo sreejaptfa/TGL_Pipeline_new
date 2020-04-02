@@ -23,6 +23,8 @@
 			<class name="org.tfa.tgl.tests.GroupCalculationFieldValidationTest" />
 			<class name="org.tfa.tgl.tests.SendEmailTextboxTest" />
 			<class name="org.tfa.tgl.tests.TimeLineTest" />			
+			<class name="org.tfa.tgl.tests.DecimalPlacesInTextFieldsTest" />	
+			<class name="org.tfa.tgl.tests.EducationCostCalculationTest" />	
 					
 		</classes>
 
