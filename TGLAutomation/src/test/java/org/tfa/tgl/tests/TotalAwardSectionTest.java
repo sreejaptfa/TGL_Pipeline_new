@@ -1,7 +1,6 @@
 package org.tfa.tgl.tests;
 
 import org.apache.log4j.Logger;
-import org.openqa.selenium.By;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.tfa.framework.core.BaseTestMethods;

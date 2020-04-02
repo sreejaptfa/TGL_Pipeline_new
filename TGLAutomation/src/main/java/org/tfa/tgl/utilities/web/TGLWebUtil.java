@@ -2,8 +2,11 @@ package org.tfa.tgl.utilities.web;
 
 import org.tfa.framework.core.WebDriverUtil;
 import java.io.File;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.apache.commons.lang3.SystemUtils;
 import org.apache.log4j.Logger;
@@ -40,6 +43,7 @@ public class TGLWebUtil extends WebDriverUtil{
 			downloadedFilePath="/home/"+System.getProperty("user.name")+"/Downloads/"+fileName;
 		}else {
 			downloadedFilePath="C:\\Users\\"+System.getProperty("user.name")+"\\Downloads\\"+fileName;
+			//downloadedFilePath="\\natfs\\Teams\\Technology\\ApplicationDevelopment\\QA\\TFA Automation\\Data Files\\JAVA APPLICATIONS\\Downloads\\"+fileName;
 		}
 		File file=new File(downloadedFilePath);
 		if(file.exists()) {
@@ -83,7 +87,7 @@ public class TGLWebUtil extends WebDriverUtil{
 			return null;
 		}
 
-	private static String getLocatorValue(Map<String, String> locatorValueMap, String locatorName){
+	public static String getLocatorValue(Map<String, String> locatorValueMap, String locatorName){
 		String locatorValue=null;
 		try{
 			locatorValue=locatorValueMap.get("LocatorValue");
@@ -138,6 +142,28 @@ public class TGLWebUtil extends WebDriverUtil{
 			webUtil=new TGLWebUtil();
 		}
 		return webUtil;
+	}
+	public boolean verifyTheValueInWebTableElement(String rowLocatorName, String columnLocatorName, String[] expectedValues){
+		String elementText = null;
+		By rowLocator=getLocatorBy(rowLocatorName);	
+		By colLocator=getLocatorBy(columnLocatorName);
+		Set<String> expectedValuesSet = new HashSet<>();
+		expectedValuesSet.addAll(Arrays.asList(expectedValues));
+		List<WebElement> tableRowValues = getDriver().findElements(rowLocator);
+		for(WebElement trElement : tableRowValues)
+		{
+			WebElement tdElement=trElement.findElement(colLocator);
+			elementText = tdElement.getText();
+			if(expectedValuesSet.contains(elementText))
+			{
+				expectedValuesSet.remove(elementText);
+			}
+		}
+		if(!expectedValuesSet.isEmpty()) { 
+			return false;
+		}else{
+			return true;	
+		}
 	}
 
 }
