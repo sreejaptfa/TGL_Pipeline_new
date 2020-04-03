@@ -75,10 +75,13 @@ public class LeftNavSection extends PFactory{
 		webUtil.getElement("Tgl_Taxinfoincome_txt").clear();
 		webUtil.getElement("Tgl_TaxInfonoofdependents_txt").clear();		
 		webUtil.holdOn(4);
+		webUtil.getElement("Tgl_Taxinfoincome_txt").sendKeys(" ");
+		webUtil.getElement("Tgl_TaxInfonoofdependents_txt").sendKeys(" ");
+		webUtil.holdOn(4);
 		
 		//Verify there is no validation when the Status is updated as New
 		webUtil.selectByVisibleText("Tgl_TGLStatus_dd", "New");
-		webUtil.holdOn(2);
+		webUtil.holdOn(3);
 		validations = webUtil.getDriver().findElements(statusvalidations);		
 		if(validations.size()==0){
 			flag=true;}
@@ -87,7 +90,7 @@ public class LeftNavSection extends PFactory{
 		
 		//Verify there is no validation when the Status is updated as In Progress
 		webUtil.selectByVisibleText("Tgl_TGLStatus_dd", "In Progress");
-		webUtil.holdOn(2);
+		webUtil.holdOn(3);
 		validations = webUtil.getDriver().findElements(statusvalidations);		
 		if(validations.size()==0){
 			flag=true;}
@@ -96,7 +99,7 @@ public class LeftNavSection extends PFactory{
 		
 		//Verify there is no validation when the Status is updated as Review
 		webUtil.selectByVisibleText("Tgl_TGLStatus_dd", "Manager Review");
-		webUtil.holdOn(2);
+		webUtil.holdOn(3);
 		validations = webUtil.getDriver().findElements(statusvalidations);		
 		if(validations.size()==0){
 			flag=true;}
@@ -105,7 +108,7 @@ public class LeftNavSection extends PFactory{
 		
 		//Verify there is no validation when the Status is updated as Incomplete
 		webUtil.selectByVisibleText("Tgl_TGLStatus_dd", "Incomplete");
-		webUtil.holdOn(2);
+		webUtil.holdOn(3);
 		validations = webUtil.getDriver().findElements(statusvalidations);		
 		if(validations.size()==0){
 			flag=true;}
@@ -115,7 +118,7 @@ public class LeftNavSection extends PFactory{
 				
 		//Verify there is no validation when the Status is updated as Recheck
 		webUtil.selectByVisibleText("Tgl_TGLStatus_dd", "Recheck");
-		webUtil.holdOn(2);
+		webUtil.holdOn(3);
 		validations = webUtil.getDriver().findElements(statusvalidations);		
 		if(validations.size()==0){
 			flag=true;}
@@ -124,7 +127,7 @@ public class LeftNavSection extends PFactory{
 		
 		//Verify there Are validation when the Status is updated as Complete
 		webUtil.selectByVisibleText("Tgl_TGLStatus_dd", "Complete");
-		webUtil.holdOn(2);
+		webUtil.holdOn(3);
 		validations = webUtil.getDriver().findElements(statusvalidations);		
 		if(validations.size()>0){
 			flag=true;}
@@ -146,7 +149,7 @@ public class LeftNavSection extends PFactory{
 		log.info("verifyTopNavSectionAssignment method called" );
 		List <WebElement> validations;
 		webUtil.getDriver().navigate().to("https://qamerlin.teachforamerica.org/ada/tgl");
-		webUtil.holdOn(2);
+		webUtil.holdOn(3);
 		webUtil.click("Tgl_moreSearchOptionsLink");  	
     	//webUtil.setTextBoxValue("Tgl_personid", pid);
     	webUtil.setTextBoxValueTestData("Tgl_personid", "PIDAssignment");
@@ -197,7 +200,7 @@ public class LeftNavSection extends PFactory{
 		
 		//Verify there is no validation when the Status is updated as New
 		webUtil.selectByVisibleText("Tgl_TGLStatus_dd", "New");
-		webUtil.holdOn(2);
+		webUtil.holdOn(3);
 		validations = webUtil.getDriver().findElements(statusvalidations);		
 		if(validations.size()==0){
 			flag=true;}
@@ -206,7 +209,7 @@ public class LeftNavSection extends PFactory{
 		
 		//Verify there is no validation when the Status is updated as In Progress
 		webUtil.selectByVisibleText("Tgl_TGLStatus_dd", "In Progress");
-		webUtil.holdOn(2);
+		webUtil.holdOn(3);
 		validations = webUtil.getDriver().findElements(statusvalidations);		
 		if(validations.size()==0){
 			flag=true;}
@@ -215,7 +218,7 @@ public class LeftNavSection extends PFactory{
 		
 		//Verify there is no validation when the Status is updated as Review
 		webUtil.selectByVisibleText("Tgl_TGLStatus_dd", "Manager Review");
-		webUtil.holdOn(2);
+		webUtil.holdOn(3);
 		validations = webUtil.getDriver().findElements(statusvalidations);		
 		if(validations.size()==0){
 			flag=true;}
@@ -224,7 +227,7 @@ public class LeftNavSection extends PFactory{
 		
 		//Verify there is no validation when the Status is updated as Incomplete
 		webUtil.selectByVisibleText("Tgl_TGLStatus_dd", "Incomplete");
-		webUtil.holdOn(2);
+		webUtil.holdOn(3);
 		validations = webUtil.getDriver().findElements(statusvalidations);		
 		if(validations.size()==0){
 			flag=true;}
@@ -234,7 +237,7 @@ public class LeftNavSection extends PFactory{
 				
 		//Verify there is no validation when the Status is updated as Recheck
 		webUtil.selectByVisibleText("Tgl_TGLStatus_dd", "Recheck");
-		webUtil.holdOn(2);
+		webUtil.holdOn(3);
 		validations = webUtil.getDriver().findElements(statusvalidations);		
 		if(validations.size()==0){
 			flag=true;}
@@ -243,7 +246,7 @@ public class LeftNavSection extends PFactory{
 		
 		//Verify there Are validation when the Status is updated as Complete
 		webUtil.selectByVisibleText("Tgl_TGLStatus_dd", "Complete");
-		webUtil.holdOn(2);
+		webUtil.holdOn(3);
 		validations = webUtil.getDriver().findElements(statusvalidations);		
 		if(validations.size()>0){
 			flag=true;}
@@ -259,7 +262,7 @@ public class LeftNavSection extends PFactory{
 		log.info("verifyTopNavSectionAccepted method called" );
 		List <WebElement> validations;
 		webUtil.getDriver().navigate().to("https://qamerlin.teachforamerica.org/ada/tgl");
-		webUtil.holdOn(2);
+		webUtil.holdOn(3);
 		webUtil.click("Tgl_moreSearchOptionsLink");  	
     	//webUtil.setTextBoxValue("Tgl_personid", pid);
     	webUtil.setTextBoxValueTestData("Tgl_personid", "PIDDeferAccept");
@@ -310,7 +313,7 @@ public class LeftNavSection extends PFactory{
 		
 		//Verify there is no validation when the Status is updated as New
 		webUtil.selectByVisibleText("Tgl_TGLStatus_dd", "New");
-		webUtil.holdOn(2);
+		webUtil.holdOn(3);
 		validations = webUtil.getDriver().findElements(statusvalidations);		
 		if(validations.size()==0){
 			flag=true;}
@@ -319,7 +322,7 @@ public class LeftNavSection extends PFactory{
 		
 		//Verify there is no validation when the Status is updated as In Progress
 		webUtil.selectByVisibleText("Tgl_TGLStatus_dd", "In Progress");
-		webUtil.holdOn(2);
+		webUtil.holdOn(3);
 		validations = webUtil.getDriver().findElements(statusvalidations);		
 		if(validations.size()==0){
 			flag=true;}
@@ -328,7 +331,7 @@ public class LeftNavSection extends PFactory{
 		
 		//Verify there is no validation when the Status is updated as Review
 		webUtil.selectByVisibleText("Tgl_TGLStatus_dd", "Manager Review");
-		webUtil.holdOn(2);
+		webUtil.holdOn(3);
 		validations = webUtil.getDriver().findElements(statusvalidations);		
 		if(validations.size()==0){
 			flag=true;}
@@ -337,7 +340,7 @@ public class LeftNavSection extends PFactory{
 		
 		//Verify there is no validation when the Status is updated as Incomplete
 		webUtil.selectByVisibleText("Tgl_TGLStatus_dd", "Incomplete");
-		webUtil.holdOn(2);
+		webUtil.holdOn(3);
 		validations = webUtil.getDriver().findElements(statusvalidations);		
 		if(validations.size()==0){
 			flag=true;}
@@ -347,7 +350,7 @@ public class LeftNavSection extends PFactory{
 				
 		//Verify there is no validation when the Status is updated as Recheck
 		webUtil.selectByVisibleText("Tgl_TGLStatus_dd", "Recheck");
-		webUtil.holdOn(2);
+		webUtil.holdOn(3);
 		validations = webUtil.getDriver().findElements(statusvalidations);		
 		if(validations.size()==0){
 			flag=true;}
@@ -356,7 +359,7 @@ public class LeftNavSection extends PFactory{
 		
 		//Verify there Are validation when the Status is updated as Complete
 		webUtil.selectByVisibleText("Tgl_TGLStatus_dd", "Complete");
-		webUtil.holdOn(2);
+		webUtil.holdOn(3);
 		validations = webUtil.getDriver().findElements(statusvalidations);		
 		if(validations.size()>0){
 			flag=true;}
