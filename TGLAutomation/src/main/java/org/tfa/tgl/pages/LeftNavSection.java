@@ -70,14 +70,15 @@ public class LeftNavSection extends PFactory{
 		if(webUtil.getElement("Tgl_TaxInfoPISRequired_chk").isSelected())
 			while(webUtil.getElement("Tgl_TaxInfoPISValid_chk").isSelected())
 					webUtil.getElement("Tgl_TaxInfoPISValid_chk").click();
-				
+		
+		webUtil.holdOn(5);
 		// Empty Mandatory Fields
 		webUtil.getElement("Tgl_Taxinfoincome_txt").clear();
 		webUtil.getElement("Tgl_TaxInfonoofdependents_txt").clear();		
-		webUtil.holdOn(4);
+		webUtil.holdOn(2);
 		webUtil.getElement("Tgl_Taxinfoincome_txt").sendKeys(" ");
 		webUtil.getElement("Tgl_TaxInfonoofdependents_txt").sendKeys(" ");
-		webUtil.holdOn(4);
+		webUtil.holdOn(2);
 		
 		//Verify there is no validation when the Status is updated as New
 		webUtil.selectByVisibleText("Tgl_TGLStatus_dd", "New");
