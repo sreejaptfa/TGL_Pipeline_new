@@ -70,7 +70,7 @@ public class LeftNavSection extends PFactory{
 		if(webUtil.getElement("Tgl_TaxInfoPISRequired_chk").isSelected())
 			while(webUtil.getElement("Tgl_TaxInfoPISValid_chk").isSelected())
 					webUtil.getElement("Tgl_TaxInfoPISValid_chk").click();
-				
+		webUtil.holdOn(5);		
 		// Empty Mandatory Fields
 		webUtil.getElement("Tgl_Taxinfoincome_txt").clear();
 		webUtil.getElement("Tgl_TaxInfonoofdependents_txt").clear();		
