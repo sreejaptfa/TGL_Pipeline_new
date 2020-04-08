@@ -152,9 +152,11 @@ public class TGLAppCenterIntergrationPoints extends WebDriverUtil{
 	// This method is used to check applicant tax return checkbox as Valid
 	public boolean uncheckValidcheckBoxApplicantTaxReturn() {
 		boolean flag = false;
+		webUtil.holdOn(2);
 		try{
 			while(webUtil.getElement("Tgl_ApplicantstaxValid_chk").isSelected())
 				webUtil.getElement("Tgl_ApplicantstaxValid_chk").click();
+			webUtil.holdOn(2);
 			webUtil.getElement("Tgl_TaxInfoAppTaxReturnAppNotes_txt").clear();
 			webUtil.getElement("Tgl_TaxInfoAppTaxReturnAppNotes_txt").sendKeys(" ");
 			webUtil.holdOn(3);
