@@ -38,15 +38,15 @@ public class DecimalPlacesInTextFieldsTest extends BaseTestMethods{
 	@Test
 	public void TGL11126TestDecimalPlacesInTextFields() throws Exception  {
 		
-		//Step - 1 -------- Login to the TGL  portal application using valid user id < https://qamerlin.teachforamerica.org/ada
+		/* Step 1 - Login to the TGL  portal application using valid user id < https://qamerlin.teachforamerica.org/ada */
 		loginpage=new LoginPageTgl();
 		loginpage.enterLoginInfo();
 		
-		//Step - 2 -------- Search for Personid to verify Total award section who has already cal award 
+		/* Step 2 - Search for Personid to verify Total award section who has already cal award */
 		searchPage.clickOnSearchBtn();
 		searchPage.clickFirstRowColumnOnSearchResults();
 			
-		//Step - 3 -------- Enter more than two decimal places in all amount fields
+		/* Step 3 - Enter more than two decimal places in all amount fields */
 		String enterAmountValue = testDataMap.get("EnterAmount");
 		expectedPromptMessage = testDataMap.get("errorMessage_Validation_1");
 		
@@ -58,13 +58,13 @@ public class DecimalPlacesInTextFieldsTest extends BaseTestMethods{
 		actualPromptMessage = webUtil.getText("Tgl_OtherLoansAmountErrorMsg_ST");
 		Assert.assertTrue(actualPromptMessage.contains(expectedPromptMessage), "Verified the PromptMessage.Please round to the nearest 2 decimal points.");
 		
-		//Step - 4 -------- Enter a decimal value in "Total no of dependents" field
+		/* Step 4 - Enter a decimal value in "Total no of dependents" field */
 		expectedPromptMessage = testDataMap.get("ValidationMessage_2");
 		webUtil.setTextBoxValue("Tgl_TotalNoOfDependents_ED", enterAmountValue);
 		actualPromptMessage = webUtil.getText("Tgl_TotalNoOfDependentsErrorMsg_ST");
 		Assert.assertTrue(actualPromptMessage.contains(expectedPromptMessage), "Verified the PromptMessage.Please round to the nearest whole number.");
 
-		//Step - 5 -------- End
+		/* Step 5 - End Script */
 	}
 	@Override
 	public TGLConstants getConstants(){

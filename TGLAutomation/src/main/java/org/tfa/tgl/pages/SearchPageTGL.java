@@ -415,35 +415,70 @@ public class SearchPageTGL {
 		
 		return flag;
 	}	
-	public SearchDetailsPageTGL clickFirstRowColumnOnSearchResults(){
-		
+	/*
+	 * This function will clicks on the first value on the webtable
+	 * returns Applicant Name
+	 */
+	public String clickFirstRowColumnOnSearchResults(){
+		String getApplicantName = webUtil.getText("Tgl_FirstRowColumn_TB");
 		webUtil.click("Tgl_FirstRowColumn_TB");
 		webUtil.holdOn(5);
-		return new SearchDetailsPageTGL();
+		return getApplicantName;
 	}
+	/*
+	 * This function will clicks on remove Button
+	 */
 	public void clickOnRemoveBtn(){
 		webUtil.click("Tgl_Remove_btn");
 	}
+	/*
+	 * This function will clicks on Search Button
+	 */
 	public void clickOnSearchBtn(){
 		webUtil.click("Tgl_Search_btn");
 	}
+	/*
+	 * This function will clicks on Award Calculator Button
+	 */
 	public void clickOnAwardCalculatorBtn(){
 		webUtil.click("Tgl_AwardCalculator_btn");
 	}
+	/*
+	 * This function will enter send Email Notes
+	 */
 	public void enterSendEmailNotes(String locatorName,String emailNotes){
 		webUtil.setTextBoxValue(locatorName, emailNotes);		
 	}
+	/*
+	 * This function will clicks on Send email Button
+	 */
 	public void clickOnSendEmailBtn(){
 		webUtil.click("Tgl_SendEmail_Btn");
 	}
+	/*
+	 * This function will clicks on Confirm Send Button
+	 */
 	public void clickOnConfirmSendBtn(){
 		webUtil.click("Tgl_ConfirmSend_Btn");
-	}	
-	public void clickOnTGLStatusDD(){
-		webUtil.click("Tgl_TGLStatus_DD");
 	}
-	public void clickOnCompleteLink(){
-		webUtil.click("Tgl_Complete_LK");
+	/*
+	 * This function will selects TGL Status Button
+	 */
+	public void selectTGLStatusDD(String locatorNameTGLStatus){
+		webUtil.click("Tgl_TGLStatus_DD");
+		webUtil.click(locatorNameTGLStatus);
+	}
+	/*
+	 * This function will clicks on More Search option button
+	 */
+	public void clickOnMoreSearchOptionsBtn(){
+		webUtil.click("Tgl_MoreSearchOptions_Btn");
+	}
+	/*
+	 * This function will enters the Person ID
+	 */
+	public void enterPersonID(String personID){
+		webUtil.setTextBoxValue("Tgl_personid", personID);		
 	}
 }
 

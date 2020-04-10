@@ -41,44 +41,44 @@ public class SendEmailTextboxTest extends BaseTestMethods{
 	@Test
 	public void TGL11124TestSendEmailTextboxTest() throws Exception {
 		
-		//Step - 1 -------- Login to the TGL  portal application using valid user id < https://stageweb.tfanet.org/ada/login>
+		/* Step 1 - Login to the TGL  portal application using valid user id < https://stageweb.tfanet.org/ada/login> */
 		loginpage=new LoginPageTgl();
 		loginpage.enterLoginInfo();
 		
-		//Step - 2 & 3 -------- Search for the applicants. Click on the search result row
+		/* Step 2 & 3 - Search for the applicants. Click on the search result row */
 		searchPage.clickOnSearchBtn();
 		searchPage.clickFirstRowColumnOnSearchResults();
 
-		//Step - 4 -------- Go to bottom of the page, Check the Send Email Test box and Send Button
+		/* Step 4 - Go to bottom of the page, Check the Send Email Test box and Send Button */
 		webUtil.setTextBoxClear("Tgl_SendEmailTextBox_ED");
 		webUtil.holdOn(2);
 		//Assert.assertFalse(webUtil.objectIsEnabled("Tgl_SendEmail_Btn"), "Verify Send Email button is Disabled");
 
-		//Step - 5 -------- Now Enter Data to Text Box
+		/* Step 5 - Now Enter Data to Text Box */
 		String enterSendEmailNotesValue = "QATesting Email Sent_"+random.generateRandomString(5)+random.generateRandomNumber(5);
 		searchPage.enterSendEmailNotes("Tgl_SendEmailTextBox_ED",enterSendEmailNotesValue);
 		Assert.assertTrue(webUtil.objectIsEnabled("Tgl_SendEmail_Btn"), "Verify Send Email button is Enabled");
 				
-		//Step - 6 -------- Click on Send
+		/* Step 6 - Click on Send */
 		searchPage.clickOnSendEmailBtn();
 		Assert.assertTrue(webUtil.objectIsVisible("Tgl_SendEmailPopupMessage_header"), "Verify Confirmation popup is Displayed");
 		
-		//Step - 7 -------- Now click on cancel
+		/* Step 7 - Now click on cancel */
 		searchDetailsPage.clickOnCancelButton("Tgl_Cancel_btn");
 		Assert.assertFalse(webUtil.objectIsVisible("Tgl_SendEmailPopupMessage_header"), "Verify Confirmation popup is Displayed");
 
-		//Step - 8 -------- Now again click on Send
+		/* Step 8 - Now again click on Send */
 		searchPage.clickOnSendEmailBtn();
 		Assert.assertTrue(webUtil.objectIsVisible("Tgl_SendEmailPopupMessage_header"), "Verify Confirmation popup is Displayed");
 
-		//Step - 9 -------- This time Click on Confirm Send
+		/* Step 9 - This time Click on Confirm Send */
 		searchPage.clickOnConfirmSendBtn();
 		webUtil.holdOn(3);
 		String actualEmailSendMessage = webUtil.getText("Tgl_EmailSent_Msg");
 		String expectedEmailSendMessage = testDataMap.get("EmailSendMessage");
 		Assert.assertEquals(actualEmailSendMessage, expectedEmailSendMessage,"Verify you are able to send the message and confimation message display on TGL detail page that your message is send");
 
-		//Step - 10 -------- End 
+		/* Step 10 - End Script */
 	}
 	@Override
 	public TGLConstants getConstants(){

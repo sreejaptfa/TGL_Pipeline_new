@@ -11,6 +11,7 @@ import java.util.Set;
 import org.apache.commons.lang3.SystemUtils;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.tfa.framework.utilities.testdata.TestData;
@@ -24,9 +25,9 @@ public class TGLWebUtil extends WebDriverUtil{
 	
 	
 	
-	/**
-	 * This function will upload the file.
-	 */
+	/*
+	* This function will upload the file.
+	*/
 	public void uploadFile(String filePathKeyName, String locatorName){
 		String relativeFilePath=data.getTestCaseDataMap().get(filePathKeyName);
 		WebElement el=webUtil.getElement(locatorName);
@@ -35,15 +36,14 @@ public class TGLWebUtil extends WebDriverUtil{
         webUtil.holdOn(5);
 	}
 	
-	/**
-	 * This function will download the file.
-	 */
+	/*
+	* This function will download the file.
+	*/
 	public void downloadFile(String fileName){
 		if(SystemUtils.IS_OS_LINUX) {
 			downloadedFilePath="/home/"+System.getProperty("user.name")+"/Downloads/"+fileName;
 		}else {
 			downloadedFilePath="C:\\Users\\"+System.getProperty("user.name")+"\\Downloads\\"+fileName;
-			//downloadedFilePath="\\natfs\\Teams\\Technology\\ApplicationDevelopment\\QA\\TFA Automation\\Data Files\\JAVA APPLICATIONS\\Downloads\\"+fileName;
 		}
 		File file=new File(downloadedFilePath);
 		if(file.exists()) {
@@ -57,9 +57,9 @@ public class TGLWebUtil extends WebDriverUtil{
 			
 	}
 
-	/**
-	 * This function will click on review or remove links on the particular document
-	 */
+	/*
+	* This function will click on review or remove links on the particular document
+	*/
 	public WebElement getValuesFromDocumentsWebTable(String tableLocatorName, String refRowDataToSearch, String  expressionType){
 		Map<String, String> locatorValueMap=webUtil.getLocatorValueMap(tableLocatorName);
 		String locatorValue=getLocatorValue(locatorValueMap, tableLocatorName);
@@ -86,7 +86,10 @@ public class TGLWebUtil extends WebDriverUtil{
 			}
 			return null;
 		}
-
+	
+	/*
+	* This function will gets the Locator Value
+	*/
 	public static String getLocatorValue(Map<String, String> locatorValueMap, String locatorName){
 		String locatorValue=null;
 		try{
@@ -101,11 +104,19 @@ public class TGLWebUtil extends WebDriverUtil{
 
 		return locatorValue;
 	}
+	
+	/*
+	* This function will Clears the TextBox value 
+	*/
 	public void setTextBoxClear(String locatorName){
 		By locator=null;
 		locator=webUtil.getLocatorBy(locatorName);
 		webUtil.getDriver().findElement(locator).clear();
 	}
+	
+	/*
+	* This function will verifies the object is visible on the Page
+	*/
 	public boolean objectIsVisible(String locatorName){
 		By locator=null;
 		locator=webUtil.getLocatorBy(locatorName);
@@ -119,6 +130,9 @@ public class TGLWebUtil extends WebDriverUtil{
 			return false;
 		}	
 	}
+	/*
+	* This function will verifies the object is enabled on the Page
+	*/
 	public boolean objectIsEnabled(String locatorName){
 		By locator=null;
 		locator=webUtil.getLocatorBy(locatorName);
@@ -133,16 +147,21 @@ public class TGLWebUtil extends WebDriverUtil{
 		}	
 	}
 
-	/**
-	 * This function is to get the object of WebdriverUtil.
-	 * @return instance of WebdriverUtil class.
-	 */
+	/*
+	* This function is to get the object of WebdriverUtil.
+	* @return instance of WebdriverUtil class.
+	*/
 	public static TGLWebUtil getObject(){
 		if(webUtil==null){
 			webUtil=new TGLWebUtil();
 		}
 		return webUtil;
 	}
+	
+	/*
+	* This function is to verify the values from WebTable 
+	* @return true or false.
+	*/
 	public boolean verifyTheValueInWebTableElement(String rowLocatorName, String columnLocatorName, String[] expectedValues){
 		String elementText = null;
 		By rowLocator=getLocatorBy(rowLocatorName);	
@@ -163,6 +182,18 @@ public class TGLWebUtil extends WebDriverUtil{
 			return false;
 		}else{
 			return true;	
+		}
+	}
+	
+	/*
+	* This function switches the Frame to the default
+	*/
+	public void switchToWindowFromFrame() {
+		try{
+			getDriver().switchTo().defaultContent();
+		}catch(WebDriverException e){
+			logger.info(e);	
+
 		}
 	}
 

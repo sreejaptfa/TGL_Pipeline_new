@@ -1,20 +1,12 @@
 package org.tfa.tgl.tests;
 
 
-import java.io.File;
-import java.util.HashMap;
 import java.util.List;
 import org.apache.log4j.Logger;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.tfa.framework.core.BaseTestMethods;
-import org.tfa.framework.utilities.testdata.TestData;
 import org.tfa.tgl.pages.LoginPageTgl;
 import org.tfa.tgl.pages.SearchDetailsPageTGL;
 import org.tfa.tgl.pages.SearchPageTGL;
@@ -29,8 +21,7 @@ public class TGLPortalUploadTest extends BaseTestMethods {
 	private SearchDetailsPageTGL searchDetailsPage = new SearchDetailsPageTGL();
 	private TGLWebUtil webUtil=TGLWebUtil.getObject();
 	static Logger log=Logger.getLogger("rootLogger");
-	private TestData data;
-	
+
 	String expectedErrorMessage;
 	String actualErrorMessage;
 	String downloadedFilePath;
@@ -48,19 +39,19 @@ public class TGLPortalUploadTest extends BaseTestMethods {
 	@Test
 	public void TGL105TestTGLPortalUpload() throws Exception {
 		
-		//Step - 1 -------- Login to TGL Portal >  Search for any applicant and than click on any applicant
+		/* Step 1 - Login to TGL Portal >  Search for any applicant and than click on any applicant */
 		loginpage=new LoginPageTgl();
 		loginpage.enterLoginInfo();
 		searchPage.clickOnSearchBtn();
-		searchDetailsPage= searchPage.clickFirstRowColumnOnSearchResults();
+		searchPage.clickFirstRowColumnOnSearchResults();
 		
-		//Step - 2 -------- Verify upload button is there to upload the doc
+		/* Step 2 - Verify upload button is there to upload the doc */
 		Assert.assertTrue(webUtil.isVisible("Tgl_UploadTGLDocuments_btn"));
 		
-		//Step - 3 -------- Click on upload TGL link
+		/* Step 3 - Click on upload TGL link */
 		searchDetailsPage.clickOnUploadTGLDouments();
 	
-		//Step - 4 -------- Now try to cick on upload without entering any doc and selecting any check box
+		/* Step 4 - Now try to cick on upload without entering any doc and selecting any check box */
 		searchDetailsPage.clickOnUploadButton();
 		expectedErrorMessage=testDataMap.get("errorMessage_Validation_1");
 		actualErrorMessage = webUtil.getText("Tgl_validationErrorMsgWitoutEnterAnyDoc_ST");
@@ -70,14 +61,14 @@ public class TGLPortalUploadTest extends BaseTestMethods {
 		actualErrorMessage = webUtil.getText("Tgl_validationErrorMsgDocType_ST");
 		Assert.assertEquals(actualErrorMessage, expectedErrorMessage,"Verified the Check Box error ");
 
-		//Step - 5 -------- Now Just select check box and try to upload
+		/* Step 5 - Now Just select check box and try to upload */
 		searchDetailsPage.clickOnTypeOfDocumentChk(tglApplicantTaxReturnCHK);
 		searchDetailsPage.clickOnUploadButton();
 		expectedErrorMessage=testDataMap.get("errorMessage_Validation_1");
 		actualErrorMessage = webUtil.getText("Tgl_validationErrorMsgWitoutEnterAnyDoc_ST");
 		Assert.assertEquals(actualErrorMessage, expectedErrorMessage,"Verified the Document Upload error");
 		
-		//Step - 6 -------- Now remove check box and just upload doc
+		/* Step 6 - Now remove check box and just upload doc */
 		searchDetailsPage.clickOnTypeOfDocumentChk(tglApplicantTaxReturnCHK);
 		webUtil.uploadFile("uploadPDFFilePath",tglUploadedFileIconImg);
 		searchDetailsPage.clickOnUploadButton();
@@ -85,7 +76,7 @@ public class TGLPortalUploadTest extends BaseTestMethods {
 		actualErrorMessage = webUtil.getText("Tgl_validationErrorMsgDocType_ST");
 		Assert.assertEquals(actualErrorMessage, expectedErrorMessage,"Verified the Check Box error ");
 
-		//Step - 7 -------- Try to upload file other than .gif, .jpg, or .pdf files
+		/* Step 7 - Try to upload file other than .gif, .jpg, or .pdf files */
 		searchDetailsPage.clickOnTypeOfDocumentChk(tglApplicantTaxReturnCHK);
 		webUtil.uploadFile("uploadDocFilePath",tglUploadedFileIconImg);
 		searchDetailsPage.clickOnUploadButton();
@@ -93,7 +84,7 @@ public class TGLPortalUploadTest extends BaseTestMethods {
 		actualErrorMessage = webUtil.getText("Tgl_validationErrorMsgWitoutEnterAnyDoc_ST");
 		Assert.assertEquals(actualErrorMessage, expectedErrorMessage,"Verified the Document Upload error");
 
-		//Step - 8 -------- Verify You see valid document type to upload the file
+		/* Step 8 - Verify You see valid document type to upload the file */
 		List<WebElement> allDocTypeSectionList=webUtil.getElementsList("Tgl_DocumentTypeSection_ST");
 		for( int j=0; j<=allDocTypeSectionList.size()-1; j++) {
 			WebElement columnWe=allDocTypeSectionList.get(j);
@@ -102,14 +93,14 @@ public class TGLPortalUploadTest extends BaseTestMethods {
 			Assert.assertTrue(expectedDocumentType.contains(actualDocumentType), "verified the Document Type");
 		}
 		
-		//Step - 9 -------- Go to Upload Doc again and upload valid doc and check the check box and do not click on upload, rather than click on Cancel
+		/* Step 9 - Go to Upload Doc again and upload valid doc and check the check box and do not click on upload, rather than click on Cancel */
 		searchDetailsPage.clickOnTypeOfDocumentChk(tglApplicantTaxReturnCHK);
 		webUtil.uploadFile("uploadPDFFilePath",tglUploadedFileIconImg);
 		searchDetailsPage.clickOnCancelButton("Tgl_Cancel_btn");
 		Assert.assertFalse(!webUtil.isVisible("Tgl_UploadTGLDocuments_btn"),"verified Document Upload window cancelled");
 		webUtil.holdOn(3);
 		
-		//Step - 10 -------- Go back to upload doc again and Try to enter same file for multiple doc type
+		/* Step 10 - Go back to upload doc again and Try to enter same file for multiple doc type */
 		searchDetailsPage.clickOnUploadTGLDouments();
 		searchDetailsPage.clickOnTypeOfDocumentChk(tglApplicantTaxReturnCHK);
 		for(int i=0; i<=2; i++){
@@ -118,21 +109,21 @@ public class TGLPortalUploadTest extends BaseTestMethods {
 		}
 		searchDetailsPage.clickOnCancelButton("Tgl_Cancel_btn");
 		
-		//Step - 11 -------- Verify once you upload the document
+		/* Step 11 - Verify once you upload the document */
 		searchDetailsPage.clickOnUploadTGLDouments();
 		searchDetailsPage.clickOnTypeOfDocumentChk(tglApplicantTaxReturnCHK);
 		webUtil.uploadFile("uploadPDFFilePath",tglUploadedFileIconImg);
 		searchDetailsPage.clickOnUploadButton();
 		webUtil.holdOn(5);
 		
-		//Step - 12 -------- Now Click on Review for doc which you uploaded 
+		/* Step 12 - Now Click on Review for doc which you uploaded */
 		String uploadedFileName=testDataMap.get("uploadPDFFilePath");
 		WebElement clickOnReviewLink = webUtil.getValuesFromDocumentsWebTable("Tgl_ColTaxReturn_TB", uploadedFileName,"Review");
 		webUtil.click(clickOnReviewLink);
 		webUtil.holdOn(5);
 		webUtil.downloadFile(uploadedFileName);
 	
-		//Step - 13 -------- Now Click on Remove the doc 
+		/* Step 13 -  Now Click on Remove the doc */
 		WebElement clickOnRemoveLink = webUtil.getValuesFromDocumentsWebTable("Tgl_ColTaxReturn_TB", uploadedFileName,"Remove");
 		webUtil.click(clickOnRemoveLink);
 		webUtil.holdOn(2);
@@ -140,7 +131,7 @@ public class TGLPortalUploadTest extends BaseTestMethods {
 		webUtil.holdOn(2);
 		Assert.assertFalse(webUtil.objectIsVisible("Tgl_DocumentName_ST"),"verified document removed");
 	
-		//Step - 14 -------- End 
+		/* Step 14 - End Script */
 
 	}
 		

@@ -21,17 +21,16 @@ public class TimeLineTest extends BaseTestMethods{
 	@Test
 	public void TGL11125TestTimeLine() throws Exception {
 		
-		//Step - 1 -------- Login to TGL portal
+		/* Step 1 - Login to TGL portal */
 		loginpage=new LoginPageTgl();
 		loginpage.enterLoginInfo();
 		
-		//Step - 2 -------- Go go to TGL search and search for applicant whose TGL app is completed in Online part 2
-		searchPage.clickOnTGLStatusDD();
-		searchPage.clickOnCompleteLink();
+		/* Step 2 - Go go to TGL search and search for applicant whose TGL app is completed in Online part 2 */
+		searchPage.selectTGLStatusDD("Tgl_Complete_LK");
 		searchPage.clickOnSearchBtn();
-		searchDetailsPage= searchPage.clickFirstRowColumnOnSearchResults();
+		searchPage.clickFirstRowColumnOnSearchResults();
 		
-		//Step - 3 -------- Now click on Manual Adjustment link
+		/* Step 3 - Now click on Manual Adjustment link */
 		searchDetailsPage.clickOnManuallyAdjustButton();
 		String enterLoanAdjustAmountValue = testDataMap.get("LoanAdjustmentAmount");
 		String enterGrantAdjustAmountValue = testDataMap.get("GrantAdjustmentAmount");
@@ -42,12 +41,12 @@ public class TimeLineTest extends BaseTestMethods{
 		searchDetailsPage.clickOnSaveButton("Tgl_AdjustmentSave_btn");
 		searchDetailsPage.clickOnYesUpdateThisAwardButton();
 		
-		//Step - 4 -------- Click on Detail link and verify all the story
+		/* Step 4 - Click on Detail link and verify all the story */
 		searchDetailsPage.clickOnTimeLineButton();
 		String actualValueMsg = webUtil.getText("Tgl_TimeLine_TB");
 		Assert.assertTrue(actualValueMsg.contains(enterAdjustmentCommentValue), "Verify Time Line adds the Row");
 		
-		//Step - 5 -------- End
+		/* Step 5 - End Script */
 
 	}
 	@Override
