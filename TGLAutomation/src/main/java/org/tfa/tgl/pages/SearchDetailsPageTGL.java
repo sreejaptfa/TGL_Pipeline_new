@@ -166,4 +166,6 @@ public class SearchDetailsPageTGL {
 	public void clickOnTGLSignOutLink(){
 		webUtil.click("Tgl_logout");
 	}
+	
+
 }

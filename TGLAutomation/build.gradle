@@ -100,6 +100,9 @@ dependencies {
 
 	// Adding this dependency to make explicitwait.until work - NS
 	compile group: 'com.google.guava', name:'guava', version:'21.0'
+	
+	// https://mvnrepository.com/artifact/javax.mail/mail
+	compile group: 'javax.mail', name: 'mail', version: '1.5.0-b01'
     
 }
 

@@ -6,8 +6,14 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 import java.util.Set;
-
+import javax.mail.Flags;
+import javax.mail.Folder;
+import javax.mail.Message;
+import javax.mail.Session;
+import javax.mail.Store;
+import javax.mail.search.FlagTerm;
 import org.apache.commons.lang3.SystemUtils;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
@@ -16,11 +22,18 @@ import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.tfa.framework.utilities.testdata.TestData;
 
+
 public class TGLWebUtil extends WebDriverUtil{
 	private static final Logger logger = Logger.getLogger(TGLWebUtil.class);
 	private TestData data=TestData.getObject();
 	private static TGLWebUtil webUtil;
 	
+	private static final String TRUE = "true";
+	private static final String MAIL_POP3_HOST = "mail.pop3.host";
+	private static final String MAIL_POP3_PORT = "mail.pop3.port";
+	private static final String MAIL_POP3_STARTTLS_ENABLE = "mail.pop3.starttls.enable";
+	private static final String MAIL_FOLDER_INBOX = "INBOX";
+
 	String downloadedFilePath;
 	
 	
@@ -196,5 +209,46 @@ public class TGLWebUtil extends WebDriverUtil{
 
 		}
 	}
+	
+	/*
+	 * Login to mailbox for test email account and verify the email content match with Email template
+	 * returns true and false
+	 */
+    public boolean checkEmailContentFromTestEmailAccount(String host, String userEmail, String password, String bodyContent) throws Exception {
+        Store emailStore = null;
+        Folder emailFolder = null;
+        try {
+            Properties properties = new Properties();
+            properties.put(MAIL_POP3_HOST, "pop3s");
+            properties.put(MAIL_POP3_PORT, "995");
+            properties.put(MAIL_POP3_STARTTLS_ENABLE, TRUE);
+            Session emailSession = Session.getDefaultInstance(properties);
+
+            emailStore = emailSession.getStore("pop3s");
+            emailStore.connect(host, userEmail, password);
+            emailFolder = emailStore.getFolder(MAIL_FOLDER_INBOX);
+            emailFolder.open(Folder.READ_WRITE);
+
+            Message[] emailMessages = emailFolder.search(new FlagTerm(new Flags(Flags.Flag.SEEN), false));
+             if (emailMessages.length == 0) {
+            	 return false;
+             } else {
+            	int len = emailMessages.length - 10;
+                 for (int i = len; i < emailMessages.length; i++) {
+            	    Message emailMessage = emailMessages[i];
+                    Object content = emailMessage.getContent();
+		            if(content.toString().contains(bodyContent)){
+		               return true;
+					 }
+                 }
+            }
+        }catch (Exception e) {
+            throw new Exception(e);
+        } finally {
+            emailFolder.close(false);
+            emailStore.close();
+        }
+		return false;
+    }
 
 }

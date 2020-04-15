@@ -480,5 +480,6 @@ public class SearchPageTGL {
 	public void enterPersonID(String personID){
 		webUtil.setTextBoxValue("Tgl_personid", personID);		
 	}
+
 }
 
