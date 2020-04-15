@@ -11,14 +11,14 @@
 	<test name="Regression Testing">
 	
 		<classes>
-		  	<class name="org.tfa.tgl.tests.TglLoginTest" />  
+<!--		  	<class name="org.tfa.tgl.tests.TglLoginTest" />  -->
 <!-- 			<class name="org.tfa.tgl.tests.SearchPageTest" />   -->
 <!-- 			<class name="org.tfa.tgl.tests.TaxInformationSectionTest" /> -->
 <!-- 			<class name="org.tfa.tgl.tests.AdditionalInformationSectionTest" /> -->
 <!-- 			<class name="org.tfa.tgl.tests.AssetsAndLiabilitiesTest" />			 -->
-<!-- 		<!-- 	<class name="org.tfa.tgl.tests.IncomeAndTotalNoDependencyTest" />	 -->	 -->
+<!-- 		 	<class name="org.tfa.tgl.tests.IncomeAndTotalNoDependencyTest" />	 -->	
 <!-- 			<class name="org.tfa.tgl.tests.LeftNavTest" /> -->
-<!-- 	<!-- 		<class name="org.tfa.tgl.tests.TGLPortalUploadTest" /> --> -->
+<!-- 	 		<class name="org.tfa.tgl.tests.TGLPortalUploadTest" /> --> 
 <!-- 			<class name="org.tfa.tgl.tests.TotalAwardSectionTest" /> -->
 <!-- 			<class name="org.tfa.tgl.tests.GroupCalculationFieldValidationTest" /> -->
 <!-- 			<class name="org.tfa.tgl.tests.SendEmailTextboxTest" /> -->
