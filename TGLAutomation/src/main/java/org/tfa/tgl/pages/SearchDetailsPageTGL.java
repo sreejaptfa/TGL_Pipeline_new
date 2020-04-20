@@ -166,6 +166,52 @@ public class SearchDetailsPageTGL {
 	public void clickOnTGLSignOutLink(){
 		webUtil.click("Tgl_logout");
 	}
+	/*
+	 * This function will Selects the TGL Status
+	 */
+	private void selectTGLStatusDD(String tglStatus){
+		webUtil.selectByVisibleText("Tgl_TGLStatusInput_DD", tglStatus);
+		webUtil.holdOn(5);
+	}
+	/*
+	 * This function sets the value when it selects the status Complete and Any Messages 
+	 * like Total # of Dependents is blank and "Status cannot be changed
+	 */
+	public void clickCompleteAndFixErrorMessages(String applicantID){
+		selectTGLStatusDD("Complete");
+		webUtil.holdOn(5);
+		boolean iflag = webUtil.objectIsVisible("Tgl_StatusValidationMessage_ST");
+		if (iflag) {
+			String getErrorMessageText = webUtil.getText("Tgl_StatusValidationMessage_ST");
+			if((getErrorMessageText.contains("Status cannot be changed")) || (getErrorMessageText.contains("Total # of Dependents is blank"))){
+				enterTotalNumberOfDependentsAndIncomeAmount();
+				selectCheckBoxsForObjectValid("Tgl_SelectCheckBox_chk");
+				selectTGLStatusDD("Complete");
+			}
+		}
+		boolean iflag1 = webUtil.objectIsVisible("Tgl_StatusValidationMessage_ST");	
+		if (iflag1) {
+			Assert.assertTrue(false,"PLEASE CHECK MANUALLY.... THERE ARE SOME MORE ERROR MESSAGES FOR THE PERSONID -> "+applicantID);
+		}
+	}
 	
-
+	/*
+	 * This function Verifies that the required? object isSelected on TGL Detail page, and if the Valid? checkbox 
+	 * is not selects it will selects the Valid? object on the page
+	 * like Total # of Dependents is blank and "Status cannot be changed
+	 */
+	private void selectCheckBoxsForObjectValid(String locatorName){
+		Map<String, String> locatorValueMap=webUtil.getLocatorValueMap(locatorName);
+		String locatorValue=TGLWebUtil.getLocatorValue(locatorValueMap, locatorName);
+		List<WebElement> getValues = webUtil.getDriver().findElements(By.xpath(locatorValue));
+		for(int i = 1; i<=getValues.size(); i++){
+			WebElement checkBox_Required = webUtil.getDriver().findElement(By.xpath("("+ locatorValue +"["+i+"]//input)[1]"));
+			if(checkBox_Required.isSelected()){
+				WebElement checkBox_Valid = webUtil.getDriver().findElement(By.xpath("("+ locatorValue+"["+i+"]//input)[2]"));
+				if(!checkBox_Valid.isSelected()){
+					webUtil.click(checkBox_Valid);
+					}
+				}
+			}
+		}
 }

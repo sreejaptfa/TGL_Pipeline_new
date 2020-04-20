@@ -1,9 +1,6 @@
 package org.tfa.tgl.pages;
 
 import org.tfa.tgl.utilities.web.TGLWebUtil;
-
-import java.util.concurrent.TimeUnit;
-import org.apache.log4j.Logger;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 
@@ -11,25 +8,9 @@ import org.openqa.selenium.WebElement;
 public class IMPSPage {
 	
 	private TGLWebUtil webUtil=TGLWebUtil.getObject();
-	private static final Logger logger = Logger.getLogger(TGLWebUtil.class);
 	private WebElement element;
 	
-	/**
-	 * This function will open the login page of IMPS.
-	 */
-	public void openLoginPage(String url){
-		webUtil.getDriver().manage().timeouts().implicitlyWait(120, TimeUnit.SECONDS);
-		logger.debug("url -  "+url);
-		if(url==null){
-			logger.debug("data object is null");
-		}else{
-			logger.debug("data object is not null");
-		}
-		webUtil.getDriver().get(url);
-		webUtil.holdOn(3);
-		webUtil.waitForBrowserToLoadCompletely();
-	}
-	
+
 	/**
 	 * This function will login to the IMPS application
 	 */
@@ -69,6 +50,7 @@ public class IMPSPage {
 		boolean iflag = webUtil.objectIsVisible("IMPS_Applicant_LK");
 		if(iflag){
 			webUtil.click("IMPS_Applicant_LK");
+			webUtil.holdOn(5);
 		}else{
 			webUtil.switchToWindowFromFrame();
 			webUtil.switchToFrameByFrameLocator("CommonTopframeWithName_Frm");
@@ -78,12 +60,31 @@ public class IMPSPage {
 			enterPersonID(personID);
 			clickOnSearchButton();
 			webUtil.click("IMPS_Applicant_LK");
+			webUtil.holdOn(10);
 		}
 		return iflag;
 	}
 	public void clickOnAssignment(){
 		webUtil.click("IMPS_Assignment_Btn");
 	}
+	public String getEmailFromIMPSApplicantID(String personID){
+		String getValue = null;
+		boolean iflag = webUtil.objectIsVisible("IMPS_Applicant_LK");
+		if(iflag){
+			getValue = webUtil.getText("IMPS_Email_TB");
+		}else{
+			webUtil.switchToWindowFromFrame();
+			webUtil.switchToFrameByFrameLocator("CommonTopframeWithName_Frm");
+			webUtil.click("IMPS_HistoricalSearch_Btn");
+			webUtil.switchToWindowFromFrame();
+			webUtil.switchToFrameByFrameLocator("CommonMainframeWithName_Frm");
+			enterPersonID(personID);
+			clickOnSearchButton();
+			getValue = webUtil.getText("IMPS_HistoricalSearchEmail_TB");
+		}
+		return getValue;
+	}	
+
 	/*
 	 * This function will Logout from IMPS
 	 */
@@ -95,4 +96,25 @@ public class IMPSPage {
 		element.sendKeys(Keys.ESCAPE);
 		webUtil.switchToWindowFromFrame();
 	}
+	/*
+	 * This function will Assign the new Qualified Position
+	 */
+	public String assignNewQualifiedPosition(){
+		String getQualifiedPosition = webUtil.getText("IMPS_QualifiedFirstPosition_LK");
+	String getAssignStatus = webUtil.getText("IMPS_QualifiedFirstPositionAssign_LK");
+	if(getAssignStatus.equals("Unassign")){
+		if(getQualifiedPosition.contains("Bay Area")){
+			webUtil.click("IMPS_NewYorkAssign_LK");
+		}else if(getQualifiedPosition.contains("New York")){
+			webUtil.click("IMPS_BayAreaAssign_LK");
+		}else if(getQualifiedPosition.contains("D.C. Region")){
+			webUtil.click("IMPS_BayAreaAssign_LK");
+		}else{
+		webUtil.click("IMPS_DCRegionAssign_LK");
+		}
+	}
+	String selectedQualifiedPositon = webUtil.getText("IMPS_QualifiedFirstPosition_LK");
+	webUtil.switchToWindowFromFrame();
+	return selectedQualifiedPositon;
+}
 }

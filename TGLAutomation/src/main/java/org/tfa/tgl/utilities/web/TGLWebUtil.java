@@ -8,6 +8,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
+
 import javax.mail.Flags;
 import javax.mail.Folder;
 import javax.mail.Message;
@@ -251,4 +253,19 @@ public class TGLWebUtil extends WebDriverUtil{
 		return false;
     }
 
+	/**
+	 * This function will open the login page
+	 */
+	public void openLoginPage(String url){
+		webUtil.getDriver().manage().timeouts().implicitlyWait(120, TimeUnit.SECONDS);
+		logger.debug("url -  "+url);
+		if(url==null){
+			logger.debug("data object is null");
+		}else{
+			logger.debug("data object is not null");
+		}
+		webUtil.getDriver().get(url);
+		webUtil.holdOn(3);
+		webUtil.waitForBrowserToLoadCompletely();
+	}
 }

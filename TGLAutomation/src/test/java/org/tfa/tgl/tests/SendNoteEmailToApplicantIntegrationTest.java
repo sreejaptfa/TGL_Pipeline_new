@@ -6,7 +6,6 @@ import org.testng.annotations.Test;
 import org.tfa.framework.core.BaseTestMethods;
 import org.tfa.framework.utilities.general.RandomUtil;
 import org.tfa.tgl.pages.LoginPageTgl;
-import org.tfa.tgl.pages.SearchDetailsPageTGL;
 import org.tfa.tgl.pages.SearchPageTGL;
 import org.tfa.tgl.utilities.web.TGLConstants;
 import org.tfa.tgl.utilities.web.TGLWebUtil;
@@ -24,7 +23,6 @@ public class SendNoteEmailToApplicantIntegrationTest extends BaseTestMethods{
 
 	private LoginPageTgl loginpage;
 	private SearchPageTGL searchPage= new SearchPageTGL();
-	private SearchDetailsPageTGL searchDetailsPage = new SearchDetailsPageTGL();
 	private TGLWebUtil webUtil=TGLWebUtil.getObject();
 	private RandomUtil random=new RandomUtil();
 	static Logger log=Logger.getLogger("rootLogger");
