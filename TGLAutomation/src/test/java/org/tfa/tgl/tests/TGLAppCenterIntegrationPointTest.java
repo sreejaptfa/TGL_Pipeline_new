@@ -18,7 +18,7 @@ public class TGLAppCenterIntegrationPointTest extends BaseTestMethods{
 	 * @Param: TGL Admin credentials and a valid applicant email and person id in TestData
 	 * @Author: Nitin Sharma
 	 */
-	@Test(priority=1, enabled = false)
+	@Test(priority=1, enabled = true)
 	public void TGL108ValidateIntegrationPoints(){
 		LoginPageTgl loginpage = new LoginPageTgl();
 		TGLAppCenterIntergrationPoints integrationpoints= new TGLAppCenterIntergrationPoints();
@@ -50,7 +50,7 @@ public class TGLAppCenterIntegrationPointTest extends BaseTestMethods{
 	 * @Param: TGL Admin credentials and a valid applicant email and person id in TestData
 	 * @Author: Nitin Sharma
 	 */
-	@Test(priority=2, enabled = true)
+	@Test(priority=2, enabled = false)
 	public void TGL110ValidateIntegrationPoints(){
 		LoginPageTgl loginpage = new LoginPageTgl();
 		TGLAppCenterIntergrationPoints integrationpoints= new TGLAppCenterIntergrationPoints();
@@ -91,7 +91,39 @@ public class TGLAppCenterIntegrationPointTest extends BaseTestMethods{
 		Assert.fail();
 		log.info("TGL108ValidateIntegrationPoints test failed due to exception: "+e);
 		}
+		
+	
 	}
+	/* @Description: Below Test Verifies File Upload, Applicant Notes 
+	 * and Applicant Tax Return "Valid" Checkbox checked between AppCenter and TGL
+	 * @Param: TGL Admin credentials and a valid applicant email and person id in TestData
+	 * @Author: Nitin Sharma
+	 */
+	@Test(priority=4, enabled = false)
+	public void TGL112ValidateIntegrationPoints(){
+		LoginPageTgl loginpage = new LoginPageTgl();
+		TGLAppCenterIntergrationPoints integrationpoints= new TGLAppCenterIntergrationPoints();
+		try{		
+		//integrationpoints.setChromeProperties();
+		// TestCase - Integration Point - assets and liabilities - Step 1
+		Assert.assertTrue(loginpage.enterLoginInfo(),"EnterLoginInfo method failed");
+		// TestCase - Integration point - assets and liabilities - Step2 and Step 3
+		Assert.assertTrue(integrationpoints.searchAndOpenApplicantDetails(), "searchAndOpenApplicantDetails method failed");
+		// TestCase - Integration point - assets and liabilities - step 5 
+		Assert.assertTrue(integrationpoints.uploadDocumentinAda(), "uploadDocumentinAda method failed");
+		// TestCase - Integration point - assets and liabilities - step 6 
+		Assert.assertTrue(integrationpoints.checkValidcheckBoxApplicantTaxReturn(), "checkValidcheckBoxApplicantTaxReturn failed");
+		// TestCase - Integration point - assets and liabilities - Step 8
+		Assert.assertTrue(integrationpoints.removeExistingDocumentsfromApplicantTaxReturn(), "removeExistingDocumentsfromApplicantTaxReturn method failed");
+		Assert.assertTrue(integrationpoints.verifyDocumentIsRemoved(), "verifyApplicantCenterDocumentsDetails falied");
+		}
+		catch(Exception e){			
+			Assert.fail();
+			log.info("TGL108ValidateIntegrationPoints test failed due to exception: "+e);
+		}
+	}	
+	
+	
 	
 	@Override
 	public TGLConstants getConstants()

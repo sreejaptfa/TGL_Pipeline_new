@@ -22,6 +22,7 @@ import org.openqa.selenium.logging.LogType;
 import org.openqa.selenium.logging.LoggingPreferences;
 import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.tfa.framework.core.WebDriverUtil;
 import org.tfa.framework.utilities.testdata.TestData;
@@ -63,10 +64,13 @@ public class TGLAppCenterIntergrationPoints extends WebDriverUtil{
 	
 	public boolean uploadDocumentinAda() {
 		boolean flag=false;
+		explicitwait = new WebDriverWait(webUtil.getDriver(), 30);
 		
 		// Delete all existing documents for Applicants tax return
+		webUtil.holdOn(4);
 		flag=removeExistingDocumentsfromApplicantTaxReturn();
-		if (flag==false){
+		webUtil.holdOn(3);
+		if (flag==false) {
 			return flag;
 		}		
 		//  Add comments in Applicant Tax return's comment box
@@ -80,6 +84,7 @@ public class TGLAppCenterIntergrationPoints extends WebDriverUtil{
 		// Choose the file location and click upload button
 		webUtil.getElement("Tgl_ChooseFile_txt").sendKeys(System.getProperty("user.dir")+"/src/test/resources/TestData/TestPdfFile.pdf");
 		webUtil.click("Tgl_ModalUpload_btn");
+		explicitwait.until(ExpectedConditions.invisibilityOf(webUtil.getElement("Tgl_ModalUpload_btn")));
 		webUtil.holdOn(5);
 		
 		return flag;
@@ -126,10 +131,17 @@ public class TGLAppCenterIntergrationPoints extends WebDriverUtil{
 			for(WebElement w:documents){
 				w.findElement(By.xpath("//td[3]/button")).click();
 				webUtil.holdOn(3);
-				webUtil.getDriver().findElement(By.xpath("((//button[@data-hook='do-remove-document'])[1])/span")).click();
+				try {
+					webUtil.getDriver().findElement(By.xpath("(//span[contains(text(),'Yes, remove this document')])[4]")).click();
+				}
+				catch (Exception e) {
+					webUtil.getDriver().findElement(By.xpath("(//span[contains(text(),'Yes, remove this document')])[1]")).click();	
+					
+				}
+				
 			}
 			f = true;
-		}catch(Exception e) {
+		} catch(Exception e) {
 			log.info("Exception occured deleting existing documents for applicant tax return");
 			f = false;
 		}
@@ -139,6 +151,7 @@ public class TGLAppCenterIntergrationPoints extends WebDriverUtil{
 	public boolean checkValidcheckBoxApplicantTaxReturn() {
 		boolean flag = false;
 		try{
+		webUtil.holdOn(3);
 		while(!webUtil.getElement("Tgl_ApplicantstaxValid_chk").isSelected())
 			webUtil.getElement("Tgl_ApplicantstaxValid_chk").click();
 		} catch(Exception e) {
@@ -175,7 +188,10 @@ public class TGLAppCenterIntergrationPoints extends WebDriverUtil{
 		login.openLoginPage();
 		login.enterLoginInfo();
 		// Click AppCenter TGL Funding link
-		webUtil.click("AppCenter_TGLFunding_link");
+		//webUtil.click("AppCenter_TGLFunding_link");
+		webUtil.openURL("https://qamerlin.teachforamerica.org/applicant-center/#expenses/transitional-funding");
+		webUtil.holdOn(7);
+		webUtil.waitForBrowserToLoadCompletely();
 		// Check if Applicant Tax return check is check in Applicant Center
 		
 		if(verificationCheck == true) {
@@ -185,14 +201,15 @@ public class TGLAppCenterIntergrationPoints extends WebDriverUtil{
 				log.info("Applicant Center - Applicant Tax Return checkbox is not checked");
 				return flag = false;
 			}
-			
-			// Check Notes section shows correct notes from ADA application
-			if (webUtil.getElement("AppcenterDocumentationAppTaxReturnComment_txt").getText().contains("Test Comments"+dateFormat.format(date)))
-				flag=true;
-			else {
-				log.info("Applicant Notes for App tax return doesnot match");
-				return flag=false;
-			}// else
+		
+		webUtil.holdOn(4);
+		// Check Notes section shows correct notes from ADA application
+		if (webUtil.getElement("AppcenterDocumentationAppTaxReturnComment_txt").getText().contains("Test Comments"+dateFormat.format(date)))
+			flag=true;
+		else {
+			log.info("Applicant Notes for App tax return doesnot match");
+			return flag=false;
+		}// else
 		}
 		else {
 			if (!webUtil.getElement("AppcenterDocumentationAppTaxReturnVerified_chk").isSelected())
@@ -221,15 +238,16 @@ public class TGLAppCenterIntergrationPoints extends WebDriverUtil{
 		return flag=true;
 	}
 	public boolean verifyDocumentIsRemoved() {
-		boolean flag=false;
-		
+		boolean flag=false;	
 		try {
 			login.openLoginPage();
 			login.enterLoginInfo();
 			// Click AppCenter TGL Funding link
-			webUtil.click("AppCenter_TGLFunding_link");
+			//webUtil.click("AppCenter_TGLFunding_link");
+			webUtil.openURL("https://qamerlin.teachforamerica.org/applicant-center/#expenses/transitional-funding");
 			List <WebElement> list=new ArrayList<>();
 			list = webUtil.getDriver().findElements(By.xpath("(//tbody[@data-hook='tgl-documents-uploaded'])[1]/tr"));
+			webUtil.holdOn(3);
 			if(list.size()==0)
 				flag=true;
 			else {
@@ -281,14 +299,14 @@ public class TGLAppCenterIntergrationPoints extends WebDriverUtil{
 				log.info("files with .download extention here:"+files.length);
 				while ( files.length>0 ) {
 					files = folder.listFiles(new PatternFilenameFilter("TestPdfFile.*\\.*download"));
-					Thread.sleep(2);
+					webUtil.holdOn(2);
 					log.info(".download extention file is found at:"+folder.getAbsolutePath());
 				}		
 				files = folder.listFiles(new PatternFilenameFilter("TestPdfFile.*\\.pdf"));
 				//files = folder.listFiles(new PatternFilenameFilter("Corps_Member__General.*/.pdf"));		
 				log.info("Searching for .pdf file extentions at: "+folder.getAbsolutePath());
 				log.info("files with .pdf extention here:"+files.length);
-		
+				webUtil.holdOn(3);
 				if (files.length>0)
 					{flag=true; log.info( "File Downloaded");}
 				else
@@ -348,21 +366,7 @@ public class TGLAppCenterIntergrationPoints extends WebDriverUtil{
 		
 		
 	}
-	
-
-	
+		
 }
-
-
-
-
-
-
-
-
-
-
-
-
 
 
