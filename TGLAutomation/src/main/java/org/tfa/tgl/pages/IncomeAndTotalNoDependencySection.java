@@ -30,9 +30,10 @@ public class IncomeAndTotalNoDependencySection extends PFactory {
 		
 		webUtil.getDriver().navigate().refresh();
 		webUtil.waitForBrowserToLoadCompletely();
-		webUtil.selectByIndex("Tgl_appyear_dd", 0);
+		webUtil.selectByIndex("Tgl_appyear_dd", 2);
 		webUtil.holdOn(3);
 		webUtil.getElement("Tgl_TGLStatusSingle_txt").click();
+		webUtil.holdOn(2);
 		webUtil.getDriver().findElement(By.xpath("(//div[@class='selectize-dropdown-content'])[2]/div[2]")).click();
 		webUtil.click("Home_Tgl_Search2_btn");	
 		List <WebElement> searchresults=webUtil.getDriver().findElements(searchresultstable);
