@@ -10,6 +10,7 @@ import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.tfa.framework.core.BaseTestMethods;
+import org.tfa.framework.core.JavaScriptUtil;
 import org.tfa.framework.utilities.general.RandomUtil;
 import org.tfa.tgl.pages.ApplicantCenterPage;
 import org.tfa.tgl.pages.IMPSPage;
@@ -36,6 +37,7 @@ public class ValidCheckBoxIntegrationTest extends BaseTestMethods{
 	private IMPSPage IMPSpage = new IMPSPage();
 	private  Map<String, String> infoMap; 
 	private RandomUtil random=new RandomUtil();
+	private JavaScriptUtil jsUtil=JavaScriptUtil.getObject();
 
 	/**
 	 **************************************************************************************************************
@@ -71,8 +73,11 @@ public class ValidCheckBoxIntegrationTest extends BaseTestMethods{
 		/* 
 		* Step 3 - Now click on applicant  
 		*/
-		String applicantID = searchPage.clickFirstRowColumnOnSearchResults();
-		
+		String applicantID = clickApplicantNameOnSearchResults();
+		Assert.assertNotNull(applicantID, "Not returned any related data on Search results");
+		webUtil.holdOn(5);
+		jsUtil.scrollDownPage(500);
+
 		/* 
 		* Step 4 - 		Click Valid check box  for any of the available doc type which has required check box checked 
 		* Enter Notes for same field
@@ -278,4 +283,32 @@ public class ValidCheckBoxIntegrationTest extends BaseTestMethods{
 		addValidationData("ValidCheckBox",checkBoxChecked);
 		return checkBoxValue;
 	}
+
+	private String clickApplicantNameOnSearchResults() {
+		String getApplicantID = null;
+		int len = webUtil.getDriver().findElements(By.xpath("//tbody[@data-hook='results']/tr")).size();
+		try {
+			for(int i=1; i<=len; i++){
+				WebElement getPersonID =  webUtil.getDriver().findElement(By.xpath("//tbody[@data-hook='results']/tr["+i+"]/td[2]/a"));
+				WebElement getStep =  webUtil.getDriver().findElement(By.xpath("//tbody[@data-hook='results']/tr["+i+"]/td[7]/a"));
+				WebElement getExitCode =  webUtil.getDriver().findElement(By.xpath("//tbody[@data-hook='results']/tr["+i+"]/td[8]/a"));
+				if((getStep.getText().equals("ASSIGNMENT")) || (getStep.getText().equals("ACCEPTED")) && (getExitCode.getText().equals("N/A"))){
+					getApplicantID = getPersonID.getText();
+					getPersonID.click();
+					break;
+				}
+			}
+		}
+			catch (Exception e) {
+            try {
+				throw new Exception(e);
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+        } 
+		return getApplicantID;
+	}
+	
 }
+
