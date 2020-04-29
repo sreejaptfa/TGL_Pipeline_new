@@ -89,7 +89,6 @@ public class ValidCheckBoxIntegrationTest extends BaseTestMethods{
 		String getSectionNameFromTGL = infoMap.get("SectionName");
 		String getValidCheckBoxValueFromTGL =infoMap.get("ValidCheckBox");
 
-		
 		/* 
 		* Step 5 - Now Go to IMPS and reassign the diff region for same applicant Note: steps to reassign the region
 		* Go to IMPS, Search for same applicant, Click on Applicant, Click on Assignment link, You can assign new position there
@@ -111,7 +110,6 @@ public class ValidCheckBoxIntegrationTest extends BaseTestMethods{
 		*/
 		webUtil.openLoginPage((String) urlPart2);
 		applicantCenterPage.validLogin(getEmailFromIMPSApplicant,passwordPart2);
-
 				
 		/* 
 		* Step 7 -  Now  go to cFunding link t check TGL status for check box and notes which you selected in TG
@@ -220,7 +218,6 @@ public class ValidCheckBoxIntegrationTest extends BaseTestMethods{
 		addValidationData("SelectorPortalNotes",getNotesText);
 		addValidationData("SelectorPortalCheckBox",documentValidCheck);
 		return null;
-		
 	}
 	/* 
 	* This function will click on the valid checkbox and enter the notes
