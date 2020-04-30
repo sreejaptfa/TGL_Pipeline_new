@@ -204,7 +204,8 @@ public class ValidCheckBoxIntegrationTest extends BaseTestMethods{
 		Map<String, String> locatorValueMap=webUtil.getLocatorValueMap(locatorName);
 		String locatorValue=TGLWebUtil.getLocatorValue(locatorValueMap, locatorName);
 		List<WebElement> getValues = webUtil.getDriver().findElements(By.xpath(locatorValue));
-		for(int i = 1; i<=getValues.size(); i++){
+		int len= getValues.size();
+		for(int i = 1; i<=len; i++){
 			WebElement sectionName = webUtil.getDriver().findElement(By.xpath(locatorValue +"["+i+"]/td"));
 			String getText = sectionName.getText();
 			if(getText.contains(valueToCompare)){
