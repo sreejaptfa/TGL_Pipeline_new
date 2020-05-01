@@ -30,12 +30,11 @@ public class IncomeAndTotalNoDependencySection extends PFactory {
 		
 		webUtil.getDriver().navigate().refresh();
 		webUtil.waitForBrowserToLoadCompletely();
-		webUtil.selectByIndex("Tgl_appyear_dd", 2);
-		webUtil.holdOn(3);
+		webUtil.selectByIndex("Tgl_appyear_dd", 0);
 		webUtil.getElement("Tgl_TGLStatusSingle_txt").click();
-		webUtil.holdOn(2);
 		webUtil.getDriver().findElement(By.xpath("(//div[@class='selectize-dropdown-content'])[2]/div[2]")).click();
 		webUtil.click("Home_Tgl_Search2_btn");	
+		webUtil.holdOn(5);
 		List <WebElement> searchresults=webUtil.getDriver().findElements(searchresultstable);
 		size=searchresults.size();
 		if(size==0){
@@ -56,6 +55,7 @@ public class IncomeAndTotalNoDependencySection extends PFactory {
 		
 			if((rowstatus.getText().contains("INCOMPLETE")) || rowstatus.getText().contains("INPROGRESS")){			
 				rowstatus.click();
+				webUtil.holdOn(15);
 				break;
 			}
 		

@@ -14,6 +14,7 @@ import org.apache.commons.lang3.SystemUtils;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.UnexpectedAlertBehaviour;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -151,9 +152,11 @@ public class TGLAppCenterIntergrationPoints extends WebDriverUtil{
 	public boolean checkValidcheckBoxApplicantTaxReturn() {
 		boolean flag = false;
 		try{
-		webUtil.holdOn(3);
+		webUtil.getDriver().navigate().refresh();
+		webUtil.holdOn(7);
 		while(!webUtil.getElement("Tgl_ApplicantstaxValid_chk").isSelected())
 			webUtil.getElement("Tgl_ApplicantstaxValid_chk").click();
+			webUtil.holdOn(5);
 		} catch(Exception e) {
 			flag=false;
 			log.info("Exception in checking the Applicant Tax return checkbox"+e);

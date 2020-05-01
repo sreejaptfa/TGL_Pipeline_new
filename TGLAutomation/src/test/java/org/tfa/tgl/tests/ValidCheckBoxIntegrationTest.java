@@ -56,7 +56,8 @@ public class ValidCheckBoxIntegrationTest extends BaseTestMethods{
 		String urlPart2 = testDataMap.get("OnlinePart2URL");
 		String passwordPart2 = testDataMap.get("OnlinePart2Password");
 		String updateNotes="Unchecked Documentation Verified CheckBox -"+random.generateRandomNumber(5);
-			
+		String applicantID = testDataMap.get("ApplicantID");
+				
 		/* 
 		* Step 1 - Login to the TGL  portal application using valid user id
 		*/
@@ -67,15 +68,23 @@ public class ValidCheckBoxIntegrationTest extends BaseTestMethods{
 		* Step 2 - Search for the Person Id which is going to verify Tax information
 		* Click on Search button.
 		*/
-		searchPage.selectTGLStatusDD("Tgl_InComplete_LK");
+		searchPage.clickOnMoreSearchOptionsBtn();
+		searchPage.enterPersonID(applicantID);
 		searchPage.clickOnSearchBtn();
-		
+		boolean iflag = webUtil.objectIsVisible("Tgl_FirstRowColumn_TB");
+		if(iflag){
+			searchPage.clickFirstRowColumnOnSearchResults();
+		}else{
+
 		/* 
 		* Step 3 - Now click on applicant  
 		*/
-		String applicantID = clickApplicantNameOnSearchResults();
+		searchPage.selectTGLStatusDD("Tgl_InComplete_LK");
+		searchPage.clickOnSearchBtn();
+		applicantID = clickApplicantNameOnSearchResults();
 		Assert.assertNotNull(applicantID, "Not returned any related data on Search results");
 		webUtil.holdOn(5);
+		}
 		jsUtil.scrollDownPage(500);
 
 		/* 
@@ -254,7 +263,7 @@ public class ValidCheckBoxIntegrationTest extends BaseTestMethods{
 					setApplicationNotes_Object.clear();
 					setApplicationNotes_Object.sendKeys(enterNotes);
 					setApplicationNotes_Object.sendKeys(Keys.ENTER);
-					webUtil.holdOn(5);
+					webUtil.holdOn(10);
 					checkValue = true;
 					break;
 				}else{
@@ -274,7 +283,7 @@ public class ValidCheckBoxIntegrationTest extends BaseTestMethods{
 			setApplicationNotes_Object.clear();
 			setApplicationNotes_Object.sendKeys(enterNotes);
 			setApplicationNotes_Object.sendKeys(Keys.ENTER);
-			webUtil.holdOn(5);
+			webUtil.holdOn(10);
 		}
 		checkBoxValue = selectedSection;
 		addValidationData("Notes",enterNotes);
