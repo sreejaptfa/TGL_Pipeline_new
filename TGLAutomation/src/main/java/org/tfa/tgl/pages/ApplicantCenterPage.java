@@ -31,4 +31,12 @@ public class ApplicantCenterPage {
 		webUtil.click("AppCenter_LogOut_LK");
 		webUtil.holdOn(5);
 	}
+	
+	public boolean ClickOnGoToAccountHomeLink(){
+		boolean iflag = webUtil.objectIsVisible("AppCenter_GoToAccountHome_Lk");
+		if (iflag){
+			webUtil.click("AppCenter_GoToAccountHome_Lk");
+		}
+		return iflag;
+	}
 }

@@ -114,6 +114,7 @@ public class ValidCheckBoxIntegrationTest extends BaseTestMethods{
 		/* 
 		* Step 7 -  Now  go to cFunding link t check TGL status for check box and notes which you selected in TG
 		*/		
+		applicantCenterPage.ClickOnGoToAccountHomeLink();
 		applicantCenterPage.clickOnTransitionalFundingLink();
 		getValuesFromSelectorPortal("AppCenter_TGLDocuments_TB",getSectionNameFromTGL);
 		String getNotesFromSelectorPortal = infoMap.get("SelectorPortalNotes");
@@ -154,6 +155,7 @@ public class ValidCheckBoxIntegrationTest extends BaseTestMethods{
 		*/
 		webUtil.openLoginPage((String) urlPart2);
 		applicantCenterPage.validLogin(getEmailFromIMPSApplicant,passwordPart2);
+		applicantCenterPage.ClickOnGoToAccountHomeLink();
 		applicantCenterPage.clickOnTransitionalFundingLink();
 		getValuesFromSelectorPortal("AppCenter_TGLDocuments_TB",getSectionNameFromTGL);
 		String getUpdatedNotesFromSelectorPortal = infoMap.get("SelectorPortalNotes");
