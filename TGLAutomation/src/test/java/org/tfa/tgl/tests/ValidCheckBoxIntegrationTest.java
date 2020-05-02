@@ -68,17 +68,19 @@ public class ValidCheckBoxIntegrationTest extends BaseTestMethods{
 		* Step 2 - Search for the Person Id which is going to verify Tax information
 		* Click on Search button.
 		*/
+		webUtil.click("Tgl_Clear_btn");
 		searchPage.clickOnMoreSearchOptionsBtn();
 		searchPage.enterPersonID(applicantID);
 		searchPage.clickOnSearchBtn();
-		boolean iflag = webUtil.objectIsVisible("Tgl_FirstRowColumn_TB");
-		if(iflag){
+		boolean iChexkFlag = webUtil.objectIsVisible("Tgl_FirstRowColumn_TB");
+		if(iChexkFlag){
 			searchPage.clickFirstRowColumnOnSearchResults();
 		}else{
 
 		/* 
 		* Step 3 - Now click on applicant  
 		*/
+		webUtil.click("Tgl_Clear_btn");
 		searchPage.selectTGLStatusDD("Tgl_InComplete_LK");
 		searchPage.clickOnSearchBtn();
 		applicantID = clickApplicantNameOnSearchResults();
@@ -122,8 +124,9 @@ public class ValidCheckBoxIntegrationTest extends BaseTestMethods{
 				
 		/* 
 		* Step 7 -  Now  go to cFunding link t check TGL status for check box and notes which you selected in TG
-		*/		
-		applicantCenterPage.ClickOnGoToAccountHomeLink();
+		*/	
+		if(!iChexkFlag){
+			applicantCenterPage.ClickOnGoToAccountHomeLink();}
 		applicantCenterPage.clickOnTransitionalFundingLink();
 		getValuesFromSelectorPortal("AppCenter_TGLDocuments_TB",getSectionNameFromTGL);
 		String getNotesFromSelectorPortal = infoMap.get("SelectorPortalNotes");
@@ -164,7 +167,8 @@ public class ValidCheckBoxIntegrationTest extends BaseTestMethods{
 		*/
 		webUtil.openLoginPage((String) urlPart2);
 		applicantCenterPage.validLogin(getEmailFromIMPSApplicant,passwordPart2);
-		applicantCenterPage.ClickOnGoToAccountHomeLink();
+		if(!iChexkFlag){
+		applicantCenterPage.ClickOnGoToAccountHomeLink();}
 		applicantCenterPage.clickOnTransitionalFundingLink();
 		getValuesFromSelectorPortal("AppCenter_TGLDocuments_TB",getSectionNameFromTGL);
 		String getUpdatedNotesFromSelectorPortal = infoMap.get("SelectorPortalNotes");
