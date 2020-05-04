@@ -187,11 +187,11 @@ public class SearchDetailsPageTGL {
 				enterTotalNumberOfDependentsAndIncomeAmount();
 				selectCheckBoxsForObjectValid("Tgl_SelectCheckBox_chk");
 				selectTGLStatusDD("Complete");
+				boolean iflag1 = webUtil.objectIsVisible("Tgl_StatusValidationMessage_ST");	
+				if (iflag1) {
+					Assert.assertTrue(false,"PLEASE CHECK MANUALLY.... THERE ARE SOME MORE ERROR MESSAGES FOR THE PERSONID -> "+applicantID);
+				}
 			}
-		}
-		boolean iflag1 = webUtil.objectIsVisible("Tgl_StatusValidationMessage_ST");	
-		if (iflag1) {
-			Assert.assertTrue(false,"PLEASE CHECK MANUALLY.... THERE ARE SOME MORE ERROR MESSAGES FOR THE PERSONID -> "+applicantID);
 		}
 	}
 	

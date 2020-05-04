@@ -27,10 +27,6 @@ public class ReassignmentSelectorPortalIntegrationTest extends BaseTestMethods {
 	private SearchPageTGL searchPage= new SearchPageTGL();
 	private SearchDetailsPageTGL searchDetailsPage= new SearchDetailsPageTGL();
 	private SelectorPortalPage selectorPortalPage = new SelectorPortalPage();
-	String actualCalculatedTotalAmount_BeforeCalculate;
-	String actualExpectedContributionAmount_BeforeCalculate;
-	String actualAdjustedLoanAmount_BeforeCalculate;
-	String actualAdjustedGrantAmount_BeforeCalculate;
 
 	/**
 	 **************************************************************************************************************
@@ -86,7 +82,7 @@ public class ReassignmentSelectorPortalIntegrationTest extends BaseTestMethods {
 		*/
 		loginpage=new LoginPageTgl();
 		loginpage.enterLoginInfo();
-		
+		webUtil.click("Tgl_Clear_btn");
 		searchPage.clickOnMoreSearchOptionsBtn();
 		searchPage.enterPersonID(applicantID);
 		searchPage.clickOnSearchBtn();
@@ -94,16 +90,6 @@ public class ReassignmentSelectorPortalIntegrationTest extends BaseTestMethods {
 		String actualAssignmentValue = getAssignmentValue();
 		Assert.assertEquals(actualAssignmentValue,expectedAssignment, "Verify the Assignment value updated");
 		
-		actualCalculatedTotalAmount_BeforeCalculate = webUtil.getText("Tgl_CalculatedTotal_ST");
-		actualExpectedContributionAmount_BeforeCalculate = webUtil.getText("Tgl_ExpectedContribution_ST");
-		actualAdjustedLoanAmount_BeforeCalculate = webUtil.getText("Tgl_AdjustedLoanAmount_ST");
-		actualAdjustedGrantAmount_BeforeCalculate = webUtil.getText("Tgl_AdjustedGrantAmount_ST");
-			
-		Assert.assertEquals(actualCalculatedTotalAmount_BeforeCalculate,"n/a", "Verify Calculated Total Amount not display any Calculation");
-		Assert.assertEquals(actualExpectedContributionAmount_BeforeCalculate,"n/a", "Verify Expected Contribution Amount not display any Calculation");
-		Assert.assertEquals(actualAdjustedLoanAmount_BeforeCalculate,"n/a", "Verify Adjusted Loan Amount not display any Calculation");
-		Assert.assertEquals(actualAdjustedGrantAmount_BeforeCalculate,"n/a", "Verify Adjusted Grant Amount not display any Calculation");
-
 		/* 
 		* Step 5 - Now click on Calculate award 
 		*/
@@ -113,10 +99,10 @@ public class ReassignmentSelectorPortalIntegrationTest extends BaseTestMethods {
 		/*
 		 * Step 6 - Verify Award
 		 */
-		actualCalculatedTotalAmount_BeforeCalculate = webUtil.getText("Tgl_CalculatedTotal_ST");
-		actualExpectedContributionAmount_BeforeCalculate = webUtil.getText("Tgl_ExpectedContribution_ST");
-		Assert.assertNotEquals(actualCalculatedTotalAmount_BeforeCalculate, "n/a", "Verify Calculated Total Amount is updated");
-		Assert.assertNotEquals(actualExpectedContributionAmount_BeforeCalculate,"n/a", "Verify Expected Contribution Amount is updated");
+		String actualCalculatedTotalAmount_AfterCalculate = webUtil.getText("Tgl_CalculatedTotal_ST");
+		String actualContributionAmount_AfterCalculate = webUtil.getText("Tgl_ExpectedContribution_ST");
+		Assert.assertNotEquals(actualCalculatedTotalAmount_AfterCalculate, "n/a", "Verify Calculated Total Amount is updated");
+		Assert.assertNotEquals(actualContributionAmount_AfterCalculate,"n/a", "Verify Expected Contribution Amount is updated");
 		
 		/* 
 		* Step 7 - End Script 
