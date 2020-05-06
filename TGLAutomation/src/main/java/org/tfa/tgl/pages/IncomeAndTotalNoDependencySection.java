@@ -31,8 +31,10 @@ public class IncomeAndTotalNoDependencySection extends PFactory {
 		webUtil.getDriver().navigate().refresh();
 		webUtil.waitForBrowserToLoadCompletely();
 		webUtil.selectByIndex("Tgl_appyear_dd", 0);
+		webUtil.holdOn(1);
 		webUtil.getElement("Tgl_TGLStatusSingle_txt").click();
 		webUtil.getDriver().findElement(By.xpath("(//div[@class='selectize-dropdown-content'])[2]/div[2]")).click();
+		webUtil.holdOn(1);
 		webUtil.click("Home_Tgl_Search2_btn");	
 		webUtil.holdOn(5);
 		List <WebElement> searchresults=webUtil.getDriver().findElements(searchresultstable);
@@ -55,7 +57,7 @@ public class IncomeAndTotalNoDependencySection extends PFactory {
 		
 			if((rowstatus.getText().contains("INCOMPLETE")) || rowstatus.getText().contains("INPROGRESS")){			
 				rowstatus.click();
-				webUtil.holdOn(15);
+				webUtil.holdOn(10);
 				break;
 			}
 		
@@ -142,7 +144,7 @@ public class IncomeAndTotalNoDependencySection extends PFactory {
 		webUtil.setTextBoxValue("Tgl_TaxInfonoofdependents_txt", "0");
 		webUtil.holdOn(4);
 		webUtil.selectByVisibleText("Tgl_TGLStatus_dd", "Complete");
-		
+		webUtil.holdOn(2);
 		validations = webUtil.getDriver().findElements(statusvalidations);		
 		if(validations.size()==0){
 			flag=true;}
