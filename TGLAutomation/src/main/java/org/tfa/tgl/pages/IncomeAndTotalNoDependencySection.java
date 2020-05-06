@@ -101,6 +101,7 @@ public class IncomeAndTotalNoDependencySection extends PFactory {
 					webUtil.getElement("Tgl_TaxInfoPISValid_chk").click();
 		
 		// Set TGL status as Complete
+		webUtil.holdOn(2);
 		webUtil.selectByVisibleText("Tgl_TGLStatus_dd", "Complete");
 		// Verify there is no error message
 		List <WebElement> validations = webUtil.getDriver().findElements(statusvalidations);
