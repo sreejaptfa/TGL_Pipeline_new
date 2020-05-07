@@ -16,11 +16,8 @@
 			<class name="org.tfa.tgl.tests.TaxInformationSectionTest" />
 			<class name="org.tfa.tgl.tests.AdditionalInformationSectionTest" />
 			<class name="org.tfa.tgl.tests.AssetsAndLiabilitiesTest" />	
-			<!-- commenting below test due to a logged bug	 -->	
-			<!-- <class name="org.tfa.tgl.tests.IncomeAndTotalNoDependencyTest" />	 -->
 			<class name="org.tfa.tgl.tests.TGLAppCenterIntegrationPointTest" />  
 			<class name="org.tfa.tgl.tests.LeftNavTest" />
-<!-- 	 		<class name="org.tfa.tgl.tests.TGLPortalUploadTest" />  -->
 			<class name="org.tfa.tgl.tests.TotalAwardSectionTest" />
 			<class name="org.tfa.tgl.tests.GroupCalculationFieldValidationTest" />
 			<class name="org.tfa.tgl.tests.SendEmailTextboxTest" />
@@ -31,6 +28,9 @@
 			<class name="org.tfa.tgl.tests.SendNoteEmailToApplicantIntegrationTest" />	
 			<class name="org.tfa.tgl.tests.ReassignmentSelectorPortalIntegrationTest" />
 			<class name="org.tfa.tgl.tests.ValidCheckBoxIntegrationTest" /> 
+			<!-- commenting below test due to a logged bug	 -->	
+			<!-- <class name="org.tfa.tgl.tests.IncomeAndTotalNoDependencyTest" />	 -->
+			<!-- <class name="org.tfa.tgl.tests.TGLPortalUploadTest" />  -->
 		</classes>
 
 	</test>
