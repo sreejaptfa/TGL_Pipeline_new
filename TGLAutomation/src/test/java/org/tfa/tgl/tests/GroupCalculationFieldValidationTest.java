@@ -77,6 +77,8 @@ public class GroupCalculationFieldValidationTest extends BaseTestMethods{
 				String actualAwardCalculationMessage = webUtil.getText("Tgl_AwardCalculation_Msg");
 				Assert.assertTrue(actualAwardCalculationMessage.contains("awards calculated"));
 				break;
+			}else{
+				webUtil.click("Tgl_TGLCalculation_Cancel_Btn");
 			}
 		}
 		
