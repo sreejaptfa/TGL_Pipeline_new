@@ -1,6 +1,5 @@
 package org.tfa.tgl.tests;
 
-
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.tfa.framework.core.BaseTestMethods;
@@ -129,5 +128,5 @@ public class ReassignmentTest extends BaseTestMethods {
 	public TGLConstants getConstants(){
 		return new TGLConstants();
 	}
-
+	
 }

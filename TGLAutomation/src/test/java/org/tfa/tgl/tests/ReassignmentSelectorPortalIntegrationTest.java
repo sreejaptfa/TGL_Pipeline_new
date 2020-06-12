@@ -1,6 +1,8 @@
 package org.tfa.tgl.tests;
 
 
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.tfa.framework.core.BaseTestMethods;
@@ -44,20 +46,33 @@ public class ReassignmentSelectorPortalIntegrationTest extends BaseTestMethods {
 		String passwordSelectorPortal = testDataMap.get("SelectorPortalPassword");
 		String uploadedFileName=testDataMap.get("uploadUploadTemplateFilePath");
 		String expectedAssignment=testDataMap.get("expectedAssignment");
-
+		String assignmentId = null;
 		/*  
 		 * Step 1 - Login to TGL portal and pickup one applicant whose application is not completed  and click on applicant
 		 */
 		loginpage=new LoginPageTgl();
 		loginpage.enterLoginInfo();
+		
 		searchPage.selectTGLStatusDD("Tgl_InComplete_LK");
 		searchPage.clickOnSearchBtn();
-		String applicantID = searchPage.clickFirstRowColumnOnSearchResults();
-		
-		 
+		String applicantID = clickApplicantNameOnSearchResults();
+		Assert.assertNotNull(applicantID, "Not returned any related data on Search results");
+		webUtil.holdOn(5);
+			 
 		/*  
 		 * Step 2 - Now complete the application but do not calculate any award , make sure applicant is assign to region
 		 */
+		String actualValue = getAssignmentValue();
+		if(actualValue.contains("San Antonio")){
+			assignmentId ="NYENGL";
+			expectedAssignment = "New York";
+		}else if(actualValue.contains("New York")){
+			assignmentId ="SASPED";
+			expectedAssignment = "San Antonio";
+		}else{
+			assignmentId ="NYENGL";
+			expectedAssignment = "New York";
+		}
 		searchDetailsPage.clickCompleteAndFixErrorMessages(applicantID);
 		searchDetailsPage.clickOnTGLSignOutLink();
 
@@ -72,7 +87,7 @@ public class ReassignmentSelectorPortalIntegrationTest extends BaseTestMethods {
 		selectorPortalPage.selectRegionalReassignmentUploadLink();
 
 		//--> update excel with person ID and save
-		selectorPortalPage.updateExcelWithPersonIDForRegReassignUploadTemplate(uploadedFileName,applicantID);
+		selectorPortalPage.updateExcelWithPersonIDForRegReassignUploadTemplate(uploadedFileName,applicantID,assignmentId);
 		
 		//--> Click on Upload
         selectorPortalPage.chooseFileAndUploadTemplate();
@@ -116,7 +131,30 @@ public class ReassignmentSelectorPortalIntegrationTest extends BaseTestMethods {
 		String actualAssignmentValue = arrSplit[1];
 		return actualAssignmentValue;
 	}
-
+	private String clickApplicantNameOnSearchResults() {
+		String getApplicantID = null;
+		int len = webUtil.getDriver().findElements(By.xpath("//tbody[@data-hook='results']/tr")).size();
+		try {
+			for(int i=1; i<=len; i++){
+				WebElement getPersonID =  webUtil.getDriver().findElement(By.xpath("//tbody[@data-hook='results']/tr["+i+"]/td[2]/a"));
+				WebElement getsStage =  webUtil.getDriver().findElement(By.xpath("//tbody[@data-hook='results']/tr["+i+"]/td[6]/a"));
+				if((getsStage.getText().equals("APPLICANT"))){
+					getApplicantID = getPersonID.getText();
+					getPersonID.click();
+					break;
+				}
+			}
+		}
+			catch (Exception e) {
+            try {
+				throw new Exception(e);
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+        } 
+		return getApplicantID;
+	}
 	
 		@Override
 		public TGLConstants getConstants(){

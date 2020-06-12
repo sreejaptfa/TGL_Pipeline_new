@@ -49,13 +49,15 @@ public class SelectorPortalPage {
 	/**
 	 * This function will update the Person id on row 1 for Reg Reassign Upload Template
 	 */
-	public void updateExcelWithPersonIDForRegReassignUploadTemplate(String fileName, String applicantID) throws IOException{
+	public void updateExcelWithPersonIDForRegReassignUploadTemplate(String fileName, String applicantID, String assignmentId) throws IOException{
 		FileInputStream fis = new FileInputStream(new File(fileName).getAbsolutePath());  
 		HSSFWorkbook workbook = new HSSFWorkbook (fis);
 		HSSFSheet sheet = workbook.getSheetAt(0); 
 		HSSFRow row = sheet.getRow(1);
 		HSSFCell cell = row.getCell(0);
 		cell.setCellValue(applicantID);
+		HSSFCell cell1 = row.getCell(3);
+		cell1.setCellValue(assignmentId);
 	   	fis.close(); 
 		FileOutputStream fos =new FileOutputStream(new File(fileName).getAbsolutePath());
         workbook.write(fos);
