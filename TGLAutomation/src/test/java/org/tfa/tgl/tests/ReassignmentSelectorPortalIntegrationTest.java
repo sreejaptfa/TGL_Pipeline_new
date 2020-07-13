@@ -54,7 +54,7 @@ public class ReassignmentSelectorPortalIntegrationTest extends BaseTestMethods {
 		loginpage.enterLoginInfo();
 		
 		searchPage.selectTGLStatusDD("Tgl_InComplete_LK");
-		searchPage.clickOnSearchBtn();
+ 		searchPage.clickOnSearchBtn();
 		String applicantID = clickApplicantNameOnSearchResults();
 		Assert.assertNotNull(applicantID, "Not returned any related data on Search results");
 		webUtil.holdOn(5);
