@@ -53,6 +53,7 @@ public class ReassignmentSelectorPortalIntegrationTest extends BaseTestMethods {
 		loginpage=new LoginPageTgl();
 		loginpage.enterLoginInfo();
 		
+		webUtil.holdOn(2);
 		searchPage.selectTGLStatusDD("Tgl_InComplete_LK");
  		searchPage.clickOnSearchBtn();
  		webUtil.holdOn(2);
