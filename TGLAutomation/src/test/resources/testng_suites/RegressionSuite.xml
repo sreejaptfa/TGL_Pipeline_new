@@ -26,7 +26,7 @@
 			<class name="org.tfa.tgl.tests.EducationCostCalculationTest" />	
 			<class name="org.tfa.tgl.tests.ReassignmentTest" />		
 			<!-- <class name="org.tfa.tgl.tests.SendNoteEmailToApplicantIntegrationTest" />	 -->
-			<class name="org.tfa.tgl.tests.ReassignmentSelectorPortalIntegrationTest" />
+<!-- 			<class name="org.tfa.tgl.tests.ReassignmentSelectorPortalIntegrationTest" /> -->
 			<!-- <class name="org.tfa.tgl.tests.ValidCheckBoxIntegrationTest" />  -->
 			<!-- commenting below test due to a logged bug	 -->	
 			<!-- <class name="org.tfa.tgl.tests.IncomeAndTotalNoDependencyTest" />	 -->

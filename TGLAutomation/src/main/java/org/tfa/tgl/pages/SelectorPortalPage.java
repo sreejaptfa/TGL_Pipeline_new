@@ -32,7 +32,7 @@ public class SelectorPortalPage {
 		webUtil.click("SelectorPortal_Admissions_LK");
 		webUtil.holdOn(5);
 		webUtil.click("SelectorPortal_RegionalReassignmentUpload_LK");
-		webUtil.holdOn(2);
+		webUtil.holdOn(5);
 	}
 	
 	/**
