@@ -50,7 +50,7 @@ public class TGLAppCenterIntegrationPointTest extends BaseTestMethods{
 	 * @Param: TGL Admin credentials and a valid applicant email and person id in TestData
 	 * @Author: Nitin Sharma
 	 */
-	@Test(priority=2, enabled = true)
+	@Test(priority=2, enabled = false)
 	public void TGL110ValidateIntegrationPoints(){
 		LoginPageTgl loginpage = new LoginPageTgl();
 		TGLAppCenterIntergrationPoints integrationpoints= new TGLAppCenterIntergrationPoints();
@@ -74,7 +74,7 @@ public class TGLAppCenterIntegrationPointTest extends BaseTestMethods{
 	 * @Param: TGL Admin credentials and a valid applicant email and person id in TestData
 	 * @Author: Nitin Sharma
 	 */
-	@Test(priority=3, enabled = true)
+	@Test(priority=3, enabled = false)
 	public void TGL111ValidateIntegrationPoints(){
 		LoginPageTgl loginpage = new LoginPageTgl();
 		TGLAppCenterIntergrationPoints integrationpoints= new TGLAppCenterIntergrationPoints();
@@ -99,7 +99,7 @@ public class TGLAppCenterIntegrationPointTest extends BaseTestMethods{
 	 * @Param: TGL Admin credentials and a valid applicant email and person id in TestData
 	 * @Author: Nitin Sharma
 	 */
-	@Test(priority=4, enabled = true)
+	@Test(priority=4, enabled = false)
 	public void TGL112ValidateIntegrationPoints(){
 		LoginPageTgl loginpage = new LoginPageTgl();
 		TGLAppCenterIntergrationPoints integrationpoints= new TGLAppCenterIntergrationPoints();
