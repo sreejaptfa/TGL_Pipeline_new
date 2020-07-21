@@ -72,6 +72,7 @@ public class ReassignmentTest extends BaseTestMethods {
 		//--> Go to IMPS
 		webUtil.openLoginPage(url);
 		IMPSpage.validLogin(userNameIMPS,passwordIMPS);
+		webUtil.holdOn(5);
 		IMPSpage.clickOnAdmissionsButton();
 		
 		//--> Search for same applicant
@@ -91,10 +92,13 @@ public class ReassignmentTest extends BaseTestMethods {
 		*/
 		loginpage=new LoginPageTgl();
 		loginpage.enterLoginInfo();
+		webUtil.holdOn(5);
+		webUtil.click("Tgl_Clear_btn");
 		searchPage.clickOnMoreSearchOptionsBtn();
 		searchPage.enterPersonID(applicantID);
 		searchPage.clickOnSearchBtn();
 		searchPage.clickFirstRowColumnOnSearchResults();
+		webUtil.holdOn(2);
 		String actualAssignmentValue = getAssignmentValue();
 		Assert.assertTrue(selectedQualifiedPositon.contains(actualAssignmentValue), "Verify the Assignment value updated");
 		

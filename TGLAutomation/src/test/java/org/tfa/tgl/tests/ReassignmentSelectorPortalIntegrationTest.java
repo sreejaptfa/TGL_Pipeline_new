@@ -53,8 +53,10 @@ public class ReassignmentSelectorPortalIntegrationTest extends BaseTestMethods {
 		loginpage=new LoginPageTgl();
 		loginpage.enterLoginInfo();
 		
+		webUtil.holdOn(2);
 		searchPage.selectTGLStatusDD("Tgl_InComplete_LK");
-		searchPage.clickOnSearchBtn();
+ 		searchPage.clickOnSearchBtn();
+ 		webUtil.holdOn(2);
 		String applicantID = clickApplicantNameOnSearchResults();
 		Assert.assertNotNull(applicantID, "Not returned any related data on Search results");
 		webUtil.holdOn(5);
@@ -84,6 +86,7 @@ public class ReassignmentSelectorPortalIntegrationTest extends BaseTestMethods {
 		//--> Go to Selector Portal
 		webUtil.openLoginPage(url);
 		selectorPortalPage.validLogin(userNameSelectorPortal, passwordSelectorPortal);
+		webUtil.holdOn(5);
 		selectorPortalPage.selectRegionalReassignmentUploadLink();
 
 		//--> update excel with person ID and save

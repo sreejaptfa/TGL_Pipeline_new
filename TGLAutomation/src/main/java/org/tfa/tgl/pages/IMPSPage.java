@@ -26,6 +26,7 @@ public class IMPSPage {
 	public void clickOnAdmissionsButton(){
 		webUtil.switchToFrameByFrameLocator("CommonTopframeWithName_Frm");
 		webUtil.click("IMPS_Admissions_Btn");
+		webUtil.holdOn(2);
 		webUtil.switchToWindowFromFrame();
 	}
 	
@@ -105,12 +106,16 @@ public class IMPSPage {
 	if(getAssignStatus.equals("Unassign")){
 		if(getQualifiedPosition.contains("Bay Area")){
 			webUtil.click("IMPS_NewYorkAssign_LK");
+			webUtil.holdOn(2);
 		}else if(getQualifiedPosition.contains("New York")){
 			webUtil.click("IMPS_BayAreaAssign_LK");
+			webUtil.holdOn(2);
 		}else if(getQualifiedPosition.contains("D.C. Region")){
 			webUtil.click("IMPS_BayAreaAssign_LK");
+			webUtil.holdOn(2);
 		}else{
 		webUtil.click("IMPS_DCRegionAssign_LK");
+		webUtil.holdOn(2);
 		}
 	}
 	String selectedQualifiedPositon = webUtil.getText("IMPS_QualifiedFirstPosition_LK");
