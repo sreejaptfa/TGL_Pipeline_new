@@ -55,8 +55,8 @@ public class SearchPageTGL {
 		boolean flag=false;
 		
 		Select appyeardd=new Select(webUtil.getElement("Tgl_appyear_dd"));
-		
-		if(appyeardd.getFirstSelectedOption().getText().contains("2020"))
+		// This condition verifies the dafault app year selection
+		if(appyeardd.getFirstSelectedOption().getText().contains("2021"))
 			return flag=true;
 		else
 			flag=false;
@@ -91,6 +91,7 @@ public class SearchPageTGL {
 		
 		webUtil.getDriver().navigate().refresh();
 		webUtil.waitForBrowserToLoadCompletely();
+		// deselecting app year value
 		webUtil.selectByIndex("Tgl_appyear_dd", 0);
 		webUtil.click("Tgl_moreSearchOptionsLink");
 		webUtil.getDriver().manage().window().maximize();
@@ -100,8 +101,7 @@ public class SearchPageTGL {
 		webUtil.click("Home_Tgl_Search2_btn");
 		webUtil.holdOn(3);
 		
-		 WebElement datahook=webUtil.getDriver().findElement(datahooklocator);
-		
+		 WebElement datahook=webUtil.getDriver().findElement(datahooklocator);	
 		 List <WebElement>searchresults=datahook.findElements(By.xpath("//tr"));
 		 
 		 int size;
