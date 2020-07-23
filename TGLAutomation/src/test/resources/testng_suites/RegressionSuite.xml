@@ -27,8 +27,10 @@
 			<class name="org.tfa.tgl.tests.TimeLineTest" />			
 			<class name="org.tfa.tgl.tests.DecimalPlacesInTextFieldsTest" />	
 			<class name="org.tfa.tgl.tests.EducationCostCalculationTest" />	
-			<class name="org.tfa.tgl.tests.ReassignmentTest" />		
-			<class name="org.tfa.tgl.tests.ReassignmentSelectorPortalIntegrationTest" />	
+			
+			<!-- commenting below reassignment tests due to lack of testdata as per discussion with Surya <<NS 23 July>> -->
+			<!-- <class name="org.tfa.tgl.tests.ReassignmentTest" />		
+			<class name="org.tfa.tgl.tests.ReassignmentSelectorPortalIntegrationTest" />	 -->
 				
 			<!--  below tests are all commented as on 15 June 2020 <<NS>> -->
 			<!-- <class name="org.tfa.tgl.tests.SendNoteEmailToApplicantIntegrationTest" />	 -->
