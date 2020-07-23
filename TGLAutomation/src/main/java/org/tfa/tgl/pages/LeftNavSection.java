@@ -38,6 +38,9 @@ public class LeftNavSection extends PFactory{
     	//webUtil.setTextBoxValue("Tgl_personid", pid);
 		// TestCase: LeftNav(Automatable) Step - 2 
     	webUtil.setTextBoxValueTestData("Tgl_personid", "PIDConfirmed");
+    	// Clear app year value - change made to fix script <<NS 21 July 2020>>
+    	webUtil.selectByIndex("Tgl_appyear_dd", 0);
+    	webUtil.holdOn(1);
 		webUtil.click("Home_Tgl_Search2_btn");	
 		WebElement firstrow=webUtil.getDriver().findElement(firstrowlocator);	
 		
@@ -196,6 +199,9 @@ public class LeftNavSection extends PFactory{
 		webUtil.click("Tgl_moreSearchOptionsLink");  	
     	//webUtil.setTextBoxValue("Tgl_personid", pid);
     	webUtil.setTextBoxValueTestData("Tgl_personid", "PIDAssignment");
+    	// Clear app year value - change made to fix script <<NS 21 July 2020>>
+    	webUtil.selectByIndex("Tgl_appyear_dd", 0);
+    	webUtil.holdOn(1);
 		webUtil.click("Home_Tgl_Search2_btn");	
 		WebElement firstrow=webUtil.getDriver().findElement(firstrowlocator);	
 		
@@ -346,6 +352,9 @@ public class LeftNavSection extends PFactory{
 		webUtil.click("Tgl_moreSearchOptionsLink");  	
     	//webUtil.setTextBoxValue("Tgl_personid", pid);
     	webUtil.setTextBoxValueTestData("Tgl_personid", "PIDDeferAccept");
+    	// Clear app year value - change made to fix script <<NS 21 July 2020>>
+    	webUtil.selectByIndex("Tgl_appyear_dd", 0);
+    	webUtil.holdOn(1);
 		webUtil.click("Home_Tgl_Search2_btn");	
 		WebElement firstrow=webUtil.getDriver().findElement(firstrowlocator);	
 		

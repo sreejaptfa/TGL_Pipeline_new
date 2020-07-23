@@ -108,6 +108,9 @@ public class TGLAppCenterIntergrationPoints extends WebDriverUtil{
 		// Provide PID in PersonId field
 		webUtil.setTextBoxValueTestData("Tgl_personid", "PIDIntegation");
 		webUtil.holdOn(2);
+		// Clear app year value - change made to fix script <<NS 21 July 2020>>
+    	webUtil.selectByIndex("Tgl_appyear_dd", 0);
+    	webUtil.holdOn(1);
 		// Click Search button
 		webUtil.click("Home_Tgl_Search2_btn");
 		webUtil.holdOn(3);

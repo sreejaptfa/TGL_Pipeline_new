@@ -71,6 +71,9 @@ public class ValidCheckBoxIntegrationTest extends BaseTestMethods{
 		webUtil.click("Tgl_Clear_btn");
 		searchPage.clickOnMoreSearchOptionsBtn();
 		searchPage.enterPersonID(applicantID);
+		// Clear app year value - change made to fix script <<NS 21 July 2020>>
+    	webUtil.selectByIndex("Tgl_appyear_dd", 0);
+    	webUtil.holdOn(1);
 		searchPage.clickOnSearchBtn();
 		boolean iChexkFlag = webUtil.objectIsVisible("Tgl_FirstRowColumn_TB");
 		if(iChexkFlag){
