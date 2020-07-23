@@ -19,6 +19,7 @@
 			<class name="org.tfa.tgl.tests.AssetsAndLiabilitiesTest" />	
 			<!-- commenting below test temporarily -->
 			<!-- <class name="org.tfa.tgl.tests.TGLAppCenterIntegrationPointTest" />   -->
+			
 		 	<class name="org.tfa.tgl.tests.LeftNavTest" />
 			<class name="org.tfa.tgl.tests.TotalAwardSectionTest" />
 			<class name="org.tfa.tgl.tests.GroupCalculationFieldValidationTest" />
@@ -27,7 +28,8 @@
 			<class name="org.tfa.tgl.tests.DecimalPlacesInTextFieldsTest" />	
 			<class name="org.tfa.tgl.tests.EducationCostCalculationTest" />	
 			<class name="org.tfa.tgl.tests.ReassignmentTest" />		
-			<class name="org.tfa.tgl.tests.ReassignmentSelectorPortalIntegrationTest" />		
+			<class name="org.tfa.tgl.tests.ReassignmentSelectorPortalIntegrationTest" />	
+				
 			<!--  below tests are all commented as on 15 June 2020 <<NS>> -->
 			<!-- <class name="org.tfa.tgl.tests.SendNoteEmailToApplicantIntegrationTest" />	 -->
  			<class name="org.tfa.tgl.tests.ReassignmentSelectorPortalIntegrationTest" />
