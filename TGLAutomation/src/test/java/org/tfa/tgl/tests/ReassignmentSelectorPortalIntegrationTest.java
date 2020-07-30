@@ -1,6 +1,8 @@
 package org.tfa.tgl.tests;
 
 
+import java.util.List;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
@@ -57,7 +59,20 @@ public class ReassignmentSelectorPortalIntegrationTest extends BaseTestMethods {
 		searchPage.selectTGLStatusDD("Tgl_InComplete_LK");
  		searchPage.clickOnSearchBtn();
  		webUtil.holdOn(2);
-		String applicantID = clickApplicantNameOnSearchResults();
+		String applicantID = searchPage.clickApplicantNameOnSearchResults();
+		
+		if(applicantID !=null) {
+		}else {
+			webUtil.click("Tgl_Clear_btn");
+			List<WebElement> link=webUtil.getElementsList("Home_tgl_applicationyear");
+			WebElement appYear =  link.get(1);
+			appYear.click();
+			searchPage.selectTGLStatusDD("Tgl_Complete_LK");
+	 		searchPage.clickOnSearchBtn();
+	 		applicantID = searchPage.clickApplicantNameOnSearchResults();
+		}
+		
+		
 		Assert.assertNotNull(applicantID, "Not returned any related data on Search results");
 		webUtil.holdOn(5);
 			 
@@ -100,7 +115,10 @@ public class ReassignmentSelectorPortalIntegrationTest extends BaseTestMethods {
 		*/
 		loginpage=new LoginPageTgl();
 		loginpage.enterLoginInfo();
+		webUtil.waitForBrowserToLoadCompletely();
+		webUtil.holdOn(10);
 		webUtil.click("Tgl_Clear_btn");
+		webUtil.holdOn(2);
 		searchPage.clickOnMoreSearchOptionsBtn();
 		searchPage.enterPersonID(applicantID);
 		searchPage.clickOnSearchBtn();
