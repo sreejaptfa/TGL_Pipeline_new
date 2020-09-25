@@ -3,7 +3,6 @@ package org.tfa.tgl.tests;
 
 import java.util.List;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -55,7 +54,6 @@ public class ReassignmentSelectorPortalIntegrationTest extends BaseTestMethods {
 		loginpage=new LoginPageTgl();
 		loginpage.enterLoginInfo();
 		
-		webUtil.holdOn(2);
 		searchPage.selectTGLStatusDD("Tgl_InComplete_LK");
  		searchPage.clickOnSearchBtn();
  		webUtil.holdOn(2);
@@ -152,33 +150,8 @@ public class ReassignmentSelectorPortalIntegrationTest extends BaseTestMethods {
 		String actualAssignmentValue = arrSplit[1];
 		return actualAssignmentValue;
 	}
-	private String clickApplicantNameOnSearchResults() {
-		String getApplicantID = null;
-		int len = webUtil.getDriver().findElements(By.xpath("//tbody[@data-hook='results']/tr")).size();
-		try {
-			for(int i=1; i<=len; i++){
-				WebElement getPersonID =  webUtil.getDriver().findElement(By.xpath("//tbody[@data-hook='results']/tr["+i+"]/td[2]/a"));
-				WebElement getsStage =  webUtil.getDriver().findElement(By.xpath("//tbody[@data-hook='results']/tr["+i+"]/td[6]/a"));
-				if((getsStage.getText().equals("APPLICANT"))){
-					getApplicantID = getPersonID.getText();
-					getPersonID.click();
-					break;
-				}
-			}
-		}
-			catch (Exception e) {
-            try {
-				throw new Exception(e);
-			} catch (Exception e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-        } 
-		return getApplicantID;
+	@Override
+	public TGLConstants getConstants(){
+		return new TGLConstants();
 	}
-	
-		@Override
-		public TGLConstants getConstants(){
-			return new TGLConstants();
-		}
 }

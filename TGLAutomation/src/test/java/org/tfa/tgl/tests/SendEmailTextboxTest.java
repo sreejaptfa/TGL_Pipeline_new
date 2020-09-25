@@ -47,7 +47,6 @@ public class SendEmailTextboxTest extends BaseTestMethods{
 		
 		/* Step 2 & 3 - Search for the applicants. Click on the search result row */
 		webUtil.waitForBrowserToLoadCompletely();
-		webUtil.holdOn(3);
 		searchPage.clickOnSearchBtn();
 		searchPage.clickFirstRowColumnOnSearchResults();
 

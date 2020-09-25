@@ -55,6 +55,8 @@ public class ReassignmentTest extends BaseTestMethods {
 		*/
 		loginpage=new LoginPageTgl();
 		loginpage.enterLoginInfo();
+		webUtil.holdOn(5);
+		
 		searchPage.selectTGLStatusDD("Tgl_InComplete_LK");
 		searchPage.clickOnSearchBtn();
 		String applicantID = searchPage.clickFirstRowColumnOnSearchResults();
