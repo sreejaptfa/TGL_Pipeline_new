@@ -46,16 +46,19 @@ public class TaxInformationSection extends PFactory{
 	public boolean verifyTaxInformationSection(){
 		boolean flag=false;
 		// TestCase - TaxInformation - Step 2
-		String pid=SearchPageTGL.getpersonid();
+		//String pid=SearchPageTGL.getpersonid();
+	//	searchPage.clickOnSearchBtn();
+	//	searchPage.clickFirstRowColumnOnSearchResults();
+		webUtil.click("Tgl_Search_btn");
     	By assetandliabilitylocator=By.xpath("(//div[@class='verification-views'])//div[3]/h2");   	
     	// This code will not be applicable when entire test suite will be run, this is temporary Person Id Search in case test is run directly
-    	if(pid==null)
-    			pid="4228467";		
-    	webUtil.click("Tgl_moreSearchOptionsLink");  	
-    	webUtil.setTextBoxValue("Tgl_personid", pid);
+    //	if(pid==null)
+    //			pid="4228467";		
+    //	webUtil.click("Tgl_moreSearchOptionsLink");  	
+    //	webUtil.setTextBoxValue("Tgl_personid", pid);
     	
     	// Clear app year value - change made to fix script <<NS 21 July 2020>>
-    	webUtil.selectByIndex("Tgl_appyear_dd", 0);
+    	webUtil.selectByIndex("Tgl_appyear_dd",1);
     	webUtil.holdOn(1);
 		webUtil.click("Home_Tgl_Search2_btn");	
 		WebElement firstrow=webUtil.getDriver().findElement(firstrowlocator);				

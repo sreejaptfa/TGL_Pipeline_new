@@ -46,7 +46,7 @@ public class SendNoteEmailToApplicantIntegrationTest extends BaseTestMethods{
 		 */
 		loginpage=new LoginPageTgl();
 		loginpage.enterLoginInfo();
-		
+	
 		/* 
 		 * Step 2 - Search for the applicants. Click on the search result row 
 		 */

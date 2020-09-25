@@ -1,5 +1,8 @@
 package org.tfa.tgl.tests;
 
+import java.util.List;
+
+import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.tfa.framework.core.BaseTestMethods;
@@ -42,9 +45,18 @@ public class TimeLineTest extends BaseTestMethods{
 		searchDetailsPage.clickOnYesUpdateThisAwardButton();
 		
 		/* Step 4 - Click on Detail link and verify all the story */
+		boolean flag = false;
 		searchDetailsPage.clickOnTimeLineButton();
-		String actualValueMsg = webUtil.getText("Tgl_TimeLine_TB");
-		Assert.assertTrue(actualValueMsg.contains(enterAdjustmentCommentValue), "Verify Time Line adds the Row");
+		List<WebElement> totalCnt=webUtil.getElementsList("Tgl_TimeLine_TB");
+		for(int i = 0; i<totalCnt.size(); i++){
+			WebElement msg =  totalCnt.get(i);
+			if(msg.getText().contains(enterAdjustmentCommentValue)) {
+				flag = true;
+				break;
+			}
+				
+		}
+		Assert.assertTrue(flag, "Verify Time Line adds the Row");
 		
 		/* Step 5 - End Script */
 

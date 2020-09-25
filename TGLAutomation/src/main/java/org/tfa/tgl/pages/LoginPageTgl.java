@@ -40,6 +40,7 @@ public class LoginPageTgl
 		webUtil.setTextBoxValueTestData("LoginTgl_username_ED", "Login_UserName");
 		webUtil.setTextBoxValueTestData("LoginTgl_password_ED", "Login_Password");
 		webUtil.click("LoginTgl_Signin_btn");
+		webUtil.holdOn(5);
 		
 		explicitwait.until(ExpectedConditions.visibilityOfElementLocated(homepagecontrol));
 		if (webUtil.getDriver().getCurrentUrl().contains("tgl"))

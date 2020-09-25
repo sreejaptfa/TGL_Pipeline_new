@@ -80,6 +80,8 @@ public class GroupCalculationFieldValidationTest extends BaseTestMethods{
 			}else{
 				webUtil.click("Tgl_TGLCalculation_Cancel_Btn");
 			}
+			
+			//Assert.assertTrue(flag, "No Awards to Calculate for the Applicatants");
 		}
 		
 		/* Step 9 - End Script */

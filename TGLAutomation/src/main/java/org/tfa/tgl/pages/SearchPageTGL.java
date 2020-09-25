@@ -435,6 +435,7 @@ public class SearchPageTGL {
 	 * This function will clicks on Search Button
 	 */
 	public void clickOnSearchBtn(){
+		webUtil.holdOn(5);
 		webUtil.click("Tgl_Search_btn");
 	}
 	/*

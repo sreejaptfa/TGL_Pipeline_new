@@ -49,7 +49,7 @@ public class TotalAwardSectionTest extends BaseTestMethods{
 		/* Step 1 - Login to the TGL  portal application using valid user id < https://qamerlin.teachforamerica.org/ada */
 		loginpage=new LoginPageTgl();
 		loginpage.enterLoginInfo();
-		
+	
 		/* Step 2 - Search for Personid to verify Total award section who has already cal award */
 		searchPage.clickOnSearchBtn();
 		searchPage.clickFirstRowColumnOnSearchResults();
