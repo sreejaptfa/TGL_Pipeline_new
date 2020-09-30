@@ -246,8 +246,9 @@ public class SearchPageTGL {
 		webUtil.waitForBrowserToLoadCompletely();
 		WebElement InterviewDeadlinedd=webUtil.getElement("Tgl_InterviewDeadlinefilter_txt");		
 		//localwait.until(ExpectedConditions.visibilityOfElementLocated(rowdetailxpath));
-		rowdetailxpath=By.xpath("//tbody[@data-hook='results']/tr[1]");		
-		do{
+		rowdetailxpath=By.xpath("//tbody[@data-hook='results']/tr[1]");	
+		int exit = 0;
+		do {
 			validofferdeadline=true;
 			webUtil.getDriver().navigate().refresh();
 			webUtil.waitForBrowserToLoadCompletely();
@@ -276,6 +277,11 @@ public class SearchPageTGL {
 			log.info("No records found with Interview Deadline:"+intvwdeadlineselection);
 			//System.out.println("No records found with Interview Deadline:"+intvwdeadlineselection);
 			//don't execute remaining code and startover again
+			exit ++ ;
+			if (exit > 8) {
+				log.info("No data (or Insufficiet data) found against the available deadlines");
+				return false;		
+			}
 			continue;
 			//webUtil.getDriver().navigate().refresh();
 			}
@@ -342,7 +348,7 @@ public class SearchPageTGL {
 						continue;		
 					}
 				}
-			
+							
 		}while(size<2);		
 		for (i=1;i<=size;i++){			
 		WebElement rowstatus=webUtil.getDriver().findElement(By.xpath("//tbody[@data-hook='results']/tr["+String.valueOf(i)+"]/td[3]/a"));
