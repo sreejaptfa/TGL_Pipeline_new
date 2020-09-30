@@ -128,6 +128,7 @@ public class TGLAppCenterIntergrationPoints extends WebDriverUtil{
 	
 	public boolean removeExistingDocumentsfromApplicantTaxReturn() {
 		boolean f = false;
+		List <WebElement> we = new ArrayList();
 		List <WebElement> documents = new ArrayList<>();
 		try{
 			documents = webUtil.getDriver().findElements(By.xpath("(//table[@class='documents-table'])[6]/tbody/tr"));
@@ -135,15 +136,19 @@ public class TGLAppCenterIntergrationPoints extends WebDriverUtil{
 			for(WebElement w:documents){
 				w.findElement(By.xpath("//td[3]/button")).click();
 				webUtil.holdOn(3);
-				try {
-					webUtil.getDriver().findElement(By.xpath("(//span[contains(text(),'Yes, remove this document')])[4]")).click();
-				}
-				catch (Exception e) {
-					webUtil.getDriver().findElement(By.xpath("(//span[contains(text(),'Yes, remove this document')])[1]")).click();	
-					
-				}
-				
+				// fetch number of Remove buttons and click the one that is visible
+				we=webUtil.getDriver().findElements(By.xpath("(//span[contains(text(),'Yes, remove this document')])"));
+				log.info("Number of Yes remove buttons:"+we.size());
+
+				for(WebElement w1: we) {
+					if (w1.isDisplayed() == true) {
+						w1.click();
+						webUtil.holdOn(2);
+						break ;
+					}
+				}			
 			}
+			
 			f = true;
 		} catch(Exception e) {
 			log.info("Exception occured deleting existing documents for applicant tax return");
