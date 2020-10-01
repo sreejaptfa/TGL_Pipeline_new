@@ -7,14 +7,10 @@ import org.tfa.framework.core.BaseTestMethods;
 import org.tfa.tgl.pages.LoginPageTgl;
 import org.tfa.tgl.pages.SearchPageTGL;
 import org.tfa.tgl.utilities.web.TGLConstants;
-import org.tfa.framework.core.Constants;
 
 public class SearchPageTest extends BaseTestMethods {
 	
-	private boolean flag;
-	private LoginPageTgl loginpage;
 	Logger log=Logger.getLogger("rootLogger");
-	//Assert Assert=new Assert();
 	SearchPageTGL search=new SearchPageTGL();
 	
 	/*@Desc: below test verifies filters and ensures search results are expected
@@ -25,9 +21,8 @@ public class SearchPageTest extends BaseTestMethods {
 	 *@Author: Nitin Sharma 
 	 */
 	@Test
-	public void TGL101verifySearchResults(){
-		
-		loginpage=new LoginPageTgl();
+	public void tgl101verifySearchResults(){
+		LoginPageTgl loginpage=new LoginPageTgl();
 		try {
 			
 			// Below assert logs into the application
@@ -55,26 +50,15 @@ public class SearchPageTest extends BaseTestMethods {
 			Assert.assertTrue(search.verifyEachFilter());
 			
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			//e.printStackTrace();		
 			Assert.fail("Exception Occured"+e);
 			log.error("Exception Occured"+e);
-			
-			
 		} finally{
-			
 			log.info(this.getClass().getEnclosingMethod() + " Test Execution Completion - Success!");
 		}
-		
-		
 	}
 	
 	@Override
-	public TGLConstants getConstants()
-	{
+	public TGLConstants getConstants()	{
 		return new TGLConstants();
 	}
-	
-	
-
 }

@@ -21,7 +21,6 @@ import org.tfa.tgl.utilities.web.TGLWebUtil;
  */
 public class SendNoteEmailToApplicantIntegrationTest extends BaseTestMethods{
 
-	private LoginPageTgl loginpage;
 	private SearchPageTGL searchPage= new SearchPageTGL();
 	private TGLWebUtil webUtil=TGLWebUtil.getObject();
 	private RandomUtil random=new RandomUtil();
@@ -37,14 +36,14 @@ public class SendNoteEmailToApplicantIntegrationTest extends BaseTestMethods{
 	 */
 	
 	@Test
-	public void TGL11129TestSendNoteEmailToApplicantIntegrationPoint() throws Exception {
+	public void tgl11129TestSendNoteEmailToApplicantIntegrationPoint() throws Exception {
 		String host = testDataMap.get("Host");
 		String userEmail = testDataMap.get("userEmail");
 		String password = testDataMap.get("emailPassword");
 		/* 
 		 * Step 1 - Login to the TGL  portal application using valid user id < https://stageweb.tfanet.org/ada/login> 
 		 */
-		loginpage=new LoginPageTgl();
+		LoginPageTgl loginpage=new LoginPageTgl();
 		loginpage.enterLoginInfo();
 	
 		/* 

@@ -15,17 +15,16 @@ import org.tfa.tgl.utilities.web.TGLWebUtil;
 
 public class TimeLineTest extends BaseTestMethods{
 
-	private LoginPageTgl loginpage;
 	private TGLWebUtil webUtil=TGLWebUtil.getObject();
 	private RandomUtil random=new RandomUtil();
 	private SearchPageTGL searchPage= new SearchPageTGL();
 	private SearchDetailsPageTGL searchDetailsPage = new SearchDetailsPageTGL();
 	
 	@Test
-	public void TGL11125TestTimeLine() throws Exception {
+	public void tgl11125TestTimeLine() throws Exception {
 		
 		/* Step 1 - Login to TGL portal */
-		loginpage=new LoginPageTgl();
+		LoginPageTgl loginpage=new LoginPageTgl();
 		loginpage.enterLoginInfo();
 		
 		/* Step 2 - Go go to TGL search and search for applicant whose TGL app is completed in Online part 2 */

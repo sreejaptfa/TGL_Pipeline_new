@@ -32,7 +32,7 @@ public class ApplicantCenterPage {
 		webUtil.holdOn(5);
 	}
 	
-	public boolean ClickOnGoToAccountHomeLink(){
+	public boolean clickOnGoToAccountHomeLink(){
 		boolean iflag = webUtil.objectIsVisible("AppCenter_GoToAccountHome_Lk");
 		if (iflag){
 			webUtil.click("AppCenter_GoToAccountHome_Lk");

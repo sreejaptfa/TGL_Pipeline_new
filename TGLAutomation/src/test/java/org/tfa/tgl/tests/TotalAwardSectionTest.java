@@ -21,12 +21,14 @@ import org.tfa.tgl.utilities.web.TGLWebUtil;
  */
 public class TotalAwardSectionTest extends BaseTestMethods{
 
-	private LoginPageTgl loginpage;
 	private TGLWebUtil webUtil=TGLWebUtil.getObject();
 	private SearchPageTGL searchPage= new SearchPageTGL();
 	private SearchDetailsPageTGL searchDetailsPage = new SearchDetailsPageTGL();
 	static Logger log=Logger.getLogger("rootLogger");
-	
+	private static final String TGLLOADADJUSTMENTED="Tgl_LoanAdjustment_ED";
+	private static final String TGLADJUSTMENTCOMMENTED="Tgl_AdjustmentComment_ED";
+	private static final String TGLGRANTADJUSTMENTED="Tgl_GrantAdjustment_ED";
+	private static final String TGLADJUSTMENTSAVEBTN="Tgl_AdjustmentSave_btn";
 	String getActualValue;
 	String enterLoanAdjustAmountValue;
 	String enterGrantAdjustAmountValue;
@@ -44,10 +46,10 @@ public class TotalAwardSectionTest extends BaseTestMethods{
 	 */
 	
 	@Test
-	public void TGL106TestTotalAwardSection() throws Exception {
+	public void tgl106TestTotalAwardSection() throws Exception {
 		
 		/* Step 1 - Login to the TGL  portal application using valid user id < https://qamerlin.teachforamerica.org/ada */
-		loginpage=new LoginPageTgl();
+		LoginPageTgl loginpage=new LoginPageTgl();
 		loginpage.enterLoginInfo();
 	
 		/* Step 2 - Search for Personid to verify Total award section who has already cal award */
@@ -58,26 +60,26 @@ public class TotalAwardSectionTest extends BaseTestMethods{
 		searchDetailsPage.clickOnManuallyAdjustButton();
 		
 		/* Step 4 - Check Editable fields */
-		webUtil.isEnabled("Tgl_LoanAdjustment_ED");
-		webUtil.isEnabled("Tgl_GrantAdjustment_ED");
-		webUtil.isEnabled("Tgl_AdjustmentComment_ED");
+		webUtil.isEnabled(TGLLOADADJUSTMENTED);
+		webUtil.isEnabled(TGLGRANTADJUSTMENTED);
+		webUtil.isEnabled(TGLADJUSTMENTCOMMENTED);
 		
 		/* Step 5 - Now enter only loan amount */
 		enterLoanAdjustAmountValue = testDataMap.get("LoanAdjustmentAmount");
-		searchDetailsPage.enterLoanAdjustAmount("Tgl_LoanAdjustment_ED",enterLoanAdjustAmountValue);
-		getActualValue = webUtil.getAttributeValue("Tgl_AdjustmentSave_btn", "disabled");
+		searchDetailsPage.enterLoanAdjustAmount(TGLLOADADJUSTMENTED,enterLoanAdjustAmountValue);
+		getActualValue = webUtil.getAttributeValue(TGLADJUSTMENTSAVEBTN, "disabled");
 		Assert.assertEquals(getActualValue, "true","Verified Save button is not Enable");
 		
 		/* Step 6 - Now enter grant amount */
 		enterGrantAdjustAmountValue = testDataMap.get("GrantAdjustmentAmount");
-		searchDetailsPage.enterGrantAdjustAmount("Tgl_GrantAdjustment_ED",enterGrantAdjustAmountValue);
-		getActualValue = webUtil.getAttributeValue("Tgl_AdjustmentSave_btn", "disabled");
+		searchDetailsPage.enterGrantAdjustAmount(TGLGRANTADJUSTMENTED,enterGrantAdjustAmountValue);
+		getActualValue = webUtil.getAttributeValue(TGLADJUSTMENTSAVEBTN, "disabled");
 		Assert.assertEquals(getActualValue, "true","Verified Save button is not Enable");
 		
 		/* Step 7 - Now enter comments */
 		enterAdjustmentCommentValue = testDataMap.get("AdjustmentComment");
-		searchDetailsPage.enterAdjustmentComments("Tgl_AdjustmentComment_ED",enterAdjustmentCommentValue);
-		webUtil.isEnabled("Tgl_AdjustmentSave_btn");
+		searchDetailsPage.enterAdjustmentComments(TGLADJUSTMENTCOMMENTED,enterAdjustmentCommentValue);
+		webUtil.isEnabled(TGLADJUSTMENTSAVEBTN);
 
 		/* Step 8 - Verify when you click on cancel */
 		searchDetailsPage.clickOnCancelButton("Tgl_AdjustmentCancel_btn");
@@ -85,10 +87,10 @@ public class TotalAwardSectionTest extends BaseTestMethods{
 		
 		/* Step 9 - Click again on manual adjustment and enter all the data and click on save */
 		searchDetailsPage.clickOnManuallyAdjustButton();
-		searchDetailsPage.enterLoanAdjustAmount("Tgl_LoanAdjustment_ED",enterLoanAdjustAmountValue);
-		searchDetailsPage.enterGrantAdjustAmount("Tgl_GrantAdjustment_ED",enterGrantAdjustAmountValue);
-		searchDetailsPage.enterAdjustmentComments("Tgl_AdjustmentComment_ED",enterAdjustmentCommentValue);
-		searchDetailsPage.clickOnSaveButton("Tgl_AdjustmentSave_btn");
+		searchDetailsPage.enterLoanAdjustAmount(TGLLOADADJUSTMENTED,enterLoanAdjustAmountValue);
+		searchDetailsPage.enterGrantAdjustAmount(TGLGRANTADJUSTMENTED,enterGrantAdjustAmountValue);
+		searchDetailsPage.enterAdjustmentComments(TGLADJUSTMENTCOMMENTED,enterAdjustmentCommentValue);
+		searchDetailsPage.clickOnSaveButton(TGLADJUSTMENTSAVEBTN);
 		
 		String actualPromptMessage = webUtil.getText("Tgl_PromptMessage_Msg");
 		String expectedPromptMessage = testDataMap.get("expectedPromptMessage");
@@ -96,10 +98,10 @@ public class TotalAwardSectionTest extends BaseTestMethods{
 
 		/* Step 10 - Click on No */
 		searchDetailsPage.clickOnCancelButton("Tgl_CancelNo_btn");
-		webUtil.isVisible("Tgl_AdjustmentSave_btn");
+		webUtil.isVisible(TGLADJUSTMENTSAVEBTN);
 		
 		/* Step 11 - Clicking on update */
-		searchDetailsPage.clickOnSaveButton("Tgl_AdjustmentSave_btn");
+		searchDetailsPage.clickOnSaveButton(TGLADJUSTMENTSAVEBTN);
 		searchDetailsPage.clickOnYesUpdateThisAwardButton();
 		
 		/* Step 12 - Verify all the data */
@@ -117,14 +119,14 @@ public class TotalAwardSectionTest extends BaseTestMethods{
 		/* Step 14 - Now again click on Manual Adjusted link again and enter invalid loan and grant amount(such as dfdfd */
 		searchDetailsPage.clickOnManuallyAdjustButton();
 		enterGrantAdjustAmountValue = testDataMap.get("InValidLoanAdjustmentAmount_1");
-		searchDetailsPage.enterLoanAdjustAmount("Tgl_LoanAdjustment_ED",enterGrantAdjustAmountValue);
+		searchDetailsPage.enterLoanAdjustAmount(TGLLOADADJUSTMENTED,enterGrantAdjustAmountValue);
 		actualValidationMessage =  webUtil.getText("Tgl_ValidationMessage_ST");
 		expectedValidationMessage = testDataMap.get("ValidationMessage_1");
 		Assert.assertEquals(actualValidationMessage,expectedValidationMessage ,"Verified the Document Upload error");
 
 		/* Step 15 - Add Manual Adjustment such as it has decimal values and save the manual adj */
 		enterGrantAdjustAmountValue = testDataMap.get("InValidLoanAdjustmentAmount_2");
-		searchDetailsPage.enterLoanAdjustAmount("Tgl_LoanAdjustment_ED",enterGrantAdjustAmountValue);
+		searchDetailsPage.enterLoanAdjustAmount(TGLLOADADJUSTMENTED,enterGrantAdjustAmountValue);
 		actualValidationMessage =  webUtil.getText("Tgl_ValidationMessage_ST");
 		expectedValidationMessage = testDataMap.get("ValidationMessage_2");
 		Assert.assertEquals(actualValidationMessage,expectedValidationMessage ,"Verified the Document Upload error");

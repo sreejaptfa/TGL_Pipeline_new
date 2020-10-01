@@ -3,7 +3,6 @@ package org.tfa.tgl.pages;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.tfa.framework.core.WebDriverUtil;
@@ -14,21 +13,17 @@ public class AdditionalInformationSection extends PFactory{
 	
 	private WebDriverUtil webUtil;
 	private TestData data;
-	private boolean flag;
-	Logger log=Logger.getLogger("rootLogger");;
+	
+	Logger log=Logger.getLogger("rootLogger");
 	WebDriverWait explicitwait;
 	
-    public AdditionalInformationSection()
-    {
-    	
-    	webUtil=WebDriverUtil.getObject();
+    public AdditionalInformationSection()    {
+     	webUtil=WebDriverUtil.getObject();
     	data=TestData.getObject();
-    	flag=false;
     	log=Logger.getLogger("rootLogger");
-    	webUtil.openURL((String) data.getEnvironmentDataMap().get("ApplicationURL"));
+    	webUtil.openURL((String) data.getEnvironmentDataMap().get("ApplicationURL"));//NOSONAR
     	explicitwait= new WebDriverWait(webUtil.getDriver(), 20);
-    	    	
-    } 
+     } 
     
     public boolean verifyAdditionalInformationSection(){
     	boolean flag=false;

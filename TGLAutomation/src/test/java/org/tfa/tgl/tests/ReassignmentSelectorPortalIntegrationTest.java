@@ -25,11 +25,11 @@ import org.tfa.tgl.utilities.web.TGLWebUtil;
  */
 public class ReassignmentSelectorPortalIntegrationTest extends BaseTestMethods {
 	
-	private LoginPageTgl loginpage;
 	private TGLWebUtil webUtil=TGLWebUtil.getObject();
 	private SearchPageTGL searchPage= new SearchPageTGL();
 	private SearchDetailsPageTGL searchDetailsPage= new SearchDetailsPageTGL();
 	private SelectorPortalPage selectorPortalPage = new SelectorPortalPage();
+	private static final String NEWYORK="New York";
 
 	/**
 	 **************************************************************************************************************
@@ -41,17 +41,16 @@ public class ReassignmentSelectorPortalIntegrationTest extends BaseTestMethods {
 	 **************************************************************************************************************
 	 */
 	@Test
-	public void TGL11130TestReassignmentSelectorPortalIntegrationPoint() throws Exception {
+	public void tgl11130TestReassignmentSelectorPortalIntegrationPoint() throws Exception {
 		String url = testDataMap.get("SelectorPortalURL");
 		String userNameSelectorPortal = testDataMap.get("SelectorPortalUserName");
 		String passwordSelectorPortal = testDataMap.get("SelectorPortalPassword");
 		String uploadedFileName=testDataMap.get("uploadUploadTemplateFilePath");
-		String expectedAssignment=testDataMap.get("expectedAssignment");
 		String assignmentId = null;
 		/*  
 		 * Step 1 - Login to TGL portal and pickup one applicant whose application is not completed  and click on applicant
 		 */
-		loginpage=new LoginPageTgl();
+		LoginPageTgl loginpage=new LoginPageTgl();
 		loginpage.enterLoginInfo();
 		
 		searchPage.selectTGLStatusDD("Tgl_InComplete_LK");
@@ -59,7 +58,7 @@ public class ReassignmentSelectorPortalIntegrationTest extends BaseTestMethods {
  		webUtil.holdOn(2);
 		String applicantID = searchPage.clickApplicantNameOnSearchResults();
 		
-		if(applicantID !=null) {
+		if(applicantID !=null) {//NOSONAR
 		}else {
 			webUtil.click("Tgl_Clear_btn");
 			List<WebElement> link=webUtil.getElementsList("Home_tgl_applicationyear");
@@ -77,16 +76,17 @@ public class ReassignmentSelectorPortalIntegrationTest extends BaseTestMethods {
 		/*  
 		 * Step 2 - Now complete the application but do not calculate any award , make sure applicant is assign to region
 		 */
+		String expAssignment=testDataMap.get("expectedAssignment");//NOSONAR
 		String actualValue = getAssignmentValue();
 		if(actualValue.contains("San Antonio")){
 			assignmentId ="NYENGL";
-			expectedAssignment = "New York";
-		}else if(actualValue.contains("New York")){
+			expAssignment = NEWYORK;
+		}else if(actualValue.contains(NEWYORK)){
 			assignmentId ="SASPED";
-			expectedAssignment = "San Antonio";
-		}else{
+			expAssignment = "San Antonio";
+		}else{//NOSONAR
 			assignmentId ="NYENGL";
-			expectedAssignment = "New York";
+			expAssignment = NEWYORK;
 		}
 		searchDetailsPage.clickCompleteAndFixErrorMessages(applicantID);
 		searchDetailsPage.clickOnTGLSignOutLink();
@@ -122,7 +122,7 @@ public class ReassignmentSelectorPortalIntegrationTest extends BaseTestMethods {
 		searchPage.clickOnSearchBtn();
 		searchPage.clickFirstRowColumnOnSearchResults();
 		String actualAssignmentValue = getAssignmentValue();
-		Assert.assertEquals(actualAssignmentValue,expectedAssignment, "Verify the Assignment value updated");
+		Assert.assertEquals(actualAssignmentValue,expAssignment, "Verify the Assignment value updated");
 		
 		/* 
 		* Step 5 - Now click on Calculate award 
@@ -133,10 +133,10 @@ public class ReassignmentSelectorPortalIntegrationTest extends BaseTestMethods {
 		/*
 		 * Step 6 - Verify Award
 		 */
-		String actualCalculatedTotalAmount_AfterCalculate = webUtil.getText("Tgl_CalculatedTotal_ST");
-		String actualContributionAmount_AfterCalculate = webUtil.getText("Tgl_ExpectedContribution_ST");
-		Assert.assertNotEquals(actualCalculatedTotalAmount_AfterCalculate, "n/a", "Verify Calculated Total Amount is updated");
-		Assert.assertNotEquals(actualContributionAmount_AfterCalculate,"n/a", "Verify Expected Contribution Amount is updated");
+		String actualCalculatedTotalAmountAfterCalculate = webUtil.getText("Tgl_CalculatedTotal_ST");
+		String actualContributionAmountAfterCalculate = webUtil.getText("Tgl_ExpectedContribution_ST");
+		Assert.assertNotEquals(actualCalculatedTotalAmountAfterCalculate, "n/a", "Verify Calculated Total Amount is updated");
+		Assert.assertNotEquals(actualContributionAmountAfterCalculate,"n/a", "Verify Expected Contribution Amount is updated");
 		
 		/* 
 		* Step 7 - End Script 
@@ -147,8 +147,7 @@ public class ReassignmentSelectorPortalIntegrationTest extends BaseTestMethods {
 	private String getAssignmentValue(){
 		String asignmentValue = webUtil.getText("Tgl_Assignment_ST");
 		String[] arrSplit = asignmentValue.split(": ");
-		String actualAssignmentValue = arrSplit[1];
-		return actualAssignmentValue;
+		return arrSplit[1];
 	}
 	@Override
 	public TGLConstants getConstants(){

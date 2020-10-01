@@ -24,14 +24,14 @@
 			<class name="org.tfa.tgl.tests.SendEmailTextboxTest" />
 			<class name="org.tfa.tgl.tests.TimeLineTest" />			
 			<class name="org.tfa.tgl.tests.TotalAwardSectionTest" />
-		
+			<class name="org.tfa.tgl.tests.ReassignmentTest" />
+			
+			<class name="org.tfa.tgl.tests.ValidCheckBoxIntegrationTest" />
 			<class name="org.tfa.tgl.tests.SearchPageTest" />  
 			<class name="org.tfa.tgl.tests.TGLAppCenterIntegrationPointTest" />  
 			
-<!-- 			<class name="org.tfa.tgl.tests.ReassignmentTest" /> -->
 <!-- 			<class name="org.tfa.tgl.tests.SendNoteEmailToApplicantIntegrationTest" />	 -->
 <!-- 			<class name="org.tfa.tgl.tests.TGLPortalUploadTest" /> -->
-<!-- 			<class name="org.tfa.tgl.tests.ValidCheckBoxIntegrationTest" />  -->
 
 		</classes>
 

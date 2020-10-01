@@ -21,12 +21,11 @@ import org.tfa.tgl.utilities.web.TGLWebUtil;
  */
 public class GroupCalculationFieldValidationTest extends BaseTestMethods{
 	
-	private LoginPageTgl loginpage;
 	private SearchPageTGL searchPage= new SearchPageTGL();
 	private AwardCalculatorPage awardCalculatorPage = new AwardCalculatorPage();
-	
 	private TGLWebUtil webUtil=TGLWebUtil.getObject();
 	static Logger log=Logger.getLogger("rootLogger");
+	private static final String TGLOFFERDEADLINEDD="Tgl_OfferDeadline_DD";
 	
 	/**
 	 **************************************************************************************************************
@@ -37,10 +36,10 @@ public class GroupCalculationFieldValidationTest extends BaseTestMethods{
 	 **************************************************************************************************************
 	 */
 	@Test
-	public void TGL11123TestGroupCalculationFieldValidation() throws Exception {
+	public void tgl11123TestGroupCalculationFieldValidation() throws Exception {
 	
 		/* Step 1 - Login to TGL portal */
-		loginpage=new LoginPageTgl();
+		LoginPageTgl loginpage=new LoginPageTgl();
 		loginpage.enterLoginInfo();
 		
 		/* Step 2 - Now check main page */
@@ -48,11 +47,11 @@ public class GroupCalculationFieldValidationTest extends BaseTestMethods{
 		
 		/* Step 3 - Click on Award Calculator link on top */
 		searchPage.clickOnAwardCalculatorBtn();
-		Assert.assertTrue(webUtil.objectIsVisible("Tgl_OfferDeadline_DD"), "Verify OfferDeadline DD is Enabled");
+		Assert.assertTrue(webUtil.objectIsVisible(TGLOFFERDEADLINEDD), "Verify OfferDeadline DD is Enabled");
 		Assert.assertTrue(webUtil.objectIsVisible("Tgl_Regions_DD"), "Verify Regions is Enabled");
 
 		/* Step 4 - Now select Offer deadline or Region */
-		webUtil.selectRandomValueFromListBox("Tgl_OfferDeadline_DD");
+		webUtil.selectRandomValueFromListBox(TGLOFFERDEADLINEDD);
 		Assert.assertTrue(webUtil.objectIsEnabled("Tgl_Calculate_Btn"), "Verify calculate button is Enabled");
 		
 		/* Step 5 - now select The calculate button */
@@ -65,13 +64,13 @@ public class GroupCalculationFieldValidationTest extends BaseTestMethods{
 		
 		/* Step 8 - Now again go back to screen such a way that you have some data to calculate */
 		//Click on Calculate again
-		webUtil.selectByIndex("Tgl_OfferDeadline_DD", 0);
-		String selectValue[]={"Buffalo","Alabama","Baltimore","Bay Area","D.C. Region","Houston","New Jersey","New York"};
+		webUtil.selectByIndex(TGLOFFERDEADLINEDD, 0);
+		String[] selectValue={"Buffalo","Alabama","Baltimore","Bay Area","D.C. Region","Houston","New Jersey","New York"};
 		for(int i=0; i<=selectValue.length-1; i++){
 			webUtil.selectByVisibleText("Tgl_Regions_DD", selectValue[i]);
 			awardCalculatorPage.clickOnCalculateBtn();
 			boolean flag = webUtil.objectIsEnabled("Tgl_TGLCalculation_Calculate_Btn");
-			if (flag == true){
+			if (flag){
 				Assert.assertTrue(webUtil.objectIsEnabled("Tgl_TGLCalculation_Calculate_Btn"), "Verify TGL Calculation calculate button is Enabled");
 				awardCalculatorPage.clickOnTGLCalculationCalculateBtn();
 				String actualAwardCalculationMessage = webUtil.getText("Tgl_AwardCalculation_Msg");
@@ -80,8 +79,6 @@ public class GroupCalculationFieldValidationTest extends BaseTestMethods{
 			}else{
 				webUtil.click("Tgl_TGLCalculation_Cancel_Btn");
 			}
-			
-			//Assert.assertTrue(flag, "No Awards to Calculate for the Applicatants");
 		}
 		
 		/* Step 9 - End Script */
