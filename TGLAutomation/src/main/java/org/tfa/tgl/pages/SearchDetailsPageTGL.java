@@ -169,7 +169,7 @@ public class SearchDetailsPageTGL {
 	/*
 	 * This function will Selects the TGL Status
 	 */
-	private void selectTGLStatusDD(String tglStatus){
+	public void selectTGLStatusDD(String tglStatus){
 		webUtil.selectByVisibleText("Tgl_TGLStatusInput_DD", tglStatus);
 		webUtil.holdOn(5);
 	}

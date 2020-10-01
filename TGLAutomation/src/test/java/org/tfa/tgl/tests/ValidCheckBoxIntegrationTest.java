@@ -13,7 +13,7 @@ import org.tfa.framework.core.BaseTestMethods;
 import org.tfa.framework.core.JavaScriptUtil;
 import org.tfa.framework.utilities.general.RandomUtil;
 import org.tfa.tgl.pages.ApplicantCenterPage;
-import org.tfa.tgl.pages.IMPSPage;
+import org.tfa.tgl.pages.LoginPageAppCenter;
 import org.tfa.tgl.pages.LoginPageTgl;
 import org.tfa.tgl.pages.SearchPageTGL;
 import org.tfa.tgl.utilities.web.TGLConstants;
@@ -30,11 +30,10 @@ import org.tfa.tgl.utilities.web.TGLWebUtil;
  */
 public class ValidCheckBoxIntegrationTest extends BaseTestMethods{
 	
-	private LoginPageTgl loginpage;
 	private TGLWebUtil webUtil=TGLWebUtil.getObject();
 	private SearchPageTGL searchPage= new SearchPageTGL();
 	private ApplicantCenterPage applicantCenterPage = new ApplicantCenterPage();
-	private IMPSPage IMPSpage = new IMPSPage();
+	private LoginPageAppCenter loginAppCenter=new LoginPageAppCenter();
 	private  Map<String, String> infoMap; 
 	private RandomUtil random=new RandomUtil();
 	private JavaScriptUtil jsUtil=JavaScriptUtil.getObject();
@@ -49,19 +48,13 @@ public class ValidCheckBoxIntegrationTest extends BaseTestMethods{
 	 */
 	
 	@Test
-	public void TGL11131TestValidCheckBoxIntegrationPoint() throws Exception {
-		String url = testDataMap.get("IMPSURL");
-		String userNameIMPS = testDataMap.get("IMPSUserName");
-		String passwordIMPS = testDataMap.get("IMPSPassword");
-		String urlPart2 = testDataMap.get("OnlinePart2URL");
-		String passwordPart2 = testDataMap.get("OnlinePart2Password");
-		String updateNotes="Unchecked Documentation Verified CheckBox -"+random.generateRandomNumber(5);
-		String applicantID = testDataMap.get("ApplicantID");
+	public void tgl11131TestValidCheckBoxIntegrationPoint() throws Exception {
+		String applicantID = "4373388";
 				
 		/* 
 		* Step 1 - Login to the TGL  portal application using valid user id
 		*/
-		loginpage=new LoginPageTgl();
+		LoginPageTgl loginpage=new LoginPageTgl();
 		loginpage.enterLoginInfo();	
 	
 		/* 
@@ -72,24 +65,8 @@ public class ValidCheckBoxIntegrationTest extends BaseTestMethods{
 		searchPage.clickOnMoreSearchOptionsBtn();
 		searchPage.enterPersonID(applicantID);
 		// Clear app year value - change made to fix script <<NS 21 July 2020>>
-    	webUtil.selectByIndex("Tgl_appyear_dd", 0);
-    	webUtil.holdOn(1);
 		searchPage.clickOnSearchBtn();
-		boolean iChexkFlag = webUtil.objectIsVisible("Tgl_FirstRowColumn_TB");
-		if(iChexkFlag){
-			searchPage.clickFirstRowColumnOnSearchResults();
-		}else{
-
-		/* 
-		* Step 3 - Now click on applicant  
-		*/
-		webUtil.click("Tgl_Clear_btn");
-		searchPage.selectTGLStatusDD("Tgl_InComplete_LK");
-		searchPage.clickOnSearchBtn();
-		applicantID = clickApplicantNameOnSearchResults();
-		Assert.assertNotNull(applicantID, "Not returned any related data on Search results");
-		webUtil.holdOn(5);
-		}
+		searchPage.clickFirstRowColumnOnSearchResults();
 		jsUtil.scrollDownPage(500);
 
 		/* 
@@ -104,33 +81,19 @@ public class ValidCheckBoxIntegrationTest extends BaseTestMethods{
 		String getValidCheckBoxValueFromTGL =infoMap.get("ValidCheckBox");
 
 		/* 
-		* Step 5 - Now Go to IMPS and reassign the diff region for same applicant Note: steps to reassign the region
-		* Go to IMPS, Search for same applicant, Click on Applicant, Click on Assignment link, You can assign new position there
-		*/
-		//--> Go to IMPS
-		webUtil.openLoginPage(url);
-		IMPSpage.validLogin(userNameIMPS,passwordIMPS);
-		IMPSpage.clickOnAdmissionsButton();
-		
-		//--> Search for same applicant
-		webUtil.switchToFrameByFrameLocator("CommonMainframeWithName_Frm");
-		IMPSpage.enterPersonID(applicantID);
-		IMPSpage.clickOnSearchButton();
-		String getEmailFromIMPSApplicant = IMPSpage.getEmailFromIMPSApplicantID(applicantID);
-
-		/* 
-		* Step 6 -  Now login to online part 2 as qamerlin.teachforamerica.org/applicant-center
+		* Step 5 -  Now login to online part 2 as qamerlin.teachforamerica.org/applicant-center
 		* With same login which you have checked the valid check box 
 		*/
-		webUtil.openLoginPage((String) urlPart2);
-		applicantCenterPage.validLogin(getEmailFromIMPSApplicant,passwordPart2);
+		loginAppCenter.openLoginPage();
+		loginAppCenter.enterLoginInfo();
+		webUtil.holdOn(2);
+		webUtil.openURL("https://qamerlin.teachforamerica.org/applicant-center/#expenses/transitional-funding");
+		webUtil.holdOn(5);
+		webUtil.waitForBrowserToLoadCompletely();
 				
 		/* 
 		* Step 7 -  Now  go to cFunding link t check TGL status for check box and notes which you selected in TG
 		*/	
-		if(!iChexkFlag){
-			applicantCenterPage.ClickOnGoToAccountHomeLink();}
-		applicantCenterPage.clickOnTransitionalFundingLink();
 		getValuesFromSelectorPortal("AppCenter_TGLDocuments_TB",getSectionNameFromTGL);
 		String getNotesFromSelectorPortal = infoMap.get("SelectorPortalNotes");
 		String getValidCheckBoxValueFromSelectorPortal = infoMap.get("SelectorPortalCheckBox");
@@ -150,42 +113,11 @@ public class ValidCheckBoxIntegrationTest extends BaseTestMethods{
 		searchPage.clickFirstRowColumnOnSearchResults();
 		Map<String, String> locatorValueMap=webUtil.getLocatorValueMap(getSelectedDocumentSectionFromTGL);
 		String locatorValue=TGLWebUtil.getLocatorValue(locatorValueMap, getSelectedDocumentSectionFromTGL);
-		WebElement checkBox_Valid = webUtil.getDriver().findElement(By.xpath("("+ locatorValue+"/tbody/tr//input)[2]"));
-		if(checkBox_Valid.isSelected()){
-			webUtil.click(checkBox_Valid);
-			webUtil.holdOn(2);
-			addValidationData("UpdatedcheckBoxCheckedFromTGL",null);
-		}else{
-			addValidationData("UpdatedcheckBoxCheckedFromTGL","true");
+		WebElement checkBoxValid = webUtil.getDriver().findElement(By.xpath("("+ locatorValue+"/tbody/tr//input)[2]"));
+		if(checkBoxValid.isSelected()){
+			webUtil.click(checkBoxValid);
 		}
-		WebElement setApplicationNotes_Object = webUtil.getDriver().findElement(By.xpath("("+ locatorValue+"/tbody/tr//textarea)"));
-		setApplicationNotes_Object.clear();
-		setApplicationNotes_Object.sendKeys(updateNotes);
-		setApplicationNotes_Object.sendKeys(Keys.ENTER);
-		webUtil.holdOn(5);
-		addValidationData("UpdatedNotesFromTGL",updateNotes);
 		
-		/* 
-		* Step 09 -  go to online part 2 and for same applicant check TGL status
-		*/
-		webUtil.openLoginPage((String) urlPart2);
-		applicantCenterPage.validLogin(getEmailFromIMPSApplicant,passwordPart2);
-		if(!iChexkFlag){
-		applicantCenterPage.ClickOnGoToAccountHomeLink();}
-		applicantCenterPage.clickOnTransitionalFundingLink();
-		getValuesFromSelectorPortal("AppCenter_TGLDocuments_TB",getSectionNameFromTGL);
-		String getUpdatedNotesFromSelectorPortal = infoMap.get("SelectorPortalNotes");
-		String getUpdatedValidCheckBoxValueFromSelectorPortal = infoMap.get("SelectorPortalCheckBox");
-		String UpdatedNotesFromTGL = infoMap.get("UpdatedNotesFromTGL");
-		String UpdatedcheckBoxCheckedFromTGL = infoMap.get("UpdatedcheckBoxCheckedFromTGL");
-
-		Assert.assertEquals(getUpdatedNotesFromSelectorPortal, UpdatedNotesFromTGL,"Notes updated in SelectorPortal");
-		Assert.assertEquals(getUpdatedValidCheckBoxValueFromSelectorPortal, UpdatedcheckBoxCheckedFromTGL,"Documentation Verified Checkbox is Checked in Selector Portal ");
-		
-		/* 
-		* Step 10 - Logout from Applicant Center
-		*/
-		applicantCenterPage.clickOnLogOutLink();
 	}
 	@Override
 	public TGLConstants getConstants(){
@@ -197,14 +129,14 @@ public class ValidCheckBoxIntegrationTest extends BaseTestMethods{
 	*/
 	private String getSectionName(String name){
 		String getSectionName= null;
-		if(name =="Tgl_PrivateLoan_Section") getSectionName = "Private Loan";
-		if(name =="Tgl_OtherLoan_Section") getSectionName = "Other Loan";
-		if(name =="Tgl_Savings_Section") getSectionName = "Savings";
-		if(name =="Tgl_Credit_Section") getSectionName = "Credit Card debt";
-		if(name =="Tgl_ApplicantTax_Section") getSectionName = "Applicant's Tax Return";
-		if(name =="Tgl_W2Income_Section") getSectionName = "W-2 or Income Statement";
-		if(name =="Tgl_ParentTax_section") getSectionName = "Parent's Tax Return";
-		if(name =="Tgl_ParentIncome_Section") getSectionName = "Parent Income Statement";
+		if(name.equals("Tgl_PrivateLoan_Section")) getSectionName = "Private Loan";
+		if(name.equals("Tgl_OtherLoan_Section")) getSectionName = "Other Loan";
+		if(name.equals("Tgl_Savings_Section")) getSectionName = "Savings";
+		if(name.equals("Tgl_Credit_Section")) getSectionName = "Credit Card debt";
+		if(name.equals("Tgl_ApplicantTax_Section")) getSectionName = "Applicant's Tax Return";
+		if(name.equals("Tgl_W2Income_Section")) getSectionName = "W-2 or Income Statement";
+		if(name.equals("Tgl_ParentTax_section")) getSectionName = "Parent's Tax Return";
+		if(name.equals("Tgl_ParentIncome_Section")) getSectionName = "Parent Income Statement";
 		return getSectionName;
 	}
 	private void addValidationData(String validationName, String expectedValue){
@@ -256,40 +188,36 @@ public class ValidCheckBoxIntegrationTest extends BaseTestMethods{
 		for(int i= 0; i<=len; i++){
 			Map<String, String> locatorValueMap=webUtil.getLocatorValueMap(sections[i]);
 			locatorValue=TGLWebUtil.getLocatorValue(locatorValueMap, sections[i]);
-			WebElement checkBox_Required = webUtil.getDriver().findElement(By.xpath("("+ locatorValue +"/tbody/tr//input)[1]"));
-			if(checkBox_Required.isSelected()){
-				WebElement checkBox_Valid = webUtil.getDriver().findElement(By.xpath("("+ locatorValue+"/tbody/tr//input)[2]"));
+			WebElement checkBoxRequired = webUtil.getDriver().findElement(By.xpath("("+ locatorValue +"/tbody/tr//input)[1]"));
+			if(checkBoxRequired.isSelected()){
+				WebElement checkBoxValid = webUtil.getDriver().findElement(By.xpath("("+ locatorValue+"/tbody/tr//input)[2]"));
 				locatorValue1=TGLWebUtil.getLocatorValue(locatorValueMap, sections[i]);
-				if(!checkBox_Valid.isSelected()){
-					webUtil.click(checkBox_Valid);
+				if(!checkBoxValid.isSelected()){
+					webUtil.click(checkBoxValid);
 					checkBoxChecked ="true";
 					selectedSection = sections[i];
-					checkBoxValue = selectedSection;
 					getSectionName = getSectionName(selectedSection);
-					WebElement setApplicationNotes_Object = webUtil.getDriver().findElement(By.xpath("("+ locatorValue1+"/tbody/tr//textarea)"));
-					setApplicationNotes_Object.clear();
-					setApplicationNotes_Object.sendKeys(enterNotes);
-					setApplicationNotes_Object.sendKeys(Keys.ENTER);
+					WebElement setApplicationNotesObject = webUtil.getDriver().findElement(By.xpath("("+ locatorValue1+"/tbody/tr//textarea)"));
+					setApplicationNotesObject.clear();
+					setApplicationNotesObject.sendKeys(enterNotes);
+					setApplicationNotesObject.sendKeys(Keys.ENTER);
 					webUtil.holdOn(10);
 					checkValue = true;
 					break;
 				}else{
 					selectedSection = sections[i];
-					checkBoxValue = selectedSection;
-					getlocatorValue =locatorValue1;
 					getSectionName = getSectionName(selectedSection);
 					checkValue = false;
 				}
 			}	
 		}
 		if(!checkValue){
-			checkBoxValue = selectedSection;
 			getlocatorValue =locatorValue1;
-			getSectionName = getSectionName(selectedSection);
-			WebElement setApplicationNotes_Object = webUtil.getDriver().findElement(By.xpath("("+ getlocatorValue+"/tbody/tr//textarea)"));
-			setApplicationNotes_Object.clear();
-			setApplicationNotes_Object.sendKeys(enterNotes);
-			setApplicationNotes_Object.sendKeys(Keys.ENTER);
+			getSectionName = getSectionName(selectedSection);//NOSONAR
+			WebElement setApplicationNotesObject = webUtil.getDriver().findElement(By.xpath("("+ getlocatorValue+"/tbody/tr//textarea)"));
+			setApplicationNotesObject.clear();
+			setApplicationNotesObject.sendKeys(enterNotes);
+			setApplicationNotesObject.sendKeys(Keys.ENTER);
 			webUtil.holdOn(10);
 		}
 		checkBoxValue = selectedSection;
@@ -300,31 +228,5 @@ public class ValidCheckBoxIntegrationTest extends BaseTestMethods{
 		return checkBoxValue;
 	}
 
-	private String clickApplicantNameOnSearchResults() {
-		String getApplicantID = null;
-		int len = webUtil.getDriver().findElements(By.xpath("//tbody[@data-hook='results']/tr")).size();
-		try {
-			for(int i=1; i<=len; i++){
-				WebElement getPersonID =  webUtil.getDriver().findElement(By.xpath("//tbody[@data-hook='results']/tr["+i+"]/td[2]/a"));
-				WebElement getStep =  webUtil.getDriver().findElement(By.xpath("//tbody[@data-hook='results']/tr["+i+"]/td[7]/a"));
-				WebElement getExitCode =  webUtil.getDriver().findElement(By.xpath("//tbody[@data-hook='results']/tr["+i+"]/td[8]/a"));
-				if((getStep.getText().equals("ASSIGNMENT")) || (getStep.getText().equals("ACCEPTED")) && (getExitCode.getText().equals("N/A"))){
-					getApplicantID = getPersonID.getText();
-					getPersonID.click();
-					break;
-				}
-			}
-		}
-			catch (Exception e) {
-            try {
-				throw new Exception(e);
-			} catch (Exception e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-        } 
-		return getApplicantID;
-	}
-	
 }
 

@@ -18,11 +18,8 @@ import org.tfa.tgl.utilities.web.TGLWebUtil;
  ************************************************************************************************************** 
  */
 public class DecimalPlacesInTextFieldsTest extends BaseTestMethods{
-	
-	private LoginPageTgl loginpage;
 	private TGLWebUtil webUtil=TGLWebUtil.getObject();
 	private SearchPageTGL searchPage= new SearchPageTGL();
-	
 	String actualPromptMessage;
 	String expectedPromptMessage;
 	
@@ -36,10 +33,10 @@ public class DecimalPlacesInTextFieldsTest extends BaseTestMethods{
 	 **************************************************************************************************************
 	 */
 	@Test
-	public void TGL11126TestDecimalPlacesInTextFields() throws Exception  {
+	public void tgl11126TestDecimalPlacesInTextFields() throws Exception  {
 		
 		/* Step 1 - Login to the TGL  portal application using valid user id < https://qamerlin.teachforamerica.org/ada */
-		loginpage=new LoginPageTgl();
+		LoginPageTgl loginpage=new LoginPageTgl();
 		loginpage.enterLoginInfo();
 		
 		/* Step 2 - Search for Personid to verify Total award section who has already cal award */

@@ -4,7 +4,6 @@ import org.apache.log4j.Logger;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 import org.tfa.framework.core.BaseTestMethods;
-import org.tfa.tgl.pages.AssetsAndLiabilitiesSection;
 import org.tfa.tgl.pages.IncomeAndTotalNoDependencySection;
 import org.tfa.tgl.pages.LoginPageTgl;
 import org.tfa.tgl.utilities.web.TGLConstants;
@@ -23,11 +22,8 @@ public class IncomeAndTotalNoDependencyTest extends BaseTestMethods {
 	 *@Author: Nitin Sharma 
 	 */
 	@Test
-	public void TGL109ValidateIncomeAndDependency() throws Exception
-	{	
+	public void tgl109ValidateIncomeAndDependency() throws Exception	{	
 		IncomeAndTotalNoDependencySection income = new IncomeAndTotalNoDependencySection();
-
-		
 		boolean result;
 		try{			
 			loginpage = new LoginPageTgl();
@@ -40,22 +36,16 @@ public class IncomeAndTotalNoDependencyTest extends BaseTestMethods {
 			soft.assertTrue(income.verifyIncomeAndTotalNodependencySection(), "verifyIncomeAndTotalNodependencySection  method failed");								
 		
 		}catch(Exception e){
-			
 			soft.fail();	
 			log.error(e);
-			//System.out.println("Exception occured:"+e);
 		}finally{
-			
 			soft.assertAll();
 			log.info(this.getClass().getEnclosingMethod() + " Test Execution Completion - Success!");
 		}
-		
-						
 	}
 	
 	@Override
-	public TGLConstants getConstants()
-	{
+	public TGLConstants getConstants()	{
 		return new TGLConstants();
 	}
 

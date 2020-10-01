@@ -17,7 +17,8 @@ public class IMPSPage {
 	public void validLogin(String userName, String password){
         webUtil.setTextBoxValue("IMPS_UserName_ED", userName);
         webUtil.setTextBoxValue("IMPS_Password_ED", password);
-        webUtil.click("IMP_Submit_Btn");  
+        webUtil.click("IMP_Submit_Btn");
+        webUtil.holdOn(5);
 	}
 	
 	/**
@@ -102,24 +103,24 @@ public class IMPSPage {
 	 */
 	public String assignNewQualifiedPosition(){
 		String getQualifiedPosition = webUtil.getText("IMPS_QualifiedFirstPosition_LK");
-	String getAssignStatus = webUtil.getText("IMPS_QualifiedFirstPositionAssign_LK");
-	if(getAssignStatus.equals("Unassign")){
-		if(getQualifiedPosition.contains("Bay Area")){
-			webUtil.click("IMPS_NewYorkAssign_LK");
+		String getAssignStatus = webUtil.getText("IMPS_QualifiedFirstPositionAssign_LK");
+		if(getAssignStatus.equals("Unassign")){
+			if(getQualifiedPosition.contains("Bay Area")){
+				webUtil.click("IMPS_NewYorkAssign_LK");
+				webUtil.holdOn(2);
+			}else if(getQualifiedPosition.contains("New York")){
+				webUtil.click("IMPS_BayAreaAssign_LK");
+				webUtil.holdOn(2);
+			}else if(getQualifiedPosition.contains("D.C. Region")){
+				webUtil.click("IMPS_BayAreaAssign_LK");
+				webUtil.holdOn(2);
+			}else{
+			webUtil.click("IMPS_DCRegionAssign_LK");
 			webUtil.holdOn(2);
-		}else if(getQualifiedPosition.contains("New York")){
-			webUtil.click("IMPS_BayAreaAssign_LK");
-			webUtil.holdOn(2);
-		}else if(getQualifiedPosition.contains("D.C. Region")){
-			webUtil.click("IMPS_BayAreaAssign_LK");
-			webUtil.holdOn(2);
-		}else{
-		webUtil.click("IMPS_DCRegionAssign_LK");
-		webUtil.holdOn(2);
+			}
 		}
-	}
-	String selectedQualifiedPositon = webUtil.getText("IMPS_QualifiedFirstPosition_LK");
-	webUtil.switchToWindowFromFrame();
-	return selectedQualifiedPositon;
+		String selectedQualifiedPositon = webUtil.getText("IMPS_QualifiedFirstPosition_LK");
+		webUtil.switchToWindowFromFrame();
+		return selectedQualifiedPositon;
 }
 }

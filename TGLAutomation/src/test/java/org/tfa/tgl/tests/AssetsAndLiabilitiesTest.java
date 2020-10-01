@@ -1,7 +1,6 @@
 package org.tfa.tgl.tests;
 
 import org.apache.log4j.Logger;
-import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 import org.tfa.framework.core.BaseTestMethods;
@@ -22,10 +21,8 @@ public class AssetsAndLiabilitiesTest extends BaseTestMethods{
 	 *@Author: Nitin Sharma 
 	 */
 	@Test
-	public void TGL102ValidateAssetsAndLiabilitiesSection() throws Exception
-	{	
+	public void tgl102ValidateAssetsAndLiabilitiesSection() throws Exception	{	
 		AssetsAndLiabilitiesSection assetsliabilities= new AssetsAndLiabilitiesSection();
-
 		
 		boolean result;
 		try{			
@@ -39,22 +36,16 @@ public class AssetsAndLiabilitiesTest extends BaseTestMethods{
 			soft.assertTrue(assetsliabilities.verifyAssetAndLiabilitySection(), "verifyAssetAndLiability method failed");								
 		
 		}catch(Exception e){
-			
 			soft.fail();	
 			log.error(e);
-			//System.out.println("Exception occured:"+e);
 		}finally{
-			
 			soft.assertAll();
 			log.info(this.getClass().getEnclosingMethod() + " Test Execution Completion - Success!");
 		}
-		
-						
 	}
 	
 	@Override
-	public TGLConstants getConstants()
-	{
+	public TGLConstants getConstants()	{
 		return new TGLConstants();
 	}
 

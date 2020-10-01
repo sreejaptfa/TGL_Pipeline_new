@@ -21,16 +21,14 @@ import org.tfa.tgl.utilities.web.TGLWebUtil;
  */
 public class ReassignmentTest extends BaseTestMethods {
 	
-	private LoginPageTgl loginpage;
 	private TGLWebUtil webUtil=TGLWebUtil.getObject();
 	private SearchPageTGL searchPage= new SearchPageTGL();
 	private SearchDetailsPageTGL searchDetailsPage= new SearchDetailsPageTGL();
-	private IMPSPage IMPSpage = new IMPSPage();
-	private String selectedQualifiedPositon;
-	String actualCalculatedTotalAmount_BeforeCalculate;
-	String actualExpectedContributionAmount_BeforeCalculate;
-	String actualAdjustedLoanAmount_BeforeCalculate;
-	String actualAdjustedGrantAmount_BeforeCalculate;
+	private IMPSPage impsPage = new IMPSPage();
+	String actualCalculatedTotalAmountBeforeCalculate;
+	String actualExpectedContributionAmountBeforeCalculate;
+	String actualAdjustedLoanAmountBeforeCalculate;
+	String actualAdjustedGrantAmountBeforeCalculate;
 
 	/**
 	 **************************************************************************************************************
@@ -44,22 +42,31 @@ public class ReassignmentTest extends BaseTestMethods {
 	 */
 	
 	@Test
-	public void TGL11128TestReassignmentIntegrationPoint() throws Exception{
+	public void tgl11128TestReassignmentIntegrationPoint() throws Exception{
 		
+		String selectedQualifiedPositon;
 		String url = testDataMap.get("IMPSURL");
 		String userNameIMPS = testDataMap.get("IMPSUserName");
 		String passwordIMPS = testDataMap.get("IMPSPassword");
-		
+		String applicantID;
 		/* 
 		* Step 1 - Login to TGL portal and pickup one applicant whose application is not completed  and click on applicant
 		*/
-		loginpage=new LoginPageTgl();
+		LoginPageTgl loginpage=new LoginPageTgl();
 		loginpage.enterLoginInfo();
-		webUtil.holdOn(5);
-		
+				
 		searchPage.selectTGLStatusDD("Tgl_InComplete_LK");
 		searchPage.clickOnSearchBtn();
-		String applicantID = searchPage.clickFirstRowColumnOnSearchResults();
+		boolean iChexkFlag = webUtil.objectIsVisible("Tgl_FirstRowColumn_TB");
+		if(iChexkFlag){
+			applicantID = searchPage.clickFirstRowColumnOnSearchResults();
+		}else{
+			searchPage.selectTGLStatusDD("Tgl_Complete_LK");
+			searchPage.clickOnSearchBtn();
+			applicantID = searchPage.clickFirstRowColumnOnSearchResults();
+			searchDetailsPage.selectTGLStatusDD("Incomplete");
+			webUtil.holdOn(5);
+		}
 		
 		/* 
 		* Step 2 - Now complete the application but do not calculate any award , make sure applicant is assign to region
@@ -73,21 +80,20 @@ public class ReassignmentTest extends BaseTestMethods {
 		*/
 		//--> Go to IMPS
 		webUtil.openLoginPage(url);
-		IMPSpage.validLogin(userNameIMPS,passwordIMPS);
+		impsPage.validLogin(userNameIMPS,passwordIMPS);
 		webUtil.holdOn(5);
-		IMPSpage.clickOnAdmissionsButton();
+		impsPage.clickOnAdmissionsButton();
 		
 		//--> Search for same applicant
 		webUtil.switchToFrameByFrameLocator("CommonMainframeWithName_Frm");
-		IMPSpage.enterPersonID(applicantID);
-		IMPSpage.clickOnSearchButton();
+		impsPage.enterPersonID(applicantID);
+		impsPage.clickOnSearchButton();
 		//--> Click on Applicant
-		IMPSpage.clickOnApplicantLink(applicantID);
+		impsPage.clickOnApplicantLink(applicantID);
 		//--> Click on Assignment link 
-		IMPSpage.clickOnAssignment();
+		impsPage.clickOnAssignment();
 		//--> You can assign new position there
-		selectedQualifiedPositon = IMPSpage.assignNewQualifiedPosition();
-		//IMPSpage.clickOnIMPSLogoutButton();
+		selectedQualifiedPositon = impsPage.assignNewQualifiedPosition();
 		
 		/*
 		* Step 4 - Come back to TGL Portal, log out and log back again and check Award Calculation 
@@ -113,10 +119,12 @@ public class ReassignmentTest extends BaseTestMethods {
 		/*
 		 * Step 6 - Verify Award
 		 */
-		String actualCalculatedTotalAmount_AfterCalculate = webUtil.getText("Tgl_CalculatedTotal_ST");
-		String actualContributionAmount_AfterCalculate = webUtil.getText("Tgl_ExpectedContribution_ST");
-		Assert.assertNotEquals(actualCalculatedTotalAmount_AfterCalculate, "n/a", "Verify Calculated Total Amount is updated");
-		Assert.assertNotEquals(actualContributionAmount_AfterCalculate,"n/a", "Verify Expected Contribution Amount is updated");
+		String actualCalculatedTotalAmountAfterCalculate = webUtil.getText("Tgl_CalculatedTotal_ST");
+		String actualContributionAmountAfterCalculate = webUtil.getText("Tgl_ExpectedContribution_ST");
+		Assert.assertNotEquals(actualCalculatedTotalAmountAfterCalculate, "n/a", "Verify Calculated Total Amount is updated");
+		Assert.assertNotEquals(actualContributionAmountAfterCalculate,"n/a", "Verify Expected Contribution Amount is updated");
+		webUtil.holdOn(5);
+		searchDetailsPage.selectTGLStatusDD("Incomplete");
 		
 		/* 
 		* Step 7 - End Script 
@@ -126,8 +134,7 @@ public class ReassignmentTest extends BaseTestMethods {
 	private String getAssignmentValue(){
 		String asignmentValue = webUtil.getText("Tgl_Assignment_ST");
 		String[] arrSplit = asignmentValue.split(": ");
-		String actualAssignmentValue = arrSplit[1];
-		return actualAssignmentValue;
+		return arrSplit[1];
 	}
 	
 	@Override

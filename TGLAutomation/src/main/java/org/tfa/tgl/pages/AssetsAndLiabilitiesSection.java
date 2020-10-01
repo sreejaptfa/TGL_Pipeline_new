@@ -13,7 +13,7 @@ public class AssetsAndLiabilitiesSection {
 	private WebDriverUtil webUtil;
 	private TestData data;
 	private boolean flag;
-	Logger log=Logger.getLogger("rootLogger");;
+	Logger log=Logger.getLogger("rootLogger");
 	WebDriverWait explicitwait;
 	
     public AssetsAndLiabilitiesSection()
