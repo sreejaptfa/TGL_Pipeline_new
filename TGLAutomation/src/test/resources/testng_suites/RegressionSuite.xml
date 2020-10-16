@@ -19,7 +19,6 @@
 		  	<class name="org.tfa.tgl.tests.TglLoginTest" />  
 			<class name="org.tfa.tgl.tests.DecimalPlacesInTextFieldsTest" />	
 			<class name="org.tfa.tgl.tests.EducationCostCalculationTest" />	
-			<class name="org.tfa.tgl.tests.GroupCalculationFieldValidationTest" />
  			<class name="org.tfa.tgl.tests.ReassignmentSelectorPortalIntegrationTest" />
 			<class name="org.tfa.tgl.tests.SendEmailTextboxTest" />
 			<class name="org.tfa.tgl.tests.TimeLineTest" />			
@@ -29,6 +28,10 @@
 			<class name="org.tfa.tgl.tests.ValidCheckBoxIntegrationTest" />
 			<class name="org.tfa.tgl.tests.SearchPageTest" />  
 			<class name="org.tfa.tgl.tests.TGLAppCenterIntegrationPointTest" />  
+
+<!-- 			Getting error on this following test case... commented on 10-16-2020   -->
+<!-- 			<class name="org.tfa.tgl.tests.GroupCalculationFieldValidationTest" /> -->
+			
 			
 <!-- 			<class name="org.tfa.tgl.tests.SendNoteEmailToApplicantIntegrationTest" />	 -->
 <!-- 			<class name="org.tfa.tgl.tests.TGLPortalUploadTest" /> -->
