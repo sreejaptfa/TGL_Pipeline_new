@@ -3,7 +3,7 @@ package org.tfa.tgl.tests;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
+import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
@@ -37,6 +37,7 @@ public class ValidCheckBoxIntegrationTest extends BaseTestMethods{
 	private  Map<String, String> infoMap; 
 	private RandomUtil random=new RandomUtil();
 	private JavaScriptUtil jsUtil=JavaScriptUtil.getObject();
+	Logger log;
 
 	/**
 	 **************************************************************************************************************
@@ -156,19 +157,27 @@ public class ValidCheckBoxIntegrationTest extends BaseTestMethods{
 		List<WebElement> getValues = webUtil.getDriver().findElements(By.xpath(locatorValue));
 		int len= getValues.size();
 		for(int i = 1; i<=len; i++){
-			WebElement sectionName = webUtil.getDriver().findElement(By.xpath(locatorValue +"["+i+"]/td"));
-			String getText = sectionName.getText();
-			if(getText.contains(valueToCompare)){
-				WebElement getNotes = webUtil.getDriver().findElement(By.xpath(locatorValue +"["+i+"]/td[3]"));
-				getNotesText = getNotes.getText();
-				WebElement getDocumentChecked = webUtil.getDriver().findElement(By.xpath(locatorValue +"["+i+"]/td[2]/input"));
-				documentValidCheck= getDocumentChecked.getAttribute("checked");
-				break;
-			}
+			try {
+				boolean flag =  webUtil.getDriver().findElement(By.xpath(locatorValue +"["+i+"]/td")).isEnabled();
+				if (flag) {
+					WebElement sectionName = webUtil.getDriver().findElement(By.xpath(locatorValue +"["+i+"]/td"));
+					String getText = sectionName.getText();
+					if(getText.contains(valueToCompare)){
+						WebElement getNotes = webUtil.getDriver().findElement(By.xpath(locatorValue +"["+i+"]/td[3]"));
+						getNotesText = getNotes.getText();
+						WebElement getDocumentChecked = webUtil.getDriver().findElement(By.xpath(locatorValue +"["+i+"]/td[2]/input"));
+						documentValidCheck= getDocumentChecked.getAttribute("checked");
+						addValidationData("SelectorPortalNotes",getNotesText);
+						addValidationData("SelectorPortalCheckBox",documentValidCheck);
+
+						break;
+					}
+				}
+			}catch(Exception e) {
+							}
 		}
-		addValidationData("SelectorPortalNotes",getNotesText);
-		addValidationData("SelectorPortalCheckBox",documentValidCheck);
 		return null;
+
 	}
 	/* 
 	* This function will click on the valid checkbox and enter the notes
