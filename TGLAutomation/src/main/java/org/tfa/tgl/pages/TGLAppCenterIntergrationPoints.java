@@ -256,6 +256,7 @@ public class TGLAppCenterIntergrationPoints extends WebDriverUtil{
 			// Click AppCenter TGL Funding link
 			//webUtil.click("AppCenter_TGLFunding_link");
 			webUtil.openURL("https://qamerlin.teachforamerica.org/applicant-center/#expenses/transitional-funding");
+			webUtil.holdOn(4);
 			List <WebElement> list=new ArrayList<>();
 			list = webUtil.getDriver().findElements(By.xpath("(//tbody[@data-hook='tgl-documents-uploaded'])[1]/tr"));
 			webUtil.holdOn(3);
