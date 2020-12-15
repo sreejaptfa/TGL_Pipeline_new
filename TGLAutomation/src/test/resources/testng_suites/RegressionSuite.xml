@@ -11,9 +11,7 @@
 	<test name="Regression Testing" preserve-order="true">
 	
 		<classes>
-			<!-- temporarily commenting this below test for surya to fix -->
-			<!-- <class name="org.tfa.tgl.tests.ValidCheckBoxIntegrationTest" /> -->
-		
+			<class name="org.tfa.tgl.tests.ValidCheckBoxIntegrationTest" />	
 			<class name="org.tfa.tgl.tests.AdditionalInformationSectionTest" />
 			<class name="org.tfa.tgl.tests.AssetsAndLiabilitiesTest" />	
 			<class name="org.tfa.tgl.tests.IncomeAndTotalNoDependencyTest" />
