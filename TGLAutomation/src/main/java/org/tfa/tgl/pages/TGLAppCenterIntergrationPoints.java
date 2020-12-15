@@ -116,7 +116,9 @@ public class TGLAppCenterIntergrationPoints extends WebDriverUtil{
 		webUtil.holdOn(3);
 		// Click the result row
 		WebElement firstrow=webUtil.getDriver().findElement(firstrownamelocator);
+		webUtil.holdOn(3);
 		firstrow.click();
+		webUtil.holdOn(2);
 		} 
 		catch (Exception e) {
 			flag = false;
@@ -253,6 +255,7 @@ public class TGLAppCenterIntergrationPoints extends WebDriverUtil{
 		try {
 			login.openLoginPage();
 			login.enterLoginInfo();
+			webUtil.holdOn(3);
 			// Click AppCenter TGL Funding link
 			//webUtil.click("AppCenter_TGLFunding_link");
 			webUtil.openURL("https://qamerlin.teachforamerica.org/applicant-center/#expenses/transitional-funding");
