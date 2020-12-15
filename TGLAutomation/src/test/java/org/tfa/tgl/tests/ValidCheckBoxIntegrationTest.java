@@ -52,7 +52,7 @@ public class ValidCheckBoxIntegrationTest extends BaseTestMethods{
 	
 	@Test
 	public void tgl11131TestValidCheckBoxIntegrationPoint() throws Exception {
-		String applicantID = "4373388";
+		String applicantID = "4383359";
 				
 		/* 
 		* Step 1 - Login to the TGL  portal application using valid user id
