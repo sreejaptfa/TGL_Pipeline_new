@@ -58,7 +58,8 @@ public class TaxInformationSection extends PFactory{
     //	webUtil.setTextBoxValue("Tgl_personid", pid);
     	
     	// Clear app year value - change made to fix script <<NS 21 July 2020>>
-    	webUtil.selectByIndex("Tgl_appyear_dd",1);
+    	// Selecting year 2021 to fix the script << NS 04 Jan 2021 >>
+    	webUtil.selectByIndex("Tgl_appyear_dd",2);
     	webUtil.holdOn(1);
 		webUtil.click("Home_Tgl_Search2_btn");	
 		WebElement firstrow=webUtil.getDriver().findElement(firstrowlocator);				
