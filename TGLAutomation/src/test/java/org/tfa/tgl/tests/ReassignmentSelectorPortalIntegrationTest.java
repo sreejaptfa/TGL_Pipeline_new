@@ -62,7 +62,7 @@ public class ReassignmentSelectorPortalIntegrationTest extends BaseTestMethods {
 		}else {
 			webUtil.click("Tgl_Clear_btn");
 			List<WebElement> link=webUtil.getElementsList("Home_tgl_applicationyear");
-			WebElement appYear =  link.get(1);
+			WebElement appYear =  link.get(2);
 			appYear.click();
 			searchPage.selectTGLStatusDD("Tgl_Complete_LK");
 	 		searchPage.clickOnSearchBtn();
