@@ -23,11 +23,6 @@ repositories {
     maven { url archivaSnapshotUrl }
 }
 
-sourceCompatibility = 1.8
-targetCompatibility = 1.8
-
-
-
 test {
 
     useTestNG() {
@@ -105,13 +100,3 @@ dependencies {
     
 }
 
-    repositories {
-        maven {
-            url project.hasProperty('classifier') ? (project.classifier.equals('prod') ? archivaReleaseUrl : archivaSnapshotUrl) : archivaSnapshotUrl
-            credentials {
-                username archivaUsername
-                password archivaPassword
-            }
-        }
-    }
-}
