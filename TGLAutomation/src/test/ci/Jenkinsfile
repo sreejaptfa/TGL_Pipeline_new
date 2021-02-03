@@ -9,6 +9,7 @@ string(name: 'GIT_BRANCH', defaultValue: 'master', description: 'GIT repository 
 string(name: 'TEST_CLASS', defaultValue: '', description: 'Specify fully classified name of the class to run tests ONLY from that single class')
  
 }
+
 environment{
 TEST_AUTOMATION_HOME='/data/nfs/TGLADMIN_TEST_AUTOMATION';
 GRADLE_COMMAND='';
