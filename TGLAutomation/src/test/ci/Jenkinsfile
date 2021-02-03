@@ -97,13 +97,13 @@ pipeline {
 def getGradleCommand(){
 	if (params.TEST_CLASS) {
  
-		GRADLE_COMMAND="\"/opt/tests/TGLAutomation/gradlew -Dwebdriver.chrome.driver='/usr/bin/' -Dwebdriver.gecko.driver='/usr/bin/' clean build test -p /opt/tests/TGLAutomation -P${Test_Suite} --tests ${params.TEST_CLASS}\"";
+		GRADLE_COMMAND="\"/opt/tests/TGLAutomation/gradlew -Dwebdriver.chrome.driver='/usr/bin/' -Dwebdriver.gecko.driver='/usr/bin/' clean build sonarqube test -p /opt/tests/TGLAutomation -P${Test_Suite} --tests ${params.TEST_CLASS}\"";
 		println "TEST_CLASS param passed" ;
 		println "GRADLE_COMMAND: ${env.GRADLE_COMMAND}" ;
  
 	}else{
  
-		GRADLE_COMMAND="\"/opt/tests/TGLAutomation/gradlew -Dwebdriver.chrome.driver='/usr/bin/' -Dwebdriver.gecko.driver='/usr/bin/' clean build test -p /opt/tests/TGLAutomation -P${Test_Suite}\"";
+		GRADLE_COMMAND="\"/opt/tests/TGLAutomation/gradlew -Dwebdriver.chrome.driver='/usr/bin/' -Dwebdriver.gecko.driver='/usr/bin/' clean build sonarqube test -p /opt/tests/TGLAutomation -P${Test_Suite}\"";
 		println "TEST_CLASS param is not passed" ;
 		println "GRADLE_COMMAND: ${env.GRADLE_COMMAND}" ;
  
