@@ -105,17 +105,6 @@ dependencies {
     
 }
 
-
-publishing {
-    publications {
-        maven(MavenPublication) {
-            artifact("${project.jar.destinationDir}/${project.jar.archiveName}") {
-                classifier "${project.hasProperty('classifier') ? project.classifier : 'dev' }"
-                extension  'jar'
-            }
-        }
-    }
-
     repositories {
         maven {
             url project.hasProperty('classifier') ? (project.classifier.equals('prod') ? archivaReleaseUrl : archivaSnapshotUrl) : archivaSnapshotUrl
