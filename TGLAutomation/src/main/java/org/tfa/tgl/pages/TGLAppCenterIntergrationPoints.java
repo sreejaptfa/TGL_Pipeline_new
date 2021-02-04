@@ -14,7 +14,6 @@ import org.apache.commons.lang3.SystemUtils;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.UnexpectedAlertBehaviour;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -26,21 +25,15 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.tfa.framework.core.WebDriverUtil;
-import org.tfa.framework.utilities.testdata.TestData;
 import org.tfa.tgl.utilities.web.TGLWebUtil;
 
 import com.google.common.io.PatternFilenameFilter;
 
 public class TGLAppCenterIntergrationPoints extends WebDriverUtil{
 	
-	//private WebDriverUtil webUtil=WebDriverUtil.getObject();
-	private TestData data=TestData.getObject();
 	private TGLWebUtil webUtil=TGLWebUtil.getObject();
-	private boolean flag;
 	Logger log=Logger.getLogger("rootLogger");
 	protected WebDriverWait explicitwait;
-	private int size;
-	private static AssetsAndLiabilitiesSection assetsandliabilitiessection;
 	private static SearchDetailsPageTGL searchDetailsPage;
 	private LoginPageAppCenter login;
 	protected By firstrownamelocator=By.xpath("//tbody[@data-hook='results']/tr[1]/td/a");
@@ -54,13 +47,8 @@ public class TGLAppCenterIntergrationPoints extends WebDriverUtil{
 	
 	
 	public TGLAppCenterIntergrationPoints() {
-		// TODO Auto-generated constructor stub
-		 /*if(searchDetailsPage == null)*/ {
-		 assetsandliabilitiessection = new AssetsAndLiabilitiesSection();
-		 searchDetailsPage = new SearchDetailsPageTGL();
-		 login = new LoginPageAppCenter();
-		 date= new Date();	
-		 }
+		login = new LoginPageAppCenter();
+		date= new Date();	
 	}
 	
 	public boolean uploadDocumentinAda() {
@@ -127,14 +115,13 @@ public class TGLAppCenterIntergrationPoints extends WebDriverUtil{
 		flag=true;
 		return flag;
 	}
-	
+	@SuppressWarnings("unchecked")
 	public boolean removeExistingDocumentsfromApplicantTaxReturn() {
 		boolean f = false;
 		List <WebElement> we = new ArrayList();
 		List <WebElement> documents = new ArrayList<>();
 		try{
 			documents = webUtil.getDriver().findElements(By.xpath("(//table[@class='documents-table'])[6]/tbody/tr"));
-			//(//table[@class='documents-table'])[6]/tbody/tr[1]/td[3]/button
 			for(WebElement w:documents){
 				w.findElement(By.xpath("//td[3]/button")).click();
 				webUtil.holdOn(3);
@@ -196,7 +183,6 @@ public class TGLAppCenterIntergrationPoints extends WebDriverUtil{
 	}
 	
 	public boolean verifyApplicantCenterDocumentsDetails(boolean verificationCheck){
-		boolean flag = false;
 		try {
 		login.openLoginPage();
 		login.enterLoginInfo();
@@ -208,35 +194,31 @@ public class TGLAppCenterIntergrationPoints extends WebDriverUtil{
 		// Check if Applicant Tax return check is check in Applicant Center
 		
 		if(verificationCheck == true) {
-			if (webUtil.getElement("AppcenterDocumentationAppTaxReturnVerified_chk").isSelected())
-				flag=true;
-			else {
+			if (webUtil.getElement("AppcenterDocumentationAppTaxReturnVerified_chk").isSelected()) {
+			} else {
 				log.info("Applicant Center - Applicant Tax Return checkbox is not checked");
-				return flag = false;
+				return false;
 			}
 		
 		webUtil.holdOn(4);
 		// Check Notes section shows correct notes from ADA application
-		if (webUtil.getElement("AppcenterDocumentationAppTaxReturnComment_txt").getText().contains("Test Comments"+dateFormat.format(date)))
-			flag=true;
-		else {
+		if (webUtil.getElement("AppcenterDocumentationAppTaxReturnComment_txt").getText().contains("Test Comments"+dateFormat.format(date))) {
+		} else {
 			log.info("Applicant Notes for App tax return doesnot match");
-			return flag=false;
-		}// else
+			return false;
+			}
 		}
 		else {
-			if (!webUtil.getElement("AppcenterDocumentationAppTaxReturnVerified_chk").isSelected())
-				flag=true;
-			else {
+			if (!webUtil.getElement("AppcenterDocumentationAppTaxReturnVerified_chk").isSelected()) {
+			} else {
 				log.info("Applicant Center - Applicant Tax Return checkbox is still checked");
-				return flag = false;}	
+				return false;}	
 			
 			// Check Notes section shows correct notes from ADA application
-			if (webUtil.getElement("AppcenterDocumentationAppTaxReturnComment_txt").getText().equals(""))
-				flag=true;
-			else {
+			if (webUtil.getElement("AppcenterDocumentationAppTaxReturnComment_txt").getText().equals("")) {
+			} else {
 				log.info("Applicant Notes for App tax return doesnot match");
-				return flag=false;
+				return false;
 			}// else
 		}
 			
@@ -245,10 +227,9 @@ public class TGLAppCenterIntergrationPoints extends WebDriverUtil{
 		catch (Exception e) {
 			
 			log.info("Exception occured while click TGL Funding link in Applicant Center "+e);
-			flag = false;
 		}
 		
-		return flag=true;
+		return true;
 	}
 	public boolean verifyDocumentIsRemoved() {
 		boolean flag=false;	
@@ -256,8 +237,6 @@ public class TGLAppCenterIntergrationPoints extends WebDriverUtil{
 			login.openLoginPage();
 			login.enterLoginInfo();
 			webUtil.holdOn(3);
-			// Click AppCenter TGL Funding link
-			//webUtil.click("AppCenter_TGLFunding_link");
 			webUtil.openURL("https://qamerlin.teachforamerica.org/applicant-center/#expenses/transitional-funding");
 			webUtil.holdOn(4);
 			List <WebElement> list=new ArrayList<>();
@@ -293,7 +272,6 @@ public class TGLAppCenterIntergrationPoints extends WebDriverUtil{
 			for ( final File file : files ) {			
 				log.info(i+" file(s) deleted.");
 				if ( !file.delete() ) {
-					// System.err.println( "Can't remove " + file.getAbsolutePath() );
 					log.info("Can't remove ( file )" + file.getAbsolutePath());
 				}
 			}		
@@ -302,7 +280,6 @@ public class TGLAppCenterIntergrationPoints extends WebDriverUtil{
 			log.info("incomplete existing files to be deleted before fresh report download=> "+files.length);
 			for ( final File file : files ) {
 				if ( !file.delete() ) {
-					// System.err.println( "Can't remove " + file.getAbsolutePath() );
 					log.info("Can't remove ( file )" + file.getAbsolutePath());}
 			}
 				webUtil.getDriver().findElement(By.xpath("(//tbody[@data-hook='tgl-documents-uploaded']/tr)[1]/td[3]/a")).click();				
@@ -318,7 +295,6 @@ public class TGLAppCenterIntergrationPoints extends WebDriverUtil{
 					log.info(".download extention file is found at:"+folder.getAbsolutePath());
 				}		
 				files = folder.listFiles(new PatternFilenameFilter("TestPdfFile.*\\.pdf"));
-				//files = folder.listFiles(new PatternFilenameFilter("Corps_Member__General.*/.pdf"));		
 				log.info("Searching for .pdf file extentions at: "+folder.getAbsolutePath());
 				log.info("files with .pdf extention here:"+files.length);
 				webUtil.holdOn(3);
@@ -326,7 +302,6 @@ public class TGLAppCenterIntergrationPoints extends WebDriverUtil{
 					{flag=true; log.info( "File Downloaded");}
 				else
 					{flag=false; log.info("File not downloaded");log.info("file searched at path ->"+folder.getAbsolutePath()); return flag;}		
-				//This method makes sure that file is not corrupt and it is in a readable form
 				if(files[0].canRead())
 					{flag=true;log.info("Report is readable");}
 				else
@@ -338,9 +313,7 @@ public class TGLAppCenterIntergrationPoints extends WebDriverUtil{
 			log.error("Exception occured while creating a file object on given location: "+e);
 			
 		}
-		
 		log.info("=====Browser Logs at the end of the verify report method=====");
-		//logBrowserConsoleLogs();
 		return flag;
 		
 		
@@ -352,9 +325,7 @@ public class TGLAppCenterIntergrationPoints extends WebDriverUtil{
         DesiredCapabilities capabilities = new DesiredCapabilities();
         LoggingPreferences logPrefs = new LoggingPreferences();
         logPrefs.enable(LogType.BROWSER, Level.ALL);
-        //String downloadFilepath = "d:\\TestDownloads";
-        //downloadFilepath = System.getProperty("user.dir")+"/src/test/resources/TestData/";
-                
+            
         capabilities.setCapability(CapabilityType.ForSeleniumServer.ENSURING_CLEAN_SESSION, true);
         capabilities.setCapability(CapabilityType.UNEXPECTED_ALERT_BEHAVIOUR, UnexpectedAlertBehaviour.IGNORE);
         capabilities.setCapability(CapabilityType.LOGGING_PREFS, logPrefs);

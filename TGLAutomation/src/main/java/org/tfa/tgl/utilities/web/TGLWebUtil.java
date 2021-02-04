@@ -36,7 +36,7 @@ public class TGLWebUtil extends WebDriverUtil{
 	private static final String MAIL_POP3_STARTTLS_ENABLE = "mail.pop3.starttls.enable";
 	private static final String MAIL_FOLDER_INBOX = "INBOX";
 	private static final String TBODYTR="//tbody/tr[";
-
+	Logger log=Logger.getLogger("rootLogger");
 	String downloadedFilePath;
 	
 	
@@ -190,7 +190,7 @@ public class TGLWebUtil extends WebDriverUtil{
 				expectedValuesSet.remove(elementText);
 			}
 		}
-		return (!expectedValuesSet.isEmpty());
+		return (expectedValuesSet.isEmpty());
 			
 	}
 	
@@ -239,7 +239,7 @@ public class TGLWebUtil extends WebDriverUtil{
                  }
             }
         }catch (Exception e) {
-        	e.printStackTrace();
+        	log.error("email not found ", e);
         } 
 		return false;
     }

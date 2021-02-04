@@ -10,7 +10,6 @@ public class PFactory extends BaseTestMethods{
 	WebDriverUtil webUtil=WebDriverUtil.getObject();
 	protected By firstrowlocator=By.xpath("//tbody[@data-hook='results']/tr[1]/td/a");
 	protected By searchresultstable=By.xpath("//tbody[@data-hook='results']//tr");
-	//protected By statusvalidations=By.cssSelector("#status-validation-message");
 	protected By statusvalidations = By.xpath("//div[@class='application-status-input-wrapper']//validation-message");
 	protected By firstrownamelocator=By.xpath("//tbody[@data-hook='results']/tr[1]/td/a");
 	protected WebDriverWait explicitwait;
