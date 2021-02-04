@@ -8,7 +8,6 @@ import org.openqa.selenium.WebElement;
 public class IMPSPage {
 	
 	private TGLWebUtil webUtil=TGLWebUtil.getObject();
-	private WebElement element;
 	
 
 	/**
@@ -92,7 +91,7 @@ public class IMPSPage {
 	 */
 	public void clickOnIMPSLogoutButton(){
 		webUtil.switchToFrameByFrameLocator("CommonTopframeWithName_Frm");
-		this.element = webUtil.getElement("IMPS_Logout_Btn");
+		WebElement element = webUtil.getElement("IMPS_Logout_Btn");
 		webUtil.click(element);
 		webUtil.holdOn(5);
 		element.sendKeys(Keys.ESCAPE);
