@@ -35,6 +35,7 @@ public class TGLWebUtil extends WebDriverUtil{
 	private static final String MAIL_POP3_PORT = "mail.pop3.port";
 	private static final String MAIL_POP3_STARTTLS_ENABLE = "mail.pop3.starttls.enable";
 	private static final String MAIL_FOLDER_INBOX = "INBOX";
+	private static final String TBODYTR="//tbody/tr[";
 
 	String downloadedFilePath;
 	
@@ -54,6 +55,7 @@ public class TGLWebUtil extends WebDriverUtil{
 	/*
 	* This function will download the file.
 	*/
+	@SuppressWarnings({"squid:S4042","squid:S899"})
 	public void downloadFile(String fileName){
 		if(SystemUtils.IS_OS_LINUX) {
 			downloadedFilePath="/home/"+System.getProperty("user.name")+"/Downloads/"+fileName;
@@ -80,16 +82,19 @@ public class TGLWebUtil extends WebDriverUtil{
 		String locatorValue=getLocatorValue(locatorValueMap, tableLocatorName);
 		List<WebElement> tableRowValues = webUtil.getDriver().findElements(By.xpath(locatorValue));
 		for(int i = 1; i<=tableRowValues.size(); i++){
-			String rowWiseCellData =  webUtil.getDriver().findElement(By.xpath(locatorValue+"//tbody/tr["+i+"]")).getText();
+			String rowWiseCellData = tableRowValues.get(i).getText(); 
 			try
 				{
 					if(rowWiseCellData.contains(refRowDataToSearch))
 					{
 						switch(expressionType) {
 						case "Review":
-							return webUtil.getDriver().findElement(By.xpath(locatorValue+"//tbody/tr["+i+"]//a"));
+							return webUtil.getDriver().findElement(By.xpath(locatorValue+TBODYTR+i+"]//a"));
 						case "Remove":
-							return webUtil.getDriver().findElement(By.xpath(locatorValue+"//tbody/tr["+i+"]//button"));
+							return webUtil.getDriver().findElement(By.xpath(locatorValue+TBODYTR+i+"]//button"));
+						default:
+							break;
+						
 					}
 
 				}
@@ -136,11 +141,7 @@ public class TGLWebUtil extends WebDriverUtil{
 		By locator=null;
 		locator=webUtil.getLocatorBy(locatorName);
 		try{
-			if(webUtil.getDriver().findElement(locator).isDisplayed()){
-				return true;
-			}else{
-				return false;
-			}
+			return (webUtil.getDriver().findElement(locator).isDisplayed());
 		}catch(Exception e){
 			return false;
 		}	
@@ -152,11 +153,7 @@ public class TGLWebUtil extends WebDriverUtil{
 		By locator=null;
 		locator=webUtil.getLocatorBy(locatorName);
 		try{
-			if(webUtil.getDriver().findElement(locator).isEnabled()){
-				return true;
-			}else{
-				return false;
-			}
+			return (webUtil.getDriver().findElement(locator).isEnabled());
 		}catch(Exception e){
 			return false;
 		}	
@@ -193,11 +190,8 @@ public class TGLWebUtil extends WebDriverUtil{
 				expectedValuesSet.remove(elementText);
 			}
 		}
-		if(!expectedValuesSet.isEmpty()) { 
-			return false;
-		}else{
-			return true;	
-		}
+		return (!expectedValuesSet.isEmpty());
+			
 	}
 	
 	/*
@@ -216,10 +210,9 @@ public class TGLWebUtil extends WebDriverUtil{
 	 * Login to mailbox for test email account and verify the email content match with Email template
 	 * returns true and false
 	 */
-    public boolean checkEmailContentFromTestEmailAccount(String host, String userEmail, String password, String bodyContent) throws Exception {
+    public boolean checkEmailContentFromTestEmailAccount(String host, String userEmail, String password, String bodyContent) {
         Store emailStore = null;
-        Folder emailFolder = null;
-        try {
+          try {
             Properties properties = new Properties();
             properties.put(MAIL_POP3_HOST, "pop3s");
             properties.put(MAIL_POP3_PORT, "995");
@@ -228,7 +221,7 @@ public class TGLWebUtil extends WebDriverUtil{
 
             emailStore = emailSession.getStore("pop3s");
             emailStore.connect(host, userEmail, password);
-            emailFolder = emailStore.getFolder(MAIL_FOLDER_INBOX);
+            Folder emailFolder = emailStore.getFolder(MAIL_FOLDER_INBOX);
             emailFolder.open(Folder.READ_WRITE);
 
             Message[] emailMessages = emailFolder.search(new FlagTerm(new Flags(Flags.Flag.SEEN), false));
@@ -240,16 +233,14 @@ public class TGLWebUtil extends WebDriverUtil{
             	    Message emailMessage = emailMessages[i];
                     Object content = emailMessage.getContent();
 		            if(content.toString().contains(bodyContent)){
+		            	emailFolder.close(false);
 		               return true;
 					 }
                  }
             }
         }catch (Exception e) {
-            throw new Exception(e);
-        } finally {
-            emailFolder.close(false);
-            emailStore.close();
-        }
+        	e.printStackTrace();
+        } 
 		return false;
     }
 
