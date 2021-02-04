@@ -2,28 +2,28 @@ package org.tfa.tgl.pages;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import org.apache.log4j.Logger;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.tfa.framework.core.WebDriverUtil;
 import org.tfa.framework.utilities.testdata.TestData;
 
-@SuppressWarnings({ "squid:S1854" })
+@SuppressWarnings({ "squid:S1854","squid:MethodCyclomaticComplexity", "squid:ClassCyclomaticComplexity" })
 public class LeftNavSection extends PFactory {
 
-	private WebDriverUtil webUtil = WebDriverUtil.getObject();
+
 	private TestData data = TestData.getObject();
 	Logger log = Logger.getLogger("rootLogger");
 	List<WebElement> validations;
-
+	private static final String EXCEPTIONOCCURED="Exception occured";
+	private static final String VALIDATIONMSG="Validation should not show but it does!";
+	private static final String COMPLETE="Complete";
 	public LeftNavSection() {
 		// call parent class constrctor
 		explicitwait = new WebDriverWait(webUtil.getDriver(), 10);
-		validations = new ArrayList<WebElement>();
+		validations = new ArrayList<>();
 		// TestCase: LeftNav(Automatable) Step - 1
-		webUtil.openURL((String) data.getEnvironmentDataMap().get("ApplicationURL"));
+		webUtil.openURL(data.getEnvironmentDataMap().get("ApplicationURL"));
 	}
 
 	public boolean verifyTopNavSection() {
@@ -86,13 +86,14 @@ public class LeftNavSection extends PFactory {
 		try {
 			explicitwait.until(ExpectedConditions.visibilityOfElementLocated(statusvalidations));
 			validations = webUtil.getDriver().findElements(statusvalidations);
-		} catch (Exception e) {
+		}catch (Exception e) {
+			log.error(EXCEPTIONOCCURED, e);
 			validations.clear();
 		}
 		if (validations.isEmpty()) {
 			flag = true;
 		} else {
-			log.info("Validation should not show but it does!");
+			log.info(VALIDATIONMSG);
 			flag = false;
 		}
 
@@ -103,12 +104,13 @@ public class LeftNavSection extends PFactory {
 			explicitwait.until(ExpectedConditions.visibilityOfElementLocated(statusvalidations));
 			validations = webUtil.getDriver().findElements(statusvalidations);
 		} catch (Exception e) {
+			log.error(EXCEPTIONOCCURED, e);
 			validations.clear();
 		}
 		if (validations.isEmpty()) {
 			flag = true;
 		} else {
-			log.info("Validation should not show but it does!");
+			log.info(VALIDATIONMSG);
 			flag = false;
 		}
 
@@ -119,12 +121,13 @@ public class LeftNavSection extends PFactory {
 			explicitwait.until(ExpectedConditions.visibilityOfElementLocated(statusvalidations));
 			validations = webUtil.getDriver().findElements(statusvalidations);
 		} catch (Exception e) {
+			log.error(EXCEPTIONOCCURED, e);
 			validations.clear();
 		}
 		if (validations.isEmpty()) {
 			flag = true;
 		} else {
-			log.info("Validation should not show but it does!");
+			log.info(VALIDATIONMSG);
 			flag = false;
 		}
 
@@ -135,12 +138,13 @@ public class LeftNavSection extends PFactory {
 			explicitwait.until(ExpectedConditions.visibilityOfElementLocated(statusvalidations));
 			validations = webUtil.getDriver().findElements(statusvalidations);
 		} catch (Exception e) {
+			log.error(EXCEPTIONOCCURED, e);
 			validations.clear();
 		}
 		if (validations.isEmpty()) {
 			flag = true;
 		} else {
-			log.info("Validation should not show but it does!");
+			log.info(VALIDATIONMSG);
 			flag = false;
 		}
 
@@ -151,28 +155,30 @@ public class LeftNavSection extends PFactory {
 			explicitwait.until(ExpectedConditions.visibilityOfElementLocated(statusvalidations));
 			validations = webUtil.getDriver().findElements(statusvalidations);
 		} catch (Exception e) {
+			log.error(EXCEPTIONOCCURED, e);
 			validations.clear();
 		}
 		if (validations.isEmpty()) {
 			flag = true;
 		} else {
-			log.info("Validation should not show but it does!");
+			log.info(VALIDATIONMSG);
 			flag = false;
 		}
 
 		// Verify there Are validation when the Status is updated as Complete
-		webUtil.selectByVisibleText("Tgl_TGLStatus_dd", "Complete");
+		webUtil.selectByVisibleText("Tgl_TGLStatus_dd", COMPLETE);
 		webUtil.holdOn(3);
 		try {
 			explicitwait.until(ExpectedConditions.visibilityOfElementLocated(statusvalidations));
 			validations = webUtil.getDriver().findElements(statusvalidations);
 		} catch (Exception e) {
+			log.error(EXCEPTIONOCCURED, e);
 			validations.clear();
 		}
 		if (!validations.isEmpty()) {
 			flag = true;
 		} else {
-			log.info("Validation should not show but it does!");
+			log.info(VALIDATIONMSG);
 			flag = false;
 		}
 		verifyTopNavSectionAssignment();
@@ -244,12 +250,13 @@ public class LeftNavSection extends PFactory {
 			explicitwait.until(ExpectedConditions.visibilityOfElementLocated(statusvalidations));
 			validations = webUtil.getDriver().findElements(statusvalidations);
 		} catch (Exception e) {
+			log.error(EXCEPTIONOCCURED, e);
 			validations.clear();
 		}
 		if (validations.isEmpty()) {
 			flag = true;
 		} else {
-			log.info("Validation should not show but it does!");
+			log.info(VALIDATIONMSG);
 			flag = false;
 		}
 
@@ -260,12 +267,13 @@ public class LeftNavSection extends PFactory {
 			explicitwait.until(ExpectedConditions.visibilityOfElementLocated(statusvalidations));
 			validations = webUtil.getDriver().findElements(statusvalidations);
 		} catch (Exception e) {
+			log.error(EXCEPTIONOCCURED, e);
 			validations.clear();
 		}
 		if (validations.isEmpty()) {
 			flag = true;
 		} else {
-			log.info("Validation should not show but it does!");
+			log.info(VALIDATIONMSG);
 			flag = false;
 		}
 
@@ -276,12 +284,13 @@ public class LeftNavSection extends PFactory {
 			explicitwait.until(ExpectedConditions.visibilityOfElementLocated(statusvalidations));
 			validations = webUtil.getDriver().findElements(statusvalidations);
 		} catch (Exception e) {
+			log.error(EXCEPTIONOCCURED, e);
 			validations.clear();
 		}
 		if (validations.isEmpty()) {
 			flag = true;
 		} else {
-			log.info("Validation should not show but it does!");
+			log.info(VALIDATIONMSG);
 			flag = false;
 		}
 
@@ -292,12 +301,13 @@ public class LeftNavSection extends PFactory {
 			explicitwait.until(ExpectedConditions.visibilityOfElementLocated(statusvalidations));
 			validations = webUtil.getDriver().findElements(statusvalidations);
 		} catch (Exception e) {
+			log.error(EXCEPTIONOCCURED, e);
 			validations.clear();
 		}
 		if (validations.isEmpty()) {
 			flag = true;
 		} else {
-			log.info("Validation should not show but it does!");
+			log.info(VALIDATIONMSG);
 			flag = false;
 		}
 
@@ -308,28 +318,30 @@ public class LeftNavSection extends PFactory {
 			explicitwait.until(ExpectedConditions.visibilityOfElementLocated(statusvalidations));
 			validations = webUtil.getDriver().findElements(statusvalidations);
 		} catch (Exception e) {
+			log.error(EXCEPTIONOCCURED, e);
 			validations.clear();
 		}
 		if (validations.isEmpty()) {
 			flag = true;
 		} else {
-			log.info("Validation should not show but it does!");
+			log.info(VALIDATIONMSG);
 			flag = false;
 		}
 
 		// Verify there Are validation when the Status is updated as Complete
-		webUtil.selectByVisibleText("Tgl_TGLStatus_dd", "Complete");
+		webUtil.selectByVisibleText("Tgl_TGLStatus_dd", COMPLETE);
 		webUtil.holdOn(3);
 		try {
 			explicitwait.until(ExpectedConditions.visibilityOfElementLocated(statusvalidations));
 			validations = webUtil.getDriver().findElements(statusvalidations);
 		} catch (Exception e) {
+			log.error(EXCEPTIONOCCURED, e);
 			validations.clear();
 		}
 		if (!validations.isEmpty()) {
 			flag = true;
 		} else {
-			log.info("Validation should not show but it does!");
+			log.info(VALIDATIONMSG);
 			flag = false;
 		}
 		return flag;
@@ -394,12 +406,13 @@ public class LeftNavSection extends PFactory {
 			explicitwait.until(ExpectedConditions.visibilityOfElementLocated(statusvalidations));
 			validations = webUtil.getDriver().findElements(statusvalidations);
 		} catch (Exception e) {
+			log.error(EXCEPTIONOCCURED, e);
 			validations.clear();
 		}
 		if (validations.isEmpty()) {
 			flag = true;
 		} else {
-			log.info("Validation should not show but it does!");
+			log.info(VALIDATIONMSG);
 			flag = false;
 		}
 
@@ -410,12 +423,13 @@ public class LeftNavSection extends PFactory {
 			explicitwait.until(ExpectedConditions.visibilityOfElementLocated(statusvalidations));
 			validations = webUtil.getDriver().findElements(statusvalidations);
 		} catch (Exception e) {
+			log.error(EXCEPTIONOCCURED, e);
 			validations.clear();
 		}
 		if (validations.isEmpty()) {
 			flag = true;
 		} else {
-			log.info("Validation should not show but it does!");
+			log.info(VALIDATIONMSG);
 			flag = false;
 		}
 
@@ -426,12 +440,13 @@ public class LeftNavSection extends PFactory {
 			explicitwait.until(ExpectedConditions.visibilityOfElementLocated(statusvalidations));
 			validations = webUtil.getDriver().findElements(statusvalidations);
 		} catch (Exception e) {
+			log.error(EXCEPTIONOCCURED, e);
 			validations.clear();
 		}
 		if (validations.isEmpty()) {
 			flag = true;
 		} else {
-			log.info("Validation should not show but it does!");
+			log.info(VALIDATIONMSG);
 			flag = false;
 		}
 
@@ -442,12 +457,13 @@ public class LeftNavSection extends PFactory {
 			explicitwait.until(ExpectedConditions.visibilityOfElementLocated(statusvalidations));
 			validations = webUtil.getDriver().findElements(statusvalidations);
 		} catch (Exception e) {
+			log.error(EXCEPTIONOCCURED, e);
 			validations.clear();
 		}
 		if (validations.isEmpty()) {
 			flag = true;
 		} else {
-			log.info("Validation should not show but it does!");
+			log.info(VALIDATIONMSG);
 			flag = false;
 		}
 
@@ -458,28 +474,30 @@ public class LeftNavSection extends PFactory {
 			explicitwait.until(ExpectedConditions.visibilityOfElementLocated(statusvalidations));
 			validations = webUtil.getDriver().findElements(statusvalidations);
 		} catch (Exception e) {
+			log.error(EXCEPTIONOCCURED, e);
 			validations.clear();
 		}
 		if (validations.isEmpty()) {
 			flag = true;
 		} else {
-			log.info("Validation should not show but it does!");
+			log.info(VALIDATIONMSG);
 			flag = false;
 		}
 
 		// Verify there Are validation when the Status is updated as Complete
-		webUtil.selectByVisibleText("Tgl_TGLStatus_dd", "Complete");
+		webUtil.selectByVisibleText("Tgl_TGLStatus_dd", COMPLETE);
 		webUtil.holdOn(3);
 		try {
 			explicitwait.until(ExpectedConditions.visibilityOfElementLocated(statusvalidations));
 			validations = webUtil.getDriver().findElements(statusvalidations);
 		} catch (Exception e) {
+			log.error(EXCEPTIONOCCURED, e);
 			validations.clear();
 		}
 		if (!validations.isEmpty()) {
 			flag = true;
 		} else {
-			log.info("Validation should not show but it does!");
+			log.info(VALIDATIONMSG);
 			flag = false;
 		}
 		return flag;

@@ -152,11 +152,7 @@ public class SearchDetailsPageTGL {
 				expectedValuesSet.remove(elementText);
 			}
 		}
-		if(!expectedValuesSet.isEmpty()) { 
-			return false;
-		}else{
-			return true;	
-		}
+		return expectedValuesSet.isEmpty();
 
 	}
 	
