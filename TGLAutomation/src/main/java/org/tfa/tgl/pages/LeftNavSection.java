@@ -192,7 +192,8 @@ public class LeftNavSection extends PFactory {
 		boolean flag = false;
 		log.info("verifyTopNavSectionAssignment method called");
 		validations.clear();
-		webUtil.getDriver().navigate().to("https://qamerlin.teachforamerica.org/ada/tgl");
+		//webUtil.getDriver().navigate().to("https://qamerlin.teachforamerica.org/ada/tgl");
+		webUtil.getDriver().navigate().to(data.getEnvironmentDataMap().get("ApplicationURL")) ;
 		webUtil.holdOn(3);
 		webUtil.click("Tgl_moreSearchOptionsLink");
 		webUtil.setTextBoxValueTestData("Tgl_personid", "PIDAssignment");
@@ -351,7 +352,8 @@ public class LeftNavSection extends PFactory {
 		boolean flag = false;
 		log.info("verifyTopNavSectionAccepted method called");
 		validations.clear();
-		webUtil.getDriver().navigate().to("https://qamerlin.teachforamerica.org/ada/tgl");
+		//webUtil.getDriver().navigate().to("https://qamerlin.teachforamerica.org/ada/tgl");
+		webUtil.getDriver().navigate().to(data.getEnvironmentDataMap().get("ApplicationURL")) ;
 		webUtil.holdOn(3);
 		webUtil.click("Tgl_moreSearchOptionsLink");
 		webUtil.setTextBoxValueTestData("Tgl_personid", "PIDDeferAccept");

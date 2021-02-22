@@ -7,6 +7,7 @@ import java.util.Random;
 
 import org.apache.log4j.Logger;
 import org.tfa.framework.core.WebDriverUtil;
+import org.tfa.framework.utilities.testdata.TestData;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
@@ -18,6 +19,7 @@ public class SearchPageTGL {
 	Logger log = Logger.getLogger("rootLogger");
 	ArrayList<String> names = new ArrayList<String>();
 	ArrayList<String> namesnew = new ArrayList<String>();
+	private TestData data = TestData.getObject();
 
 	WebDriverWait localwait;
 	private Random r;
@@ -233,7 +235,9 @@ public class SearchPageTGL {
 		String statusselection = "";
 		By rowdetailxpath;
 
-		webUtil.getDriver().navigate().to("https://qamerlin.teachforamerica.org/ada/tgl");
+		//webUtil.getDriver().navigate().to("https://qamerlin.teachforamerica.org/ada/tgl");
+		
+		webUtil.getDriver().navigate().to(data.getEnvironmentDataMap().get("ApplicationURL")) ;
 		webUtil.waitForBrowserToLoadCompletely();
 		WebElement InterviewDeadlinedd = webUtil.getElement("Tgl_InterviewDeadlinefilter_txt");
 		rowdetailxpath = By.xpath("//tbody[@data-hook='results']/tr[1]");
