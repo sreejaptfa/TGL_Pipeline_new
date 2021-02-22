@@ -12,6 +12,7 @@ import org.testng.annotations.Test;
 import org.tfa.framework.core.BaseTestMethods;
 import org.tfa.framework.core.JavaScriptUtil;
 import org.tfa.framework.utilities.general.RandomUtil;
+import org.tfa.framework.utilities.testdata.TestData;
 import org.tfa.tgl.pages.ApplicantCenterPage;
 import org.tfa.tgl.pages.LoginPageAppCenter;
 import org.tfa.tgl.pages.LoginPageTgl;
@@ -39,6 +40,7 @@ public class ValidCheckBoxIntegrationTest extends BaseTestMethods{
 	private  Map<String, String> infoMap; 
 	private RandomUtil random=new RandomUtil();
 	private JavaScriptUtil jsUtil=JavaScriptUtil.getObject();
+	private TestData data = TestData.getObject() ;
 	Logger log;
 
 	/**
@@ -92,7 +94,9 @@ public class ValidCheckBoxIntegrationTest extends BaseTestMethods{
 		loginAppCenter.openLoginPage();
 		loginAppCenter.enterLoginInfo();
 		webUtil.holdOn(2);
-		webUtil.openURL("https://qamerlin.teachforamerica.org/applicant-center/#expenses/transitional-funding");
+		data.getEnvironmentInfo("ENV_002").get("ApplicationURL") ;
+		//webUtil.openURL("https://qamerlin.teachforamerica.org/applicant-center/#expenses/transitional-funding");
+		//webUtil.openURL(data.getEnvironmentDataMap()) ;
 		webUtil.holdOn(5);
 		webUtil.waitForBrowserToLoadCompletely();
 				
@@ -111,6 +115,7 @@ public class ValidCheckBoxIntegrationTest extends BaseTestMethods{
 		* Step 8 -  Now come back to TGL portal and uncheck the check box and verify
 		*/
 		loginpage=new LoginPageTgl();
+		// Need not login again for Azure environment
 		loginpage.enterLoginInfo();	
 		searchPage.clickOnMoreSearchOptionsBtn();
 		searchPage.enterPersonID(applicantID);
