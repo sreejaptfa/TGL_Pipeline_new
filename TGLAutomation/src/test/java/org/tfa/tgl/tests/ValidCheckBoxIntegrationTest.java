@@ -12,10 +12,10 @@ import org.testng.annotations.Test;
 import org.tfa.framework.core.BaseTestMethods;
 import org.tfa.framework.core.JavaScriptUtil;
 import org.tfa.framework.utilities.general.RandomUtil;
-import org.tfa.framework.utilities.testdata.TestData;
 import org.tfa.tgl.pages.ApplicantCenterPage;
 import org.tfa.tgl.pages.LoginPageAppCenter;
 import org.tfa.tgl.pages.LoginPageTgl;
+import org.tfa.tgl.pages.SearchDetailsPageTGL;
 import org.tfa.tgl.pages.SearchPageTGL;
 import org.tfa.tgl.utilities.web.TGLConstants;
 import org.tfa.tgl.utilities.web.TGLWebUtil;
@@ -35,10 +35,10 @@ public class ValidCheckBoxIntegrationTest extends BaseTestMethods{
 	private SearchPageTGL searchPage= new SearchPageTGL();
 	private ApplicantCenterPage applicantCenterPage = new ApplicantCenterPage();
 	private LoginPageAppCenter loginAppCenter=new LoginPageAppCenter();
+	private SearchDetailsPageTGL searchDetailsPage= new SearchDetailsPageTGL();
 	private  Map<String, String> infoMap; 
 	private RandomUtil random=new RandomUtil();
 	private JavaScriptUtil jsUtil=JavaScriptUtil.getObject();
-	private TestData data = TestData.getObject() ;
 	Logger log;
 
 	/**
@@ -71,6 +71,8 @@ public class ValidCheckBoxIntegrationTest extends BaseTestMethods{
 		searchPage.clickOnSearchBtn();
 		searchPage.clickFirstRowColumnOnSearchResults();
 		jsUtil.scrollDownPage(500);
+		searchDetailsPage.selectTGLStatusDD("Incomplete");
+
 
 		/* 
 		* Step 4 - 		Click Valid check box  for any of the available doc type which has required check box checked 
@@ -90,10 +92,7 @@ public class ValidCheckBoxIntegrationTest extends BaseTestMethods{
 		loginAppCenter.openLoginPage();
 		loginAppCenter.enterLoginInfo();
 		webUtil.holdOn(2);
-		// commenting parameterization and enable hardcoded url as before: NS
-		//webUtil.openURL(data.getEnvironmentInfo("ENV_002").get("ApplicationURL")) ;
 		webUtil.openURL("https://qamerlin.teachforamerica.org/applicant-center/#expenses/transitional-funding");
-		//webUtil.openURL(data.getEnvironmentDataMap()) ;
 		webUtil.holdOn(5);
 		webUtil.waitForBrowserToLoadCompletely();
 				
@@ -112,7 +111,6 @@ public class ValidCheckBoxIntegrationTest extends BaseTestMethods{
 		* Step 8 -  Now come back to TGL portal and uncheck the check box and verify
 		*/
 		loginpage=new LoginPageTgl();
-		// Need not login again for Azure environment
 		loginpage.enterLoginInfo();	
 		searchPage.clickOnMoreSearchOptionsBtn();
 		searchPage.enterPersonID(applicantID);
