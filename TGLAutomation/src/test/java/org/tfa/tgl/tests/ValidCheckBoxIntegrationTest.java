@@ -94,8 +94,9 @@ public class ValidCheckBoxIntegrationTest extends BaseTestMethods{
 		loginAppCenter.openLoginPage();
 		loginAppCenter.enterLoginInfo();
 		webUtil.holdOn(2);
-		webUtil.openURL(data.getEnvironmentInfo("ENV_002").get("ApplicationURL")) ;
-		//webUtil.openURL("https://qamerlin.teachforamerica.org/applicant-center/#expenses/transitional-funding");
+		// commenting parameterization and enable hardcoded url as before: NS
+		//webUtil.openURL(data.getEnvironmentInfo("ENV_002").get("ApplicationURL")) ;
+		webUtil.openURL("https://qamerlin.teachforamerica.org/applicant-center/#expenses/transitional-funding");
 		//webUtil.openURL(data.getEnvironmentDataMap()) ;
 		webUtil.holdOn(5);
 		webUtil.waitForBrowserToLoadCompletely();
