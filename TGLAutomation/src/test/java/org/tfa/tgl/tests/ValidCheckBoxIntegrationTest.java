@@ -22,38 +22,41 @@ import org.tfa.tgl.utilities.web.TGLWebUtil;
 
 /**
  **************************************************************************************************************
- * @Description  : This class Validate to verify that the Education cost works as in Admissions-9046. 
- * @parent: BaseTestMethods class has been extended that has basic methods those will run before suite, before class,
- *          before method, after class, after method etc. 
- * @TestCase     :  TGL11130TestValidCheckBoxIntegrationPoint()
+ * @Description : This class Validate to verify that the Education cost works as
+ *              in Admissions-9046.
+ * @parent: BaseTestMethods class has been extended that has basic methods those
+ *          will run before suite, before class, before method, after class,
+ *          after method etc.
+ * @TestCase : TGL11130TestValidCheckBoxIntegrationPoint()
  * @Author: Surya
  ************************************************************************************************************** 
  */
-public class ValidCheckBoxIntegrationTest extends BaseTestMethods{
-	
-	private TGLWebUtil webUtil=TGLWebUtil.getObject();
-	private SearchPageTGL searchPage= new SearchPageTGL();
+public class ValidCheckBoxIntegrationTest extends BaseTestMethods {
+
+	private TGLWebUtil webUtil = TGLWebUtil.getObject();
+	private SearchPageTGL searchPage = new SearchPageTGL();
 	private ApplicantCenterPage applicantCenterPage = new ApplicantCenterPage();
-	private LoginPageAppCenter loginAppCenter=new LoginPageAppCenter();
-	private SearchDetailsPageTGL searchDetailsPage= new SearchDetailsPageTGL();
-	private  Map<String, String> infoMap; 
-	private RandomUtil random=new RandomUtil();
-	private JavaScriptUtil jsUtil=JavaScriptUtil.getObject();
+	private LoginPageAppCenter loginAppCenter = new LoginPageAppCenter();
+	private SearchDetailsPageTGL searchDetailsPage = new SearchDetailsPageTGL();
+	private RandomUtil random = new RandomUtil();
+	private JavaScriptUtil jsUtil = JavaScriptUtil.getObject();
 	Logger log;
 
 	/**
 	 **************************************************************************************************************
-	 * @Description  : This function is to verify that the Education cost works as in Admissions-9046. 
-  	 * @Param: No Parameter
-	 * @Return: No Return 
+	 * @Description : This function is to verify that the Education cost works as in
+	 *              Admissions-9046.
+	 * @Param: No Parameter
+	 * @Return: No Return
 	 * @Author: Surya
 	 **************************************************************************************************************
 	 */
-	
+
 	@Test
 	public void tgl11131TestValidCheckBoxIntegrationPoint() throws Exception {
-		String applicantID = "4383359";
-				
+		String applicantID = testDataMap.get("ApplicantID");
+		String navToTransFundingUrl = testDataMap.get("TransFundingUrl");
+
 		/* 
 		* Step 1 - Login to the TGL  portal application using valid user id
 		*/
@@ -64,6 +67,7 @@ public class ValidCheckBoxIntegrationTest extends BaseTestMethods{
 		* Step 2 - Search for the Person Id which is going to verify Tax information
 		* Click on Search button.
 		*/
+		webUtil.holdOn(5);
 		webUtil.click("Tgl_Clear_btn");
 		searchPage.clickOnMoreSearchOptionsBtn();
 		searchPage.enterPersonID(applicantID);
@@ -79,11 +83,11 @@ public class ValidCheckBoxIntegrationTest extends BaseTestMethods{
 		* Enter Notes for same field
 		*/
 		String[] sectionsOnTGL = {"Tgl_PrivateLoan_Section","Tgl_OtherLoan_Section","Tgl_Savings_Section","Tgl_Credit_Section","Tgl_ApplicantTax_Section","Tgl_W2Income_Section","Tgl_ParentTax_section","Tgl_ParentIncome_Section"};
-		String getValue = checkValidCheckBoxAndEnterNotes(sectionsOnTGL);
-		String getSelectedDocumentSectionFromTGL = getValue;
-		String getNotesFromTGL = infoMap.get("Notes");
-		String getSectionNameFromTGL = infoMap.get("SectionName");
-		String getValidCheckBoxValueFromTGL =infoMap.get("ValidCheckBox");
+		Map<String, String> objectMap = checkValidCheckBoxAndEnterNotes(sectionsOnTGL);
+		String getSelectedDocumentSectionFromTGL = objectMap.get("Section");
+		String getNotesFromTGL = objectMap.get("Notes");
+		String getSectionNameFromTGL = objectMap.get("SectionName");
+		String getValidCheckBoxValueFromTGL =objectMap.get("ValidCheckBox");
 
 		/* 
 		* Step 5 -  Now login to online part 2 as qamerlin.teachforamerica.org/applicant-center
@@ -92,26 +96,31 @@ public class ValidCheckBoxIntegrationTest extends BaseTestMethods{
 		loginAppCenter.openLoginPage();
 		loginAppCenter.enterLoginInfo();
 		webUtil.holdOn(2);
-		webUtil.openURL("https://qamerlin.teachforamerica.org/applicant-center/#expenses/transitional-funding");
+		//webUtil.openURL(data.getEnvironmentInfo("ENV_002").get("ApplicationURL")) ;
+		webUtil.openURL(navToTransFundingUrl);
 		webUtil.holdOn(5);
 		webUtil.waitForBrowserToLoadCompletely();
 				
 		/* 
 		* Step 7 -  Now  go to cFunding link t check TGL status for check box and notes which you selected in TG
 		*/	
-		getValuesFromSelectorPortal("AppCenter_TGLDocuments_TB",getSectionNameFromTGL);
-		String getNotesFromSelectorPortal = infoMap.get("SelectorPortalNotes");
-		String getValidCheckBoxValueFromSelectorPortal = infoMap.get("SelectorPortalCheckBox");
+		Map<String, String> transitionalFundingMap = getValuesFromSelectorPortal("AppCenter_TGLDocuments_TB",getSectionNameFromTGL);
+		String getNotesFromSelectorPortal = transitionalFundingMap.get("SelectorPortalNotes");
+		String getValidCheckBoxValueFromSelectorPortal = transitionalFundingMap.get("SelectorPortalCheckBox");
 		
 		Assert.assertEquals(getNotesFromSelectorPortal,getNotesFromTGL, "Notes updated in SelectorPortal");
 		Assert.assertEquals(getValidCheckBoxValueFromSelectorPortal,getValidCheckBoxValueFromTGL,"Documentation Verified Checkbox is Checked in Selector Portal ");
 		applicantCenterPage.clickOnLogOutLink();
 		
+		
 		/* 
 		* Step 8 -  Now come back to TGL portal and uncheck the check box and verify
 		*/
 		loginpage=new LoginPageTgl();
-		loginpage.enterLoginInfo();	
+		// Need not login again for Azure environment
+//		loginpage.enterLoginInfo();	
+		webUtil.holdOn(5);
+		webUtil.click("Tgl_Clear_btn");
 		searchPage.clickOnMoreSearchOptionsBtn();
 		searchPage.enterPersonID(applicantID);
 		searchPage.clickOnSearchBtn();
@@ -144,18 +153,13 @@ public class ValidCheckBoxIntegrationTest extends BaseTestMethods{
 		if(name.equals("Tgl_ParentIncome_Section")) getSectionName = "Parent Income Statement";
 		return getSectionName;
 	}
-	private void addValidationData(String validationName, String expectedValue){
-		if(infoMap==null){
-			infoMap=new HashMap<>();
-		}
-		infoMap.put(validationName, expectedValue);
-	}
 	/* 
 	* This function will get the values from the Applicant center document table 
 	*/
-	public String getValuesFromSelectorPortal(String locatorName,String valueToCompare){
+	public Map<String, String> getValuesFromSelectorPortal(String locatorName,String valueToCompare){
 		String getNotesText = null;
 		String documentValidCheck = null;
+		Map<String, String> objectMap=new HashMap<>();
 		Map<String, String> locatorValueMap=webUtil.getLocatorValueMap(locatorName);
 		String locatorValue=TGLWebUtil.getLocatorValue(locatorValueMap, locatorName);
 		List<WebElement> getValues = webUtil.getDriver().findElements(By.xpath(locatorValue));
@@ -171,8 +175,8 @@ public class ValidCheckBoxIntegrationTest extends BaseTestMethods{
 						getNotesText = getNotes.getText();
 						WebElement getDocumentChecked = webUtil.getDriver().findElement(By.xpath(locatorValue +"["+i+"]/td[2]/input"));
 						documentValidCheck= getDocumentChecked.getAttribute("checked");
-						addValidationData("SelectorPortalNotes",getNotesText);
-						addValidationData("SelectorPortalCheckBox",documentValidCheck);
+						objectMap.put("SelectorPortalNotes",getNotesText);
+						objectMap.put("SelectorPortalCheckBox",documentValidCheck);
 
 						break;
 					}
@@ -180,14 +184,15 @@ public class ValidCheckBoxIntegrationTest extends BaseTestMethods{
 			}catch(Exception e) {
 							}
 		}
-		return null;
+		return objectMap;
 
 	}
 	/* 
 	* This function will click on the valid checkbox and enter the notes
 	* return the locator
 	*/
-	public String checkValidCheckBoxAndEnterNotes(String[] sections){
+	
+	public Map<String, String> checkValidCheckBoxAndEnterNotes(String[] sections){
 		String getlocatorValue;
 		String checkBoxValue;
 		boolean checkValue = false;
@@ -197,6 +202,7 @@ public class ValidCheckBoxIntegrationTest extends BaseTestMethods{
 		String getSectionName = null;
 		String checkBoxChecked ="true";
 		String enterNotes="Checked Documentation Verified CheckBox-"+random.generateRandomNumber(5);
+		Map<String, String> objectMap=new HashMap<>();
 		int len = sections.length-1;
 		for(int i= 0; i<=len; i++){
 			Map<String, String> locatorValueMap=webUtil.getLocatorValueMap(sections[i]);
@@ -234,12 +240,11 @@ public class ValidCheckBoxIntegrationTest extends BaseTestMethods{
 			webUtil.holdOn(10);
 		}
 		checkBoxValue = selectedSection;
-		addValidationData("Notes",enterNotes);
-		addValidationData("Section",checkBoxValue);
-		addValidationData("SectionName",getSectionName);
-		addValidationData("ValidCheckBox",checkBoxChecked);
-		return checkBoxValue;
+		objectMap.put("Notes",enterNotes);
+		objectMap.put("Section",checkBoxValue);
+		objectMap.put("SectionName",getSectionName);
+		objectMap.put("ValidCheckBox",checkBoxChecked);
+		return objectMap;
 	}
 
 }
-
