@@ -1,9 +1,8 @@
 package org.tfa.tgl.tests;
 
 
-import java.util.List;
-
-import org.openqa.selenium.WebElement;
+import java.util.HashMap;
+import java.util.Map;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.tfa.framework.core.BaseTestMethods;
@@ -30,6 +29,8 @@ public class ReassignmentSelectorPortalIntegrationTest extends BaseTestMethods {
 	private SearchDetailsPageTGL searchDetailsPage= new SearchDetailsPageTGL();
 	private SelectorPortalPage selectorPortalPage = new SelectorPortalPage();
 	private static final String NEWYORK="New York";
+	String assignmentId = null;
+
 
 	/**
 	 **************************************************************************************************************
@@ -42,11 +43,12 @@ public class ReassignmentSelectorPortalIntegrationTest extends BaseTestMethods {
 	 */
 	@Test
 	public void tgl11130TestReassignmentSelectorPortalIntegrationPoint() throws Exception {
-		String url = testDataMap.get("SelectorPortalURL");
+		String selectorPortalURL = testDataMap.get("SelectorPortalURL");
 		String userNameSelectorPortal = testDataMap.get("SelectorPortalUserName");
 		String passwordSelectorPortal = testDataMap.get("SelectorPortalPassword");
 		String uploadedFileName=testDataMap.get("uploadUploadTemplateFilePath");
-		String assignmentId = null;
+		String expAssignment=testDataMap.get("expectedAssignment");
+	
 		/*  
 		 * Step 1 - Login to TGL portal and pickup one applicant whose application is not completed  and click on applicant
 		 */
@@ -55,39 +57,17 @@ public class ReassignmentSelectorPortalIntegrationTest extends BaseTestMethods {
 		
 		searchPage.selectTGLStatusDD("Tgl_InComplete_LK");
  		searchPage.clickOnSearchBtn();
- 		webUtil.holdOn(2);
-		String applicantID = searchPage.clickApplicantNameOnSearchResults();
-		
-		if(applicantID !=null) {//NOSONAR
-		}else {
-			webUtil.click("Tgl_Clear_btn");
-			List<WebElement> link=webUtil.getElementsList("Home_tgl_applicationyear");
-			WebElement appYear =  link.get(2);
-			appYear.click();
-			searchPage.selectTGLStatusDD("Tgl_Complete_LK");
-	 		searchPage.clickOnSearchBtn();
-	 		applicantID = searchPage.clickApplicantNameOnSearchResults();
-		}
-		
-		
+ 		String applicantID = searchPage.clickApplicantNameOnSearchResults();
 		Assert.assertNotNull(applicantID, "Not returned any related data on Search results");
 		webUtil.holdOn(5);
 			 
 		/*  
 		 * Step 2 - Now complete the application but do not calculate any award , make sure applicant is assign to region
 		 */
-		String expAssignment=testDataMap.get("expectedAssignment");//NOSONAR
-		String actualValue = getAssignmentValue();
-		if(actualValue.contains("San Antonio")){
-			assignmentId ="NYENGL";
-			expAssignment = NEWYORK;
-		}else if(actualValue.contains(NEWYORK)){
-			assignmentId ="SASPED";
-			expAssignment = "San Antonio";
-		}else{//NOSONAR
-			assignmentId ="NYENGL";
-			expAssignment = NEWYORK;
-		}
+		String actualValue = searchDetailsPage.getAssignmentValue("Tgl_Assignment_ST");
+		Map<String, String> objectMap = assignAssignmentValue(actualValue, expAssignment);
+		assignmentId = objectMap.get("AssignmentId");
+		expAssignment = objectMap.get("ExpAssignment");
 		searchDetailsPage.clickCompleteAndFixErrorMessages(applicantID);
 		searchDetailsPage.clickOnTGLSignOutLink();
 
@@ -97,7 +77,7 @@ public class ReassignmentSelectorPortalIntegrationTest extends BaseTestMethods {
 		 * Click on Upload
 		*/
 		//--> Go to Selector Portal
-		webUtil.openLoginPage(url);
+		webUtil.openLoginPage(selectorPortalURL);
 		selectorPortalPage.validLogin(userNameSelectorPortal, passwordSelectorPortal);
 		webUtil.holdOn(5);
 		selectorPortalPage.selectRegionalReassignmentUploadLink();
@@ -113,22 +93,15 @@ public class ReassignmentSelectorPortalIntegrationTest extends BaseTestMethods {
 		*/
 		loginpage=new LoginPageTgl();
 		loginpage.enterLoginInfo();
-		webUtil.waitForBrowserToLoadCompletely();
-		webUtil.holdOn(10);
-		webUtil.click("Tgl_Clear_btn");
-		webUtil.holdOn(2);
-		searchPage.clickOnMoreSearchOptionsBtn();
-		searchPage.enterPersonID(applicantID);
-		searchPage.clickOnSearchBtn();
-		searchPage.clickFirstRowColumnOnSearchResults();
-		String actualAssignmentValue = getAssignmentValue();
+		searchPage.enterPersonIDAndClickOnSearchButton(applicantID);
+		String actualAssignmentValue = searchDetailsPage.getAssignmentValue("Tgl_Assignment_ST");
 		Assert.assertEquals(actualAssignmentValue,expAssignment, "Verify the Assignment value updated");
 		
 		/* 
 		* Step 5 - Now click on Calculate award 
 		*/
 		webUtil.click("Home_Tgl_Search2_btn");
-		webUtil.holdOn(2);
+		webUtil.waitUntilElementVisible("Tgl_CalculatedTotal_ST",10);
 		
 		/*
 		 * Step 6 - Verify Award
@@ -143,12 +116,25 @@ public class ReassignmentSelectorPortalIntegrationTest extends BaseTestMethods {
 		*/
 	}
 
-	//gets the Assignment value on the TGL Page
-	private String getAssignmentValue(){
-		String asignmentValue = webUtil.getText("Tgl_Assignment_ST");
-		String[] arrSplit = asignmentValue.split(": ");
-		return arrSplit[1];
+	//Assign the Assignment value on the TGL Page
+	public Map<String, String> assignAssignmentValue(String value, String expAssignment){
+		Map<String, String> objectMap=new HashMap<>();
+		if(value.contains("San Antonio")){
+			assignmentId ="NYENGL";
+			expAssignment = NEWYORK;
+		}else if(value.contains(NEWYORK)){
+			assignmentId ="SASPED";
+			expAssignment = "San Antonio";
+		}else{
+			assignmentId ="NYENGL";
+			expAssignment = NEWYORK;
+		}
+		objectMap.put("AssignmentId", assignmentId);
+		objectMap.put("ExpAssignment", expAssignment);
+		return objectMap;
+
 	}
+	
 	@Override
 	public TGLConstants getConstants(){
 		return new TGLConstants();

@@ -67,13 +67,9 @@ public class ValidCheckBoxIntegrationTest extends BaseTestMethods {
 		* Step 2 - Search for the Person Id which is going to verify Tax information
 		* Click on Search button.
 		*/
-		webUtil.holdOn(5);
-		webUtil.click("Tgl_Clear_btn");
-		searchPage.clickOnMoreSearchOptionsBtn();
-		searchPage.enterPersonID(applicantID);
+
+		searchPage.enterPersonIDAndClickOnSearchButton(applicantID);
 		// Clear app year value - change made to fix script <<NS 21 July 2020>>
-		searchPage.clickOnSearchBtn();
-		searchPage.clickFirstRowColumnOnSearchResults();
 		jsUtil.scrollDownPage(500);
 		searchDetailsPage.selectTGLStatusDD("Incomplete");
 
@@ -96,7 +92,6 @@ public class ValidCheckBoxIntegrationTest extends BaseTestMethods {
 		loginAppCenter.openLoginPage();
 		loginAppCenter.enterLoginInfo();
 		webUtil.holdOn(2);
-		//webUtil.openURL(data.getEnvironmentInfo("ENV_002").get("ApplicationURL")) ;
 		webUtil.openURL(navToTransFundingUrl);
 		webUtil.holdOn(5);
 		webUtil.waitForBrowserToLoadCompletely();
@@ -117,14 +112,7 @@ public class ValidCheckBoxIntegrationTest extends BaseTestMethods {
 		* Step 8 -  Now come back to TGL portal and uncheck the check box and verify
 		*/
 		loginpage=new LoginPageTgl();
-		// Need not login again for Azure environment
-//		loginpage.enterLoginInfo();	
-		webUtil.holdOn(5);
-		webUtil.click("Tgl_Clear_btn");
-		searchPage.clickOnMoreSearchOptionsBtn();
-		searchPage.enterPersonID(applicantID);
-		searchPage.clickOnSearchBtn();
-		searchPage.clickFirstRowColumnOnSearchResults();
+		searchPage.enterPersonIDAndClickOnSearchButton(applicantID);
 		Map<String, String> locatorValueMap=webUtil.getLocatorValueMap(getSelectedDocumentSectionFromTGL);
 		String locatorValue=TGLWebUtil.getLocatorValue(locatorValueMap, getSelectedDocumentSectionFromTGL);
 		WebElement checkBoxValid = webUtil.getDriver().findElement(By.xpath("("+ locatorValue+"/tbody/tr//input)[2]"));

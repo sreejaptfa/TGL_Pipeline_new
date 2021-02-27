@@ -20,6 +20,14 @@ public class TimeLineTest extends BaseTestMethods{
 	private SearchPageTGL searchPage= new SearchPageTGL();
 	private SearchDetailsPageTGL searchDetailsPage = new SearchDetailsPageTGL();
 	
+	/**
+	 **************************************************************************************************************
+	 * @Description  : This function is to verify the TimeLine Comments
+  	 * @Param: No Parameter
+	 * @Return: No Return 
+	 * @Author: Surya
+	 **************************************************************************************************************
+	 */
 	@Test
 	public void tgl11125TestTimeLine() throws Exception {
 		
@@ -44,21 +52,24 @@ public class TimeLineTest extends BaseTestMethods{
 		searchDetailsPage.clickOnYesUpdateThisAwardButton();
 		
 		/* Step 4 - Click on Detail link and verify all the story */
+		Assert.assertTrue(verifyTimeLineComments(enterAdjustmentCommentValue), "Verify Time Line added the Row");
+
+		/* Step 5 - End Script */
+
+	}
+	//Verify the Timeline comments
+	private boolean verifyTimeLineComments(String adjustmentComment) {
 		boolean flag = false;
 		searchDetailsPage.clickOnTimeLineButton();
 		List<WebElement> totalCnt=webUtil.getElementsList("Tgl_TimeLine_TB");
 		for(int i = 0; i<totalCnt.size(); i++){
 			WebElement msg =  totalCnt.get(i);
-			if(msg.getText().contains(enterAdjustmentCommentValue)) {
+			if(msg.getText().contains(adjustmentComment)) {
 				flag = true;
 				break;
 			}
-				
 		}
-		Assert.assertTrue(flag, "Verify Time Line adds the Row");
-		
-		/* Step 5 - End Script */
-
+		return flag;
 	}
 	@Override
 	public TGLConstants getConstants(){

@@ -65,6 +65,19 @@ public class GroupCalculationFieldValidationTest extends BaseTestMethods{
 		/* Step 8 - Now again go back to screen such a way that you have some data to calculate */
 		//Click on Calculate again
 		webUtil.selectByIndex(TGLOFFERDEADLINEDD, 0);
+		Assert.assertTrue(verifyAwardsCalculation().contains("awards calculated"));
+		
+		/* Step 9 - End Script */
+	}				
+
+	
+	@Override
+	public TGLConstants getConstants(){
+		return new TGLConstants();
+	}
+	
+	private String verifyAwardsCalculation() {
+		String actualAwardCalculationMessage = null;
 		String[] selectValue={"Buffalo","Alabama","Baltimore","Bay Area","D.C. Region","Houston","New Jersey","New York"};
 		for(int i=0; i<=selectValue.length-1; i++){
 			webUtil.selectByVisibleText("Tgl_Regions_DD", selectValue[i]);
@@ -73,19 +86,12 @@ public class GroupCalculationFieldValidationTest extends BaseTestMethods{
 			if (flag){
 				Assert.assertTrue(webUtil.objectIsEnabled("Tgl_TGLCalculation_Calculate_Btn"), "Verify TGL Calculation calculate button is Enabled");
 				awardCalculatorPage.clickOnTGLCalculationCalculateBtn();
-				String actualAwardCalculationMessage = webUtil.getText("Tgl_AwardCalculation_Msg");
-				Assert.assertTrue(actualAwardCalculationMessage.contains("awards calculated"));
+				actualAwardCalculationMessage = webUtil.getText("Tgl_AwardCalculation_Msg");
 				break;
 			}else{
 				webUtil.click("Tgl_TGLCalculation_Cancel_Btn");
 			}
 		}
-		
-		/* Step 9 - End Script */
-	}
-	
-	@Override
-	public TGLConstants getConstants(){
-		return new TGLConstants();
+			return actualAwardCalculationMessage;
 	}
 }

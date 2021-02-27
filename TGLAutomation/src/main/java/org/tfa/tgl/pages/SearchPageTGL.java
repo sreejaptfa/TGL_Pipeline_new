@@ -20,6 +20,7 @@ public class SearchPageTGL {
 	ArrayList<String> names = new ArrayList<String>();
 	ArrayList<String> namesnew = new ArrayList<String>();
 	private TestData data = TestData.getObject();
+	private static final String CLEARBTN ="Tgl_Clear_btn";
 
 	WebDriverWait localwait;
 	private Random r;
@@ -234,9 +235,6 @@ public class SearchPageTGL {
 		List<WebElement> searchresults;
 		String statusselection = "";
 		By rowdetailxpath;
-
-		//webUtil.getDriver().navigate().to("https://qamerlin.teachforamerica.org/ada/tgl");
-		
 		webUtil.getDriver().navigate().to(data.getEnvironmentDataMap().get("ApplicationURL")) ;
 		webUtil.waitForBrowserToLoadCompletely();
 		WebElement InterviewDeadlinedd = webUtil.getElement("Tgl_InterviewDeadlinefilter_txt");
@@ -482,6 +480,7 @@ public class SearchPageTGL {
 	 * This function will selects TGL Status Button
 	 */
 	public void selectTGLStatusDD(String locatorNameTGLStatus) {
+		webUtil.waitUntilElementVisible("Tgl_Search_btn", 10);
 		webUtil.click("Tgl_TGLStatus_DD");
 		webUtil.click(locatorNameTGLStatus);
 	}
@@ -496,32 +495,37 @@ public class SearchPageTGL {
 	/*
 	 * This function will enters the Person ID
 	 */
-	public void enterPersonID(String personID) {
+	public void enterPersonIDAndClickOnSearchButton(String personID) {
+		webUtil.waitForBrowserToLoadCompletely();
+		webUtil.waitUntilElementVisible(CLEARBTN, 10);
+		webUtil.click(CLEARBTN);
+		this.clickOnMoreSearchOptionsBtn();
 		webUtil.setTextBoxValue("Tgl_personid", personID);
+		this.clickOnSearchBtn();
+		this.clickFirstRowColumnOnSearchResults();
 	}
 
 	/*
-	 * 
+	 * This function will get the Applicant id where stage = incomplete/Complete
 	 */
 	public String clickApplicantNameOnSearchResults() {
-		String getApplicantID = null;
-		int len = webUtil.getDriver().findElements(By.xpath("//tbody[@data-hook='results']/tr")).size();
-		try {
-			for (int i = 1; i <= len; i++) {
-				WebElement getPersonID = webUtil.getDriver()
-						.findElement(By.xpath("//tbody[@data-hook='results']/tr[" + i + "]/td[2]/a"));
-				WebElement getsStage = webUtil.getDriver()
-						.findElement(By.xpath("//tbody[@data-hook='results']/tr[" + i + "]/td[6]/a"));
-				if ((getsStage.getText().equals("APPLICANT"))) {
-					getApplicantID = getPersonID.getText();
-					getPersonID.click();
-					break;
-				}
-			}
-		} catch (Exception e) {
-			log.error("Applicant not found ", e);
+		String applicantId = "";
+		List<WebElement> elemList = webUtil.getElementsList("Tgl_ApplicantIncomplete_Lk");
+		if(elemList.isEmpty()) {
+			webUtil.click(CLEARBTN);
+			List<WebElement> link=webUtil.getElementsList("Home_tgl_applicationyear");
+			link.get(2).click();
+			selectTGLStatusDD("Tgl_Complete_LK");
+	 		clickOnSearchBtn();
+	 		elemList = webUtil.getElementsList("Tgl_ApplicantIncomplete_Lk");
+			applicantId = elemList.get(0).getText();
+	 		elemList.get(0).click();
+		}else {
+			applicantId = elemList.get(0).getText();
+			elemList.get(0).click();
 		}
-		return getApplicantID;
+		
+		return applicantId;
 	}
 
 }
