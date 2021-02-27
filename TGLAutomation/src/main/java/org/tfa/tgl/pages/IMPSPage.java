@@ -4,12 +4,12 @@ import org.tfa.tgl.utilities.web.TGLWebUtil;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 
-
+@SuppressWarnings("squid:S1871")
 public class IMPSPage {
 	
 	private TGLWebUtil webUtil=TGLWebUtil.getObject();
-	
-
+	private static final String COMMONTOPFRAME="CommonTopframeWithName_Frm";
+	private static final String IMPSAPPLICANTLK="IMPS_Applicant_LK";
 	/**
 	 * This function will login to the IMPS application
 	 */
@@ -24,7 +24,7 @@ public class IMPSPage {
 	 * This function will Switch to the frame and Clicks on the Admission button
 	 */
 	public void clickOnAdmissionsButton(){
-		webUtil.switchToFrameByFrameLocator("CommonTopframeWithName_Frm");
+		webUtil.switchToFrameByFrameLocator(COMMONTOPFRAME);
 		webUtil.click("IMPS_Admissions_Btn");
 		webUtil.holdOn(2);
 		webUtil.switchToWindowFromFrame();
@@ -48,19 +48,19 @@ public class IMPSPage {
 	 * If the Applicant  not found it will search on Historical Search
 	 */
 	public boolean clickOnApplicantLink(String personID){
-		boolean iflag = webUtil.objectIsVisible("IMPS_Applicant_LK");
+		boolean iflag = webUtil.objectIsVisible(IMPSAPPLICANTLK);
 		if(iflag){
-			webUtil.click("IMPS_Applicant_LK");
+			webUtil.click(IMPSAPPLICANTLK);
 			webUtil.holdOn(5);
 		}else{
 			webUtil.switchToWindowFromFrame();
-			webUtil.switchToFrameByFrameLocator("CommonTopframeWithName_Frm");
+			webUtil.switchToFrameByFrameLocator(COMMONTOPFRAME);
 			webUtil.click("IMPS_HistoricalSearch_Btn");
 			webUtil.switchToWindowFromFrame();
 			webUtil.switchToFrameByFrameLocator("CommonMainframeWithName_Frm");
 			enterPersonID(personID);
 			clickOnSearchButton();
-			webUtil.click("IMPS_Applicant_LK");
+			webUtil.click(IMPSAPPLICANTLK);
 			webUtil.holdOn(10);
 		}
 		return iflag;
@@ -70,12 +70,12 @@ public class IMPSPage {
 	}
 	public String getEmailFromIMPSApplicantID(String personID){
 		String getValue = null;
-		boolean iflag = webUtil.objectIsVisible("IMPS_Applicant_LK");
+		boolean iflag = webUtil.objectIsVisible(IMPSAPPLICANTLK);
 		if(iflag){
 			getValue = webUtil.getText("IMPS_Email_TB");
 		}else{
 			webUtil.switchToWindowFromFrame();
-			webUtil.switchToFrameByFrameLocator("CommonTopframeWithName_Frm");
+			webUtil.switchToFrameByFrameLocator(COMMONTOPFRAME);
 			webUtil.click("IMPS_HistoricalSearch_Btn");
 			webUtil.switchToWindowFromFrame();
 			webUtil.switchToFrameByFrameLocator("CommonMainframeWithName_Frm");
@@ -90,7 +90,7 @@ public class IMPSPage {
 	 * This function will Logout from IMPS
 	 */
 	public void clickOnIMPSLogoutButton(){
-		webUtil.switchToFrameByFrameLocator("CommonTopframeWithName_Frm");
+		webUtil.switchToFrameByFrameLocator(COMMONTOPFRAME);
 		WebElement element = webUtil.getElement("IMPS_Logout_Btn");
 		webUtil.click(element);
 		webUtil.holdOn(5);

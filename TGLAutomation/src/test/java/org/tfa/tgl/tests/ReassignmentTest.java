@@ -45,7 +45,7 @@ public class ReassignmentTest extends BaseTestMethods {
 	public void tgl11128TestReassignmentIntegrationPoint() throws Exception{
 		
 		String selectedQualifiedPositon;
-		String url = testDataMap.get("IMPSURL");
+		String impsURL = testDataMap.get("IMPSURL");
 		String userNameIMPS = testDataMap.get("IMPSUserName");
 		String passwordIMPS = testDataMap.get("IMPSPassword");
 		String applicantID;
@@ -57,16 +57,8 @@ public class ReassignmentTest extends BaseTestMethods {
 				
 		searchPage.selectTGLStatusDD("Tgl_InComplete_LK");
 		searchPage.clickOnSearchBtn();
-		boolean iChexkFlag = webUtil.objectIsVisible("Tgl_FirstRowColumn_TB");
-		if(iChexkFlag){
-			applicantID = searchPage.clickFirstRowColumnOnSearchResults();
-		}else{
-			searchPage.selectTGLStatusDD("Tgl_Complete_LK");
-			searchPage.clickOnSearchBtn();
-			applicantID = searchPage.clickFirstRowColumnOnSearchResults();
-			searchDetailsPage.selectTGLStatusDD("Incomplete");
-			webUtil.holdOn(5);
-		}
+		applicantID = searchPage.clickApplicantNameOnSearchResults();
+		webUtil.waitUntilElementVisible("Tgl_TGLStatusInput_DD", 10);
 		
 		/* 
 		* Step 2 - Now complete the application but do not calculate any award , make sure applicant is assign to region
@@ -79,7 +71,7 @@ public class ReassignmentTest extends BaseTestMethods {
 		* Go to IMPS, Search for same applicant, Click on Applicant, Click on Assignment link, You can assign new position there
 		*/
 		//--> Go to IMPS
-		webUtil.openLoginPage(url);
+		webUtil.openLoginPage(impsURL);
 		impsPage.validLogin(userNameIMPS,passwordIMPS);
 		webUtil.holdOn(5);
 		impsPage.clickOnAdmissionsButton();
@@ -100,14 +92,8 @@ public class ReassignmentTest extends BaseTestMethods {
 		*/
 		loginpage=new LoginPageTgl();
 		loginpage.enterLoginInfo();
-		webUtil.holdOn(5);
-		webUtil.click("Tgl_Clear_btn");
-		searchPage.clickOnMoreSearchOptionsBtn();
-		searchPage.enterPersonID(applicantID);
-		searchPage.clickOnSearchBtn();
-		searchPage.clickFirstRowColumnOnSearchResults();
-		webUtil.holdOn(2);
-		String actualAssignmentValue = getAssignmentValue();
+		searchPage.enterPersonIDAndClickOnSearchButton(applicantID);
+		String actualAssignmentValue = searchDetailsPage.getAssignmentValue("Tgl_Assignment_ST");
 		Assert.assertTrue(selectedQualifiedPositon.contains(actualAssignmentValue), "Verify the Assignment value updated");
 		
 		/* 
@@ -129,12 +115,6 @@ public class ReassignmentTest extends BaseTestMethods {
 		/* 
 		* Step 7 - End Script 
 		*/
-	}
-	//gets the Assignment value on the TGL Page
-	private String getAssignmentValue(){
-		String asignmentValue = webUtil.getText("Tgl_Assignment_ST");
-		String[] arrSplit = asignmentValue.split(": ");
-		return arrSplit[1];
 	}
 	
 	@Override

@@ -17,7 +17,7 @@ import org.tfa.tgl.utilities.web.TGLWebUtil;
 
 public class SearchDetailsPageTGL {
 	private TGLWebUtil webUtil=TGLWebUtil.getObject();
-	private WebElement element;
+	private static final String STATUSVALIDATIONMESSAGE = "Tgl_StatusValidationMessage_ST";
 	
 	/*
 	 * This function will clicks on Upload TGLDouments
@@ -108,13 +108,13 @@ public class SearchDetailsPageTGL {
 	 * returns true and false
 	 */
 	public void enterTotalNumberOfDependentsAndIncomeAmount(){
-		this.element = webUtil.getElement("Tgl_TotalNoOfDependents_ED");
+		WebElement element = webUtil.getElement("Tgl_TotalNoOfDependents_ED");
 		element.clear();
 		element.sendKeys("10");
 		element.sendKeys(Keys.ENTER);
 		webUtil.holdOn(5);
 		
-		this.element = webUtil.getElement("Tgl_Income_ED");
+		element = webUtil.getElement("Tgl_Income_ED");
 		element.clear();
 		element.sendKeys("100");
 		element.sendKeys(Keys.ENTER);
@@ -155,7 +155,13 @@ public class SearchDetailsPageTGL {
 		return expectedValuesSet.isEmpty();
 
 	}
-	
+
+	//gets the Assignment value on the TGL Page
+	public String getAssignmentValue(String locatorName){
+		String asignmentValue = webUtil.getText(locatorName);
+		String[] arrSplit = asignmentValue.split(": ");
+		return arrSplit[1];
+	}
 	/*
 	 * This function will Logout from TGL
 	 */
@@ -174,16 +180,16 @@ public class SearchDetailsPageTGL {
 	 * like Total # of Dependents is blank and "Status cannot be changed
 	 */
 	public void clickCompleteAndFixErrorMessages(String applicantID){
-		selectTGLStatusDD("Complete");
+		this.selectTGLStatusDD("Complete");
 		webUtil.holdOn(5);
-		boolean iflag = webUtil.objectIsVisible("Tgl_StatusValidationMessage_ST");
+		boolean iflag = webUtil.objectIsVisible(STATUSVALIDATIONMESSAGE);
 		if (iflag) {
-			String getErrorMessageText = webUtil.getText("Tgl_StatusValidationMessage_ST");
+			String getErrorMessageText = webUtil.getText(STATUSVALIDATIONMESSAGE);
 			if((getErrorMessageText.contains("Status cannot be changed")) || (getErrorMessageText.contains("Total # of Dependents is blank"))){
 				enterTotalNumberOfDependentsAndIncomeAmount();
 				selectCheckBoxsForObjectValid("Tgl_SelectCheckBox_chk");
 				selectTGLStatusDD("Complete");
-				boolean iflag1 = webUtil.objectIsVisible("Tgl_StatusValidationMessage_ST");	
+				boolean iflag1 = webUtil.objectIsVisible(STATUSVALIDATIONMESSAGE);	
 				if (iflag1) {
 					Assert.assertTrue(false,"PLEASE CHECK MANUALLY.... THERE ARE SOME MORE ERROR MESSAGES FOR THE PERSONID -> "+applicantID);
 				}
@@ -201,11 +207,11 @@ public class SearchDetailsPageTGL {
 		String locatorValue=TGLWebUtil.getLocatorValue(locatorValueMap, locatorName);
 		List<WebElement> getValues = webUtil.getDriver().findElements(By.xpath(locatorValue));
 		for(int i = 1; i<=getValues.size(); i++){
-			WebElement checkBox_Required = webUtil.getDriver().findElement(By.xpath("("+ locatorValue +"["+i+"]//input)[1]"));
-			if(checkBox_Required.isSelected()){
-				WebElement checkBox_Valid = webUtil.getDriver().findElement(By.xpath("("+ locatorValue+"["+i+"]//input)[2]"));
-				if(!checkBox_Valid.isSelected()){
-					webUtil.click(checkBox_Valid);
+			WebElement checkBoxRequired = webUtil.getDriver().findElement(By.xpath("("+ locatorValue +"["+i+"]//input)[1]"));
+			if(checkBoxRequired.isSelected()){
+				WebElement checkBoxValid = webUtil.getDriver().findElement(By.xpath("("+ locatorValue+"["+i+"]//input)[2]"));
+				if(!checkBoxValid.isSelected()){
+					webUtil.click(checkBoxValid);
 					}
 				}
 			}
