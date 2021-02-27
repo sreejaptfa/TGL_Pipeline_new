@@ -7,10 +7,12 @@ import org.tfa.framework.core.BaseTestMethods;
 import org.tfa.tgl.pages.LeftNavSection;
 import org.tfa.tgl.pages.LoginPageTgl;
 import org.tfa.tgl.utilities.web.TGLConstants;
+import org.tfa.tgl.utilities.web.TGLWebUtil;
 
 public class LeftNavTest extends BaseTestMethods{
 	LoginPageTgl loginpage;
 	Logger log=Logger.getLogger("rootLogger");
+	private TGLWebUtil webUtil = TGLWebUtil.getObject();
 
 	/*@Desc: This test verifies Left Nav section (Top Section), refer to testcase for more details - LeftNav - Automatable
 	 *@Parameters: Login credential with admin role 
@@ -22,9 +24,10 @@ public class LeftNavTest extends BaseTestMethods{
 		LeftNavSection nav= new LeftNavSection();	
 		boolean result;
 		try{			
-			loginpage = new LoginPageTgl();		
+			LoginPageTgl loginPage = webUtil.openLoginPage();
+			
 			// Below Assert ensures success login
-			result=loginpage.enterLoginInfo();
+			result=loginPage.enterLoginInfo();
 			Assert.assertTrue(result, "EnterloginInfo method failed");			
 			// Below Assert ensures <to be added>
 			Assert.assertTrue(nav.verifyTopNavSection(), "verifyAdditionalInformation method failed");								

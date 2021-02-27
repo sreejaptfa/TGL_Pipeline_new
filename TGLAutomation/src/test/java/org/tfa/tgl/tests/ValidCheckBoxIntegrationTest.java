@@ -60,8 +60,8 @@ public class ValidCheckBoxIntegrationTest extends BaseTestMethods {
 		/* 
 		* Step 1 - Login to the TGL  portal application using valid user id
 		*/
-		LoginPageTgl loginpage=new LoginPageTgl();
-		loginpage.enterLoginInfo();	
+		LoginPageTgl loginPage = webUtil.openLoginPage();
+		loginPage.enterLoginInfo();
 	
 		/* 
 		* Step 2 - Search for the Person Id which is going to verify Tax information
@@ -111,7 +111,7 @@ public class ValidCheckBoxIntegrationTest extends BaseTestMethods {
 		/* 
 		* Step 8 -  Now come back to TGL portal and uncheck the check box and verify
 		*/
-		loginpage=new LoginPageTgl();
+		webUtil.openLoginPage();
 		searchPage.enterPersonIDAndClickOnSearchButton(applicantID);
 		Map<String, String> locatorValueMap=webUtil.getLocatorValueMap(getSelectedDocumentSectionFromTGL);
 		String locatorValue=TGLWebUtil.getLocatorValue(locatorValueMap, getSelectedDocumentSectionFromTGL);

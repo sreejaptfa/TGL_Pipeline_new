@@ -7,11 +7,13 @@ import org.tfa.framework.core.BaseTestMethods;
 import org.tfa.tgl.pages.LoginPageTgl;
 import org.tfa.tgl.pages.SearchPageTGL;
 import org.tfa.tgl.utilities.web.TGLConstants;
+import org.tfa.tgl.utilities.web.TGLWebUtil;
 
 public class SearchPageTest extends BaseTestMethods {
 	
 	Logger log=Logger.getLogger("rootLogger");
 	SearchPageTGL search=new SearchPageTGL();
+	private TGLWebUtil webUtil = TGLWebUtil.getObject();
 	
 	/*@Desc: below test verifies filters and ensures search results are expected
 	 * Verify when TGL Admin searches for the data it displays based on the search criteria and validate the data is displaying correctly
@@ -22,11 +24,11 @@ public class SearchPageTest extends BaseTestMethods {
 	 */
 	@Test
 	public void tgl101verifySearchResults(){
-		LoginPageTgl loginpage=new LoginPageTgl();
+		LoginPageTgl loginPage = webUtil.openLoginPage();
 		try {
 			
 			// Below assert logs into the application
-			Assert.assertTrue(loginpage.enterLoginInfo(), "TGL login failed");
+			Assert.assertTrue(loginPage.enterLoginInfo(), "TGL login failed");
 			
 			// Below assert ensures validation for incorrect input in Person Id field
 			Assert.assertTrue(search.verifyErrorMessageForPersonID(), "Method verifyErrorMessageForPersonID Selection failed");

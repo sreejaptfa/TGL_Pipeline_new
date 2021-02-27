@@ -7,12 +7,13 @@ import org.tfa.framework.core.BaseTestMethods;
 import org.tfa.tgl.pages.AdditionalInformationSection;
 import org.tfa.tgl.pages.LoginPageTgl;
 import org.tfa.tgl.utilities.web.TGLConstants;
+import org.tfa.tgl.utilities.web.TGLWebUtil;
 
 public class AdditionalInformationSectionTest extends BaseTestMethods  {
 
-	LoginPageTgl loginpage;
 	Logger log=Logger.getLogger("rootLogger");
 	SoftAssert soft = new SoftAssert();
+	private TGLWebUtil webUtil = TGLWebUtil.getObject();
 	
 	/*@Desc: This test verifies addition information section labels
 	 *@Parameters: Login credential with admin role 
@@ -24,10 +25,10 @@ public class AdditionalInformationSectionTest extends BaseTestMethods  {
 		AdditionalInformationSection additionalinformation= new AdditionalInformationSection();
 		boolean result;
 		try{			
-			loginpage = new LoginPageTgl();
+			LoginPageTgl loginPage = webUtil.openLoginPage();
 			
 			// Below Assert ensures success login
-			result=loginpage.enterLoginInfo();
+			result=loginPage.enterLoginInfo();
 			soft.assertTrue(result, "EnterloginInfo method failed");	
 			
 			// Below Assert ensures that searched user has additional information section showing

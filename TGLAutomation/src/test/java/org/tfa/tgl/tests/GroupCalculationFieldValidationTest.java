@@ -39,8 +39,8 @@ public class GroupCalculationFieldValidationTest extends BaseTestMethods{
 	public void tgl11123TestGroupCalculationFieldValidation() throws Exception {
 	
 		/* Step 1 - Login to TGL portal */
-		LoginPageTgl loginpage=new LoginPageTgl();
-		loginpage.enterLoginInfo();
+		LoginPageTgl loginPage = webUtil.openLoginPage();
+		loginPage.enterLoginInfo();
 		
 		/* Step 2 - Now check main page */
 		Assert.assertTrue(webUtil.objectIsVisible("Tgl_AwardCalculator_btn"), "Verify Award Calculator button is Enabled");

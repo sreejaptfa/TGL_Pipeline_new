@@ -32,8 +32,8 @@ public class TimeLineTest extends BaseTestMethods{
 	public void tgl11125TestTimeLine() throws Exception {
 		
 		/* Step 1 - Login to TGL portal */
-		LoginPageTgl loginpage=new LoginPageTgl();
-		loginpage.enterLoginInfo();
+		LoginPageTgl loginPage = webUtil.openLoginPage();
+		loginPage.enterLoginInfo();
 		
 		/* Step 2 - Go go to TGL search and search for applicant whose TGL app is completed in Online part 2 */
 		searchPage.selectTGLStatusDD("Tgl_Complete_LK");

@@ -49,8 +49,8 @@ public class TotalAwardSectionTest extends BaseTestMethods{
 	public void tgl106TestTotalAwardSection() throws Exception {
 		
 		/* Step 1 - Login to the TGL  portal application using valid user id < https://qamerlin.teachforamerica.org/ada */
-		LoginPageTgl loginpage=new LoginPageTgl();
-		loginpage.enterLoginInfo();
+		LoginPageTgl loginPage = webUtil.openLoginPage();
+		loginPage.enterLoginInfo();
 	
 		/* Step 2 - Search for Personid to verify Total award section who has already cal award */
 		searchPage.clickOnSearchBtn();

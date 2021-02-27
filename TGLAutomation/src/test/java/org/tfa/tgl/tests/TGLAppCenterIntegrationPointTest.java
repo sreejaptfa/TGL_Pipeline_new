@@ -7,11 +7,12 @@ import org.tfa.framework.core.BaseTestMethods;
 import org.tfa.tgl.pages.LoginPageTgl;
 import org.tfa.tgl.pages.TGLAppCenterIntergrationPoints;
 import org.tfa.tgl.utilities.web.TGLConstants;
+import org.tfa.tgl.utilities.web.TGLWebUtil;
 
 public class TGLAppCenterIntegrationPointTest extends BaseTestMethods{
 	
-	LoginPageTgl loginpage;
 	Logger log=Logger.getLogger("rootLogger");
+	private TGLWebUtil webUtil = TGLWebUtil.getObject();
 	private static final String ENTERLOGININFOMETHODFAILED="EnterLoginInfo method failed";
 	private static final String TESTFAILEDDUETOEXCEPTION="TGL108ValidateIntegrationPoints test failed due to exception: ";
 	private static final String SEARCHANDOPENAPPLICANTMETHODFAILED="searchAndOpenApplicantDetails method failed";
@@ -24,11 +25,11 @@ public class TGLAppCenterIntegrationPointTest extends BaseTestMethods{
 	 */
 	@Test(priority=1, enabled = true)
 	public void tgl108ValidateIntegrationPoints(){
-		loginpage = new LoginPageTgl();
+		LoginPageTgl loginPage = webUtil.openLoginPage();
 		TGLAppCenterIntergrationPoints integrationpoints= new TGLAppCenterIntergrationPoints();
 		try{		
 		// TestCase - Integration Point - assets and liabilities - Step 1
-		Assert.assertTrue(loginpage.enterLoginInfo(),ENTERLOGININFOMETHODFAILED);
+		Assert.assertTrue(loginPage.enterLoginInfo(),ENTERLOGININFOMETHODFAILED);
 		// TestCase - Integration point - assets and liabilities - Step2 and Step 3
 		Assert.assertTrue(integrationpoints.searchAndOpenApplicantDetails(), SEARCHANDOPENAPPLICANTMETHODFAILED);
 		// TestCase - Integration point - assets and liabilities - step 5 
@@ -54,11 +55,11 @@ public class TGLAppCenterIntegrationPointTest extends BaseTestMethods{
 	 */
 	@Test(priority=2, enabled = true)
 	public void tgl110ValidateIntegrationPoints(){
-		loginpage = new LoginPageTgl();
+		LoginPageTgl loginPage = webUtil.openLoginPage();
 		TGLAppCenterIntergrationPoints integrationpoints= new TGLAppCenterIntergrationPoints();
 		try{
 		// TestCase - Integration Point - assets and liabilities - Step 1
-		Assert.assertTrue(loginpage.enterLoginInfo(),ENTERLOGININFOMETHODFAILED);
+		Assert.assertTrue(loginPage.enterLoginInfo(),ENTERLOGININFOMETHODFAILED);
 		// TestCase - Integration point - assets and liabilities - Step2 and Step 3
 		Assert.assertTrue(integrationpoints.searchAndOpenApplicantDetails(), SEARCHANDOPENAPPLICANTMETHODFAILED);
 		// TestCase - Integration point - assets and liabilities - step 6
@@ -78,11 +79,11 @@ public class TGLAppCenterIntegrationPointTest extends BaseTestMethods{
 	 */
 	@Test(priority=3, enabled = true)
 	public void tgl111ValidateIntegrationPoints(){
-		loginpage = new LoginPageTgl();
+		LoginPageTgl loginPage = webUtil.openLoginPage();
 		TGLAppCenterIntergrationPoints integrationpoints= new TGLAppCenterIntergrationPoints();
 		try{
 		// TestCase - Integration Point - assets and liabilities - Step 1
-		Assert.assertTrue(loginpage.enterLoginInfo(),ENTERLOGININFOMETHODFAILED);
+		Assert.assertTrue(loginPage.enterLoginInfo(),ENTERLOGININFOMETHODFAILED);
 		// TestCase - Integration point - assets and liabilities - Step 2 and Step 3
 		Assert.assertTrue(integrationpoints.searchAndOpenApplicantDetails(), SEARCHANDOPENAPPLICANTMETHODFAILED);
 		Assert.assertTrue(integrationpoints.removeExistingDocumentsfromApplicantTaxReturn(), "removeExistingDocumentsfromApplicantTaxReturn method failed");	
@@ -103,11 +104,11 @@ public class TGLAppCenterIntegrationPointTest extends BaseTestMethods{
 	 */
 	@Test(priority=4, enabled = true)
 	public void tgl112ValidateIntegrationPoints(){
-		loginpage = new LoginPageTgl();
+		LoginPageTgl loginPage = webUtil.openLoginPage();
 		TGLAppCenterIntergrationPoints integrationpoints= new TGLAppCenterIntergrationPoints();
 		try{		
 		// TestCase - Integration Point - assets and liabilities - Step 1
-		Assert.assertTrue(loginpage.enterLoginInfo(),ENTERLOGININFOMETHODFAILED);
+		Assert.assertTrue(loginPage.enterLoginInfo(),ENTERLOGININFOMETHODFAILED);
 		// TestCase - Integration point - assets and liabilities - Step2 and Step 3
 		Assert.assertTrue(integrationpoints.searchAndOpenApplicantDetails(), SEARCHANDOPENAPPLICANTMETHODFAILED);
 		// TestCase - Integration point - assets and liabilities - step 5 

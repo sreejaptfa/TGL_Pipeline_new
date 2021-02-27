@@ -23,6 +23,7 @@ import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.tfa.framework.utilities.testdata.TestData;
+import org.tfa.tgl.pages.LoginPageTgl;
 
 @SuppressWarnings({ "squid:S4042", "squid:S899","squid:S134"})
 public class TGLWebUtil extends WebDriverUtil {
@@ -38,6 +39,7 @@ public class TGLWebUtil extends WebDriverUtil {
 	private static final String TBODYTR = "//tbody/tr[";
 	Logger log = Logger.getLogger("rootLogger");
 	String downloadedFilePath;
+	protected LoginPageTgl loginPage;
 
 	/*
 	 * This function will upload the file.
@@ -50,6 +52,14 @@ public class TGLWebUtil extends WebDriverUtil {
 		webUtil.holdOn(5);
 	}
 
+	public LoginPageTgl openLoginPage(){
+		this.getDriver().manage().timeouts().implicitlyWait(120, TimeUnit.SECONDS);
+		String url=data.getEnvironmentDataMap().get("ApplicationURL");
+		log.debug("url -  "+url);
+		openURL(url);
+		return new LoginPageTgl();
+	}
+	
 	/*
 	 * This function will download the file.
 	 */
