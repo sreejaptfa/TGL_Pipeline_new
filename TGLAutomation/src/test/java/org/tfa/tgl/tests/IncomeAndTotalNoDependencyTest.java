@@ -7,10 +7,11 @@ import org.tfa.framework.core.BaseTestMethods;
 import org.tfa.tgl.pages.IncomeAndTotalNoDependencySection;
 import org.tfa.tgl.pages.LoginPageTgl;
 import org.tfa.tgl.utilities.web.TGLConstants;
+import org.tfa.tgl.utilities.web.TGLWebUtil;
 
 public class IncomeAndTotalNoDependencyTest extends BaseTestMethods {
 	
-	
+	private TGLWebUtil webUtil = TGLWebUtil.getObject();
 	LoginPageTgl loginpage;
 	Logger log=Logger.getLogger("rootLogger");
 	SoftAssert soft = new SoftAssert();
@@ -26,10 +27,10 @@ public class IncomeAndTotalNoDependencyTest extends BaseTestMethods {
 		IncomeAndTotalNoDependencySection income = new IncomeAndTotalNoDependencySection();
 		boolean result;
 		try{			
-			loginpage = new LoginPageTgl();
-			
+			LoginPageTgl loginPage = webUtil.openLoginPage();
+				
 			//Below assert ensures success login
-			result=loginpage.enterLoginInfo();		
+			result=loginPage.enterLoginInfo();		
 			soft.assertTrue(result, "EnterloginInfo method failed");
 			
 			//Below assert ensures right error messages appear for No Of Dependents field section showing as expected

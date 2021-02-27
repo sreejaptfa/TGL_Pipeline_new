@@ -43,8 +43,9 @@ public class TGLPortalUploadTest extends BaseTestMethods {
 	public void tgl105TestTGLPortalUpload() throws Exception {
 		
 		/* Step 1 - Login to TGL Portal >  Search for any applicant and than click on any applicant */
-		LoginPageTgl loginpage=new LoginPageTgl();
-		loginpage.enterLoginInfo();
+		LoginPageTgl loginPage = webUtil.openLoginPage();
+		loginPage.enterLoginInfo();
+		
 		searchPage.clickOnSearchBtn();
 		searchPage.clickFirstRowColumnOnSearchResults();
 		

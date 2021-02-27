@@ -52,8 +52,8 @@ public class ReassignmentTest extends BaseTestMethods {
 		/* 
 		* Step 1 - Login to TGL portal and pickup one applicant whose application is not completed  and click on applicant
 		*/
-		LoginPageTgl loginpage=new LoginPageTgl();
-		loginpage.enterLoginInfo();
+		LoginPageTgl loginPage = webUtil.openLoginPage();
+		loginPage.enterLoginInfo();
 				
 		searchPage.selectTGLStatusDD("Tgl_InComplete_LK");
 		searchPage.clickOnSearchBtn();
@@ -90,8 +90,8 @@ public class ReassignmentTest extends BaseTestMethods {
 		/*
 		* Step 4 - Come back to TGL Portal, log out and log back again and check Award Calculation 
 		*/
-		loginpage=new LoginPageTgl();
-		loginpage.enterLoginInfo();
+		webUtil.openLoginPage();
+		loginPage.enterLoginInfo();
 		searchPage.enterPersonIDAndClickOnSearchButton(applicantID);
 		String actualAssignmentValue = searchDetailsPage.getAssignmentValue("Tgl_Assignment_ST");
 		Assert.assertTrue(selectedQualifiedPositon.contains(actualAssignmentValue), "Verify the Assignment value updated");

@@ -43,8 +43,9 @@ public class SendNoteEmailToApplicantIntegrationTest extends BaseTestMethods{
 		/* 
 		 * Step 1 - Login to the TGL  portal application using valid user id < https://stageweb.tfanet.org/ada/login> 
 		 */
-		LoginPageTgl loginpage=new LoginPageTgl();
-		loginpage.enterLoginInfo();
+		
+		LoginPageTgl loginPage = webUtil.openLoginPage();
+		loginPage.enterLoginInfo();
 	
 		/* 
 		 * Step 2 - Search for the applicants. Click on the search result row 

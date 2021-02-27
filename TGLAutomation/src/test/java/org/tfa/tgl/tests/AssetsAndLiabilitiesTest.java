@@ -7,10 +7,11 @@ import org.tfa.framework.core.BaseTestMethods;
 import org.tfa.tgl.pages.AssetsAndLiabilitiesSection;
 import org.tfa.tgl.pages.LoginPageTgl;
 import org.tfa.tgl.utilities.web.TGLConstants;
+import org.tfa.tgl.utilities.web.TGLWebUtil;
 
 public class AssetsAndLiabilitiesTest extends BaseTestMethods{
 	
-	LoginPageTgl loginpage;
+	private TGLWebUtil webUtil = TGLWebUtil.getObject();
 	Logger log=Logger.getLogger("rootLogger");
 	SoftAssert soft = new SoftAssert();
 	
@@ -26,10 +27,10 @@ public class AssetsAndLiabilitiesTest extends BaseTestMethods{
 		
 		boolean result;
 		try{			
-			loginpage = new LoginPageTgl();
+			LoginPageTgl loginPage = webUtil.openLoginPage();
 			
 			//Below assert ensures success login
-			result=loginpage.enterLoginInfo();		
+			result=loginPage.enterLoginInfo();		
 			soft.assertTrue(result, "EnterloginInfo method failed");
 			
 			//Below assert ensures searched record as assets and libilities section showing as expected
