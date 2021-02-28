@@ -1,4 +1,4 @@
-package org.tfa.tgl.pages;
+package org.tfa.tgl.pages.common;
 
 import org.tfa.tgl.utilities.web.TGLWebUtil;
 
@@ -39,4 +39,15 @@ public class ApplicantCenterPage {
 		}
 		return iflag;
 	}
+	public void openLoginPage() {
+		webUtil.getDriver().navigate().to("https://qamerlin.teachforamerica.org/applicant-center");
+	}
+
+	public void enterLoginInfo() {
+		webUtil.setTextBoxValueTestData("Login_UserName_ED", "Login_UserNameOnline");
+		webUtil.setTextBoxValueTestData("Login_Password_ED", "Login_PasswordOnline");
+		webUtil.click("Login_SignIn");
+		webUtil.holdOn(4);
+	}
+	
 }

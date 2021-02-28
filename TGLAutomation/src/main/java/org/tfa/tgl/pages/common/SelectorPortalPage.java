@@ -1,4 +1,4 @@
-package org.tfa.tgl.pages;
+package org.tfa.tgl.pages.common;
 
 import java.io.File;
 import java.io.FileInputStream;

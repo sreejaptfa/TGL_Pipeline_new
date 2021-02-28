@@ -27,6 +27,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.tfa.framework.core.WebDriverUtil;
 import org.tfa.framework.utilities.testdata.TestData;
+import org.tfa.tgl.pages.common.ApplicantCenterPage;
 import org.tfa.tgl.utilities.web.TGLWebUtil;
 
 import com.google.common.io.PatternFilenameFilter;
@@ -42,7 +43,7 @@ public class TGLAppCenterIntergrationPoints extends WebDriverUtil {
 	private int size;
 	private static AssetsAndLiabilitiesSection assetsandliabilitiessection;
 	private static SearchDetailsPageTGL searchDetailsPage;
-	private LoginPageAppCenter login;
+	private ApplicantCenterPage applicantCenterPage = new ApplicantCenterPage();
 	protected By firstrownamelocator = By.xpath("//tbody[@data-hook='results']/tr[1]/td/a");
 	String downloadedFilePath;
 	String tglApplicantTaxReturnCHK = "Tgl_ApplicantTaxReturn_CHK";
@@ -57,7 +58,6 @@ public class TGLAppCenterIntergrationPoints extends WebDriverUtil {
 		/* if(searchDetailsPage == null) */ {
 			assetsandliabilitiessection = new AssetsAndLiabilitiesSection();
 			searchDetailsPage = new SearchDetailsPageTGL();
-			login = new LoginPageAppCenter();
 			date = new Date();
 		}
 	}
@@ -200,8 +200,8 @@ public class TGLAppCenterIntergrationPoints extends WebDriverUtil {
 	public boolean verifyApplicantCenterDocumentsDetails(boolean verificationCheck) {
 		boolean flag = false;
 		try {
-			login.openLoginPage();
-			login.enterLoginInfo();
+			applicantCenterPage.openLoginPage();
+			applicantCenterPage.enterLoginInfo();
 			// Click AppCenter TGL Funding link
 			// webUtil.click("AppCenter_TGLFunding_link");
 			webUtil.openURL("https://qamerlin.teachforamerica.org/applicant-center/#expenses/transitional-funding");
@@ -256,8 +256,8 @@ public class TGLAppCenterIntergrationPoints extends WebDriverUtil {
 	public boolean verifyDocumentIsRemoved() {
 		boolean flag = false;
 		try {
-			login.openLoginPage();
-			login.enterLoginInfo();
+			applicantCenterPage.openLoginPage();
+			applicantCenterPage.enterLoginInfo();
 			webUtil.holdOn(3);
 			// Click AppCenter TGL Funding link
 			// webUtil.click("AppCenter_TGLFunding_link");

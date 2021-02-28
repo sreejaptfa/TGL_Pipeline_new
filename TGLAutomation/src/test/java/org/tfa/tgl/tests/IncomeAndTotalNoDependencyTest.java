@@ -5,7 +5,7 @@ import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 import org.tfa.framework.core.BaseTestMethods;
 import org.tfa.tgl.pages.IncomeAndTotalNoDependencySection;
-import org.tfa.tgl.pages.LoginPageTgl;
+import org.tfa.tgl.pages.common.LoginPageTgl;
 import org.tfa.tgl.utilities.web.TGLConstants;
 import org.tfa.tgl.utilities.web.TGLWebUtil;
 

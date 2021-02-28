@@ -12,11 +12,10 @@ import org.testng.annotations.Test;
 import org.tfa.framework.core.BaseTestMethods;
 import org.tfa.framework.core.JavaScriptUtil;
 import org.tfa.framework.utilities.general.RandomUtil;
-import org.tfa.tgl.pages.ApplicantCenterPage;
-import org.tfa.tgl.pages.LoginPageAppCenter;
-import org.tfa.tgl.pages.LoginPageTgl;
 import org.tfa.tgl.pages.SearchDetailsPageTGL;
 import org.tfa.tgl.pages.SearchPageTGL;
+import org.tfa.tgl.pages.common.ApplicantCenterPage;
+import org.tfa.tgl.pages.common.LoginPageTgl;
 import org.tfa.tgl.utilities.web.TGLConstants;
 import org.tfa.tgl.utilities.web.TGLWebUtil;
 
@@ -36,7 +35,6 @@ public class ValidCheckBoxIntegrationTest extends BaseTestMethods {
 	private TGLWebUtil webUtil = TGLWebUtil.getObject();
 	private SearchPageTGL searchPage = new SearchPageTGL();
 	private ApplicantCenterPage applicantCenterPage = new ApplicantCenterPage();
-	private LoginPageAppCenter loginAppCenter = new LoginPageAppCenter();
 	private SearchDetailsPageTGL searchDetailsPage = new SearchDetailsPageTGL();
 	private RandomUtil random = new RandomUtil();
 	private JavaScriptUtil jsUtil = JavaScriptUtil.getObject();
@@ -89,8 +87,8 @@ public class ValidCheckBoxIntegrationTest extends BaseTestMethods {
 		* Step 5 -  Now login to online part 2 as qamerlin.teachforamerica.org/applicant-center
 		* With same login which you have checked the valid check box 
 		*/
-		loginAppCenter.openLoginPage();
-		loginAppCenter.enterLoginInfo();
+		applicantCenterPage.openLoginPage();
+		applicantCenterPage.enterLoginInfo();
 		webUtil.holdOn(2);
 		webUtil.openURL(navToTransFundingUrl);
 		webUtil.holdOn(5);

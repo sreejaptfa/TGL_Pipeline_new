@@ -1,4 +1,4 @@
-package org.tfa.tgl.pages;
+package org.tfa.tgl.pages.common;
 
 import org.apache.log4j.Logger;
 import org.tfa.framework.core.WebDriverUtil;
@@ -9,7 +9,7 @@ public class LoginPageTgl {
 	Logger log = Logger.getLogger("rootLogger");
 	
 	private static final String LOGINUSERNAME ="LoginTgl_username_ED";
-	private static final String LOGINUSERPASSWORD="LoginTgl_password_ED";
+	protected static final String LOGINUSERPASSWORD="LoginTgl_password_ED";
 	private static final String LOGINSIGNBTN="LoginTgl_Signin_btn";
 
 		
@@ -27,8 +27,6 @@ public class LoginPageTgl {
 		} else {
 			flag = false;
 			log.info("Home Page not found!");
-			return flag;
-
 		}
 		return flag;
 	}

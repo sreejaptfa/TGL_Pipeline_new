@@ -23,7 +23,7 @@ import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.tfa.framework.utilities.testdata.TestData;
-import org.tfa.tgl.pages.LoginPageTgl;
+import org.tfa.tgl.pages.common.LoginPageTgl;
 
 @SuppressWarnings({ "squid:S4042", "squid:S899","squid:S134"})
 public class TGLWebUtil extends WebDriverUtil {

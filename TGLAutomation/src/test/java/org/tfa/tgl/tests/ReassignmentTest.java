@@ -3,10 +3,10 @@ package org.tfa.tgl.tests;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.tfa.framework.core.BaseTestMethods;
-import org.tfa.tgl.pages.IMPSPage;
-import org.tfa.tgl.pages.LoginPageTgl;
 import org.tfa.tgl.pages.SearchDetailsPageTGL;
 import org.tfa.tgl.pages.SearchPageTGL;
+import org.tfa.tgl.pages.common.IMPSPage;
+import org.tfa.tgl.pages.common.LoginPageTgl;
 import org.tfa.tgl.utilities.web.TGLConstants;
 import org.tfa.tgl.utilities.web.TGLWebUtil;
 

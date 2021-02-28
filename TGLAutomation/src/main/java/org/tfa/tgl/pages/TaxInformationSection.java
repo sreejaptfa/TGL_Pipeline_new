@@ -1,114 +1,81 @@
 package org.tfa.tgl.pages;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import org.apache.log4j.Logger;
 import org.openqa.selenium.WebElement;
+import org.testng.asserts.SoftAssert;
+import org.tfa.framework.utilities.general.RandomUtil;
+import org.tfa.framework.utilities.testdata.TestData;
+import org.tfa.tgl.utilities.web.TGLWebUtil;
 
-@SuppressWarnings({"squid:S1854","unused","squid:S1905"})
-public class TaxInformationSection extends PFactory{
+public class TaxInformationSection{
 
-	private static final String TESTCOMMENTS= "Test Comments";
-	private static final String VALUE="value";
-	private static final String TGLTAXINFOPISAPPNOTESTXT="Tgl_TaxInfoPISAppNotes_txt";
-	private static final String TGLTAXINFOAPPTAZRETURNAPPNOTESTXT="Tgl_TaxInfoAppTaxReturnAppNotes_txt";
-	private static final String TGLTAXINFOINCOMEAPPNOTESTXT="Tgl_TaxInfoIncomeAppNotes_txt";
-	public boolean verifyTaxInformationSection(){
-		Date date = new Date();
-		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
-		boolean flag=false;
-		
-		webUtil.click("Tgl_Search_btn");
-     	webUtil.selectByIndex("Tgl_appyear_dd",2);
-    	webUtil.holdOn(1);
-		webUtil.click("Home_Tgl_Search2_btn");	
-		WebElement firstrow=webUtil.getDriver().findElement(firstrowlocator);				
-		firstrow.click();	
-
-
-		// TestCase - TaxInformation - Step 3
-		flag = webUtil.getText("Tgl_TaxInformation_lbl").contains("Tax Information");
-		flag = webUtil.getText("Tgl_TaxInfoCanClaim_lbl").contains("Can Claim Dependent:");
-		flag = webUtil.getText("Tgl_TaxInfoDependentIncome_lbl").contains("Income:");
-		flag = webUtil.getText("Tgl_TaxInfohowmany_lbl").contains("How many dependents:");
-		flag = webUtil.getText("Tgl_TaxInfohowmany_lbl").contains("Total # of Dependents:");
-		flag = webUtil.isEnabled("Tgl_Taxinfoincome_txt");
-		flag = webUtil.isEnabled("Tgl_TaxInfonoofdependents_txt");
-
-		
-		// Verify TaxInformation Documents - Applicant's tax return
-		//TestCase - TaxInformation - Step 4
-		flag = webUtil.getText("Tgl_TaxInforAppTaxReturn_lbl").contains("Applicant's Tax Return");
-		flag = webUtil.getText("Tgl_TaxInfoNoOfDependents_lbl").contains("Total # of Dependents:");
-		flag = webUtil.isEnabled("Tgl_TaxInforAppTaxReturnedRequired_chk");
-		flag = webUtil.isEnabled("Tgl_TaxInfoAppTaxReturnrValid_chk");
-		flag = webUtil.isEnabled(TGLTAXINFOAPPTAZRETURNAPPNOTESTXT);
+	private TGLWebUtil webUtil = TGLWebUtil.getObject();
+	SoftAssert soft = new SoftAssert();
+	private TestData data = TestData.getObject();
+	Logger log=Logger.getLogger("rootLogger");
+	private RandomUtil random = new RandomUtil();
+	private static final String OBJECTNOTFOUND ="Object not found";
 	
-			
-		// Add test comments in notes section with current date
-		webUtil.setTextBoxValue(TGLTAXINFOAPPTAZRETURNAPPNOTESTXT, TESTCOMMENTS+dateFormat.format(date));
-		webUtil.holdOn(3);
-		
-		// Verify Tax Information Document section - W2 or Income Statement
-		flag = webUtil.getText("Tgl_TaxInfoIncome_lbl").contains("W-2 or Income Statement");
-		flag = webUtil.isEnabled("Tgl_TaxInfoIncomeRequired_chk");
-		flag = webUtil.isEnabled("Tgl_TaxInfoIncomeValid_chk");
-		flag = webUtil.isEnabled(TGLTAXINFOINCOMEAPPNOTESTXT);
-		
-		// Add test comments in notes section with current date
-		webUtil.setTextBoxValue(TGLTAXINFOINCOMEAPPNOTESTXT, TESTCOMMENTS+dateFormat.format(date));
-
-		// Verify Tax Information Document section - Parent's Tax Return
-		flag = webUtil.getText("Tgl_TaxInfoParentsTaxReturn_lbl").contains("Parent's Tax Return");
-		flag = webUtil.isEnabled("Tgl_TaxInfoPTRRequired_chk");
-		flag = webUtil.isEnabled("Tgl_TaxInfoPTRValid_chk");
-		flag = webUtil.isEnabled("Tgl_TaxInfoPTRAppNotes_txt");
-		
-		// Add test comments in notes section with current date
-		webUtil.setTextBoxValue("Tgl_TaxInfoPTRAppNotes_txt", TESTCOMMENTS+dateFormat.format(date));
-
-		// Verify Tax Information Document section - Parent's Tax Return
-		flag = webUtil.getText("Tgl_TaxInfoPIS_lbl").contains("Parent Income Statement");
-		flag = webUtil.isEnabled("Tgl_TaxInfoPISRequired_chk");
-		flag = webUtil.isEnabled("Tgl_TaxInfoPISValid_chk");
-		flag = webUtil.isEnabled(TGLTAXINFOPISAPPNOTESTXT);
-		
-		
-		// Add test comments in notes section with current date
-		webUtil.setTextBoxValue(TGLTAXINFOPISAPPNOTESTXT, TESTCOMMENTS+dateFormat.format(date));
-		webUtil.getDriver().navigate().refresh();
-		webUtil.waitForBrowserToLoadCompletely();
-		webUtil.holdOn(5);
-		
-		flag = webUtil.getAttributeValue(TGLTAXINFOPISAPPNOTESTXT, VALUE).contains(TESTCOMMENTS+dateFormat.format(date));
-		flag = webUtil.getAttributeValue(TGLTAXINFOINCOMEAPPNOTESTXT, VALUE).contains(TESTCOMMENTS+dateFormat.format(date));
-		flag = webUtil.getAttributeValue(TGLTAXINFOINCOMEAPPNOTESTXT, VALUE).contains(TESTCOMMENTS+dateFormat.format(date));
-		flag = webUtil.getAttributeValue(TGLTAXINFOAPPTAZRETURNAPPNOTESTXT, VALUE).contains(TESTCOMMENTS+dateFormat.format(date));
-
+	//this method is to verify the objects on Tax Information section
+	public boolean verifyDocumentInformationSection(String sectionName) {
+		boolean flag = false;
+		String[] sectionObjects= data.getTestCaseDataMap().get(sectionName).split(":");
+		int len = sectionObjects.length;
+		try { 
+			for (int i = 0; i < len-1; i++) {
+				WebElement element = webUtil.getElement(sectionObjects[i]);
+				flag = element.isEnabled();
+				if(!flag) {
+					soft.assertTrue(flag, sectionObjects[i]+" not exist on Section");
+				}
+			}
+		} catch (Exception e) {
+			soft.assertTrue(flag, OBJECTNOTFOUND);
+			log.info(OBJECTNOTFOUND);
+			flag = false;
+		}
 		return flag;
 	}
 	
-	// TestCase [Step - 6]
-	public boolean verifyHelpLinks(){
-		boolean flag=false;
-		
-		webUtil.click("Tgl_TaxInfo_ApplicantTaxReturnHelp_link");
-		flag = webUtil.getText("Tgl_TaxInfoApplicantTaxReturnHelpModal_lbl").contains("More info about Applicant's Tax Return");
+	//this method is to get the text comments
+	public String getTextFromElement(String locatorName) {
+		return webUtil.getAttributeValue(locatorName,"value");
+	}
 	
-		webUtil.click("Tgl_TaxInfo_ApplicantTaxReturnClose_btn");		
-		webUtil.click("Tgl_TaxInfoW2Help_link");
-		flag = webUtil.getText("Tgl_TaxInfo_HelpModal_lbl").contains("More info about W-2 or Income Statement");
-
-		webUtil.click("Tgl_TaxInfoW2HelpMOdalClose_btn");		
-		webUtil.click("Tgl_TaxInfoParentsTaxReturnHelp_link");
-		flag = webUtil.getText("Tgl_TaxInfoParentsTaxReturnHelpModal_lbl").contains("More info about Parent's Tax Return");
-
-		webUtil.click("Tgl_TaxInfoParentsTaxReturnHelpModalClose_btn");
-		webUtil.click("Tgl_TaxInfoPISHelp_link");
-		flag = webUtil.getText("Tgl_TaxInfoPISHelpModal_lbl").contains("More info about Parent Income Statement");
-
-		webUtil.click("Tgl_TaxInfoPISHelpModalClose_btn");	
+	//this method is to enter text comments
+	public String enterTextComment(String locatorName) {
+		return webUtil.setTextBoxValue(locatorName, "Test Comments-" + random.generateRandomString(5) + random.generateRandomNumber(5));
+	}
+	
+	
+	//Verify help link on Tax Information section
+	public boolean verifyHelpLinksOnTaxInformation(){
+		boolean flag=false;
+		String[] helpLinks= data.getTestCaseDataMap().get("HelpLinks").split(":");
+		String[] modalLabels= data.getTestCaseDataMap().get("ModalLables").split(":");
+		String[] textContains= data.getTestCaseDataMap().get("TextContains").split(":");
+		String[] closeButtons= data.getTestCaseDataMap().get("CloseButtons").split(":");
+		int len = helpLinks.length;
+		try {
+			for (int i = 0; i < len; i++) {
+				WebElement element1 = webUtil.getElement(helpLinks[i]);
+				WebElement element2 = webUtil.getElement(closeButtons[i]);
+				webUtil.click(element1);
+				flag = webUtil.getElement(modalLabels[i]).getText().contains(textContains[i]);
+				if(!flag) {
+					soft.assertTrue(flag, textContains[i]+" windows NOT displayed");
+				}
+				webUtil.click(element2);
+				webUtil.holdOn(2);
+				
+				}
+		} catch (Exception e) {
+			soft.assertTrue(flag, OBJECTNOTFOUND);
+			log.info(OBJECTNOTFOUND);
+			flag = false;
+		}
 		return flag;
 	}
 
 }
+

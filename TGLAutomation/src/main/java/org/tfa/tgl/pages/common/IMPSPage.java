@@ -1,4 +1,4 @@
-package org.tfa.tgl.pages;
+package org.tfa.tgl.pages.common;
 
 import org.tfa.tgl.utilities.web.TGLWebUtil;
 import org.openqa.selenium.Keys;
@@ -65,9 +65,15 @@ public class IMPSPage {
 		}
 		return iflag;
 	}
+	/*
+	 * This function click on Assignment Button
+	 */
 	public void clickOnAssignment(){
 		webUtil.click("IMPS_Assignment_Btn");
 	}
+	/*
+	 * This function will get the Email account by personid from IMPS
+	 */
 	public String getEmailFromIMPSApplicantID(String personID){
 		String getValue = null;
 		boolean iflag = webUtil.objectIsVisible(IMPSAPPLICANTLK);
@@ -121,5 +127,5 @@ public class IMPSPage {
 		String selectedQualifiedPositon = webUtil.getText("IMPS_QualifiedFirstPosition_LK");
 		webUtil.switchToWindowFromFrame();
 		return selectedQualifiedPositon;
-}
+	}
 }
