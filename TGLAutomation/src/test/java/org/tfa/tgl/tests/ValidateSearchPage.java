@@ -4,15 +4,15 @@ import org.apache.log4j.Logger;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.tfa.framework.core.BaseTestMethods;
-import org.tfa.tgl.pages.SearchPageTGL;
 import org.tfa.tgl.pages.common.LoginPageTgl;
+import org.tfa.tgl.pages.search.SearchPage;
 import org.tfa.tgl.utilities.web.TGLConstants;
 import org.tfa.tgl.utilities.web.TGLWebUtil;
 
-public class SearchPageTest extends BaseTestMethods {
+public class ValidateSearchPage extends BaseTestMethods {
 	
 	Logger log=Logger.getLogger("rootLogger");
-	SearchPageTGL search=new SearchPageTGL();
+	SearchPage search=new SearchPage();
 	private TGLWebUtil webUtil = TGLWebUtil.getObject();
 	
 	/*@Desc: below test verifies filters and ensures search results are expected
@@ -23,7 +23,7 @@ public class SearchPageTest extends BaseTestMethods {
 	 *@Author: Nitin Sharma 
 	 */
 	@Test
-	public void tgl101verifySearchResults(){
+	public void tgl101verifySearchResultsTest(){
 		LoginPageTgl loginPage = webUtil.openLoginPage();
 		try {
 			

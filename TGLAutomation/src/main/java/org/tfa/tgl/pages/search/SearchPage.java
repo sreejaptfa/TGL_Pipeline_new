@@ -1,4 +1,4 @@
-package org.tfa.tgl.pages;
+package org.tfa.tgl.pages.search;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -13,7 +13,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-public class SearchPageTGL {
+public class SearchPage {
 
 	private WebDriverUtil webUtil = WebDriverUtil.getObject();
 	Logger log = Logger.getLogger("rootLogger");
@@ -40,7 +40,7 @@ public class SearchPageTGL {
 	 * 
 	 * 
 	 */
-	public SearchPageTGL() {
+	public SearchPage() {
 
 		r = new Random();
 		inputcontainerlocator = By.xpath("//div[@data-hook='extended-content']//input-container");
@@ -444,6 +444,7 @@ public class SearchPageTGL {
 	 * This function will clicks on Search Button
 	 */
 	public void clickOnSearchBtn() {
+		webUtil.waitForBrowserToLoadCompletely();
 		webUtil.holdOn(5);
 		webUtil.click("Tgl_Search_btn");
 	}
@@ -467,6 +468,7 @@ public class SearchPageTGL {
 	 */
 	public void clickOnSendEmailBtn() {
 		webUtil.click("Tgl_SendEmail_Btn");
+		webUtil.holdOn(5);
 	}
 
 	/*
@@ -500,9 +502,13 @@ public class SearchPageTGL {
 		webUtil.waitUntilElementVisible(CLEARBTN, 10);
 		webUtil.click(CLEARBTN);
 		this.clickOnMoreSearchOptionsBtn();
-		webUtil.setTextBoxValue("Tgl_personid", personID);
-		this.clickOnSearchBtn();
-		this.clickFirstRowColumnOnSearchResults();
+		try {
+			webUtil.setTextBoxValue("Tgl_personid", personID);
+			this.clickOnSearchBtn();
+			this.clickFirstRowColumnOnSearchResults();
+		} catch (Exception e) {
+			log.info("unable to Click on the Applicant" + e);
+		}
 	}
 
 	/*

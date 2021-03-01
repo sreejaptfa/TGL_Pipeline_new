@@ -3,8 +3,8 @@ package org.tfa.tgl.tests;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.tfa.framework.core.BaseTestMethods;
-import org.tfa.tgl.pages.SearchPageTGL;
 import org.tfa.tgl.pages.common.LoginPageTgl;
+import org.tfa.tgl.pages.search.SearchPage;
 import org.tfa.tgl.utilities.web.TGLConstants;
 import org.tfa.tgl.utilities.web.TGLWebUtil;
 
@@ -18,9 +18,9 @@ import org.tfa.tgl.utilities.web.TGLWebUtil;
  * @Author: Surya
  ************************************************************************************************************** 
  */
-public class DecimalPlacesInTextFieldsTest extends BaseTestMethods {
+public class ValidateDecimalPlacesOnTextFields extends BaseTestMethods {
 	private TGLWebUtil webUtil = TGLWebUtil.getObject();
-	private SearchPageTGL searchPage = new SearchPageTGL();
+	private SearchPage searchPage = new SearchPage();
 	String actualPromptMessage;
 	String expectedPromptMessage;
 
@@ -34,8 +34,8 @@ public class DecimalPlacesInTextFieldsTest extends BaseTestMethods {
 	 **************************************************************************************************************
 	 */
 	@Test
-	public void tgl11126TestDecimalPlacesInTextFields() throws Exception {
-
+	public void tgl116DecimalPlacesTest() throws Exception {
+		
 		/*
 		 * Step 1 - Login to the TGL portal application using valid user id <
 		 * https://qamerlin.teachforamerica.org/ada

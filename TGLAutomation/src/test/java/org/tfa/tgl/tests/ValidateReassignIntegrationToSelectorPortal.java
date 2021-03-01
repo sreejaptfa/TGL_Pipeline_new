@@ -6,10 +6,10 @@ import java.util.Map;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.tfa.framework.core.BaseTestMethods;
-import org.tfa.tgl.pages.SearchDetailsPageTGL;
-import org.tfa.tgl.pages.SearchPageTGL;
 import org.tfa.tgl.pages.common.LoginPageTgl;
 import org.tfa.tgl.pages.common.SelectorPortalPage;
+import org.tfa.tgl.pages.search.SearchPage;
+import org.tfa.tgl.pages.searchdetails.SearchDetailsPage;
 import org.tfa.tgl.utilities.web.TGLConstants;
 import org.tfa.tgl.utilities.web.TGLWebUtil;
 
@@ -22,11 +22,11 @@ import org.tfa.tgl.utilities.web.TGLWebUtil;
  * @Author: Surya
  ************************************************************************************************************** 
  */
-public class ReassignmentSelectorPortalIntegrationTest extends BaseTestMethods {
+public class ValidateReassignIntegrationToSelectorPortal extends BaseTestMethods {
 	
 	private TGLWebUtil webUtil=TGLWebUtil.getObject();
-	private SearchPageTGL searchPage= new SearchPageTGL();
-	private SearchDetailsPageTGL searchDetailsPage= new SearchDetailsPageTGL();
+	private SearchPage searchPage= new SearchPage();
+	private SearchDetailsPage searchDetailsPage= new SearchDetailsPage();
 	private SelectorPortalPage selectorPortalPage = new SelectorPortalPage();
 	private static final String NEWYORK="New York";
 	String assignmentId = null;
@@ -42,7 +42,7 @@ public class ReassignmentSelectorPortalIntegrationTest extends BaseTestMethods {
 	 **************************************************************************************************************
 	 */
 	@Test
-	public void tgl11130TestReassignmentSelectorPortalIntegrationPoint() throws Exception {
+	public void tgl120ReassignmentSelectorPortalIntegrationTest() throws Exception {
 		String selectorPortalURL = testDataMap.get("SelectorPortalURL");
 		String userNameSelectorPortal = testDataMap.get("SelectorPortalUserName");
 		String passwordSelectorPortal = testDataMap.get("SelectorPortalPassword");

@@ -9,7 +9,7 @@ import org.tfa.tgl.pages.common.LoginPageTgl;
 import org.tfa.tgl.utilities.web.TGLConstants;
 import org.tfa.tgl.utilities.web.TGLWebUtil;
 
-public class LeftNavTest extends BaseTestMethods{
+public class ValidateLeftNavSection extends BaseTestMethods{
 	LoginPageTgl loginpage;
 	Logger log=Logger.getLogger("rootLogger");
 	private TGLWebUtil webUtil = TGLWebUtil.getObject();
@@ -20,7 +20,7 @@ public class LeftNavTest extends BaseTestMethods{
 	 *@Author: Nitin Sharma 
 	 */
 	@Test
-	public void tgl107ValidateTopNavSection() throws Exception	{	
+	public void tgl107TopNavSectionTest() throws Exception	{	
 		LeftNavSection nav= new LeftNavSection();	
 		boolean result;
 		try{			

@@ -1,4 +1,4 @@
-package org.tfa.tgl.pages;
+package org.tfa.tgl.pages.searchdetailsection;
 
 import org.apache.log4j.Logger;
 import org.openqa.selenium.WebElement;
@@ -14,28 +14,6 @@ public class TaxInformationSection{
 	private TestData data = TestData.getObject();
 	Logger log=Logger.getLogger("rootLogger");
 	private RandomUtil random = new RandomUtil();
-	private static final String OBJECTNOTFOUND ="Object not found";
-	
-	//this method is to verify the objects on Tax Information section
-	public boolean verifyDocumentInformationSection(String sectionName) {
-		boolean flag = false;
-		String[] sectionObjects= data.getTestCaseDataMap().get(sectionName).split(":");
-		int len = sectionObjects.length;
-		try { 
-			for (int i = 0; i < len-1; i++) {
-				WebElement element = webUtil.getElement(sectionObjects[i]);
-				flag = element.isEnabled();
-				if(!flag) {
-					soft.assertTrue(flag, sectionObjects[i]+" not exist on Section");
-				}
-			}
-		} catch (Exception e) {
-			soft.assertTrue(flag, OBJECTNOTFOUND);
-			log.info(OBJECTNOTFOUND);
-			flag = false;
-		}
-		return flag;
-	}
 	
 	//this method is to get the text comments
 	public String getTextFromElement(String locatorName) {
@@ -46,8 +24,7 @@ public class TaxInformationSection{
 	public String enterTextComment(String locatorName) {
 		return webUtil.setTextBoxValue(locatorName, "Test Comments-" + random.generateRandomString(5) + random.generateRandomNumber(5));
 	}
-	
-	
+		
 	//Verify help link on Tax Information section
 	public boolean verifyHelpLinksOnTaxInformation(){
 		boolean flag=false;
@@ -70,9 +47,10 @@ public class TaxInformationSection{
 				
 				}
 		} catch (Exception e) {
-			soft.assertTrue(flag, OBJECTNOTFOUND);
-			log.info(OBJECTNOTFOUND);
 			flag = false;
+			soft.assertTrue(flag, "Object not found");
+			log.info("Object not found");
+			soft.fail();
 		}
 		return flag;
 	}

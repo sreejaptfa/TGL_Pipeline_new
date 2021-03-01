@@ -4,9 +4,9 @@ import org.apache.log4j.Logger;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.tfa.framework.core.BaseTestMethods;
-import org.tfa.tgl.pages.AwardCalculatorPage;
-import org.tfa.tgl.pages.SearchPageTGL;
 import org.tfa.tgl.pages.common.LoginPageTgl;
+import org.tfa.tgl.pages.search.SearchPage;
+import org.tfa.tgl.pages.searchdetails.AwardCalculatorPage;
 import org.tfa.tgl.utilities.web.TGLConstants;
 import org.tfa.tgl.utilities.web.TGLWebUtil;
 
@@ -19,9 +19,9 @@ import org.tfa.tgl.utilities.web.TGLWebUtil;
  * @Author: Surya
  ************************************************************************************************************** 
  */
-public class GroupCalculationFieldValidationTest extends BaseTestMethods{
+public class ValidateGroupCalculationFields extends BaseTestMethods{
 	
-	private SearchPageTGL searchPage= new SearchPageTGL();
+	private SearchPage searchPage= new SearchPage();
 	private AwardCalculatorPage awardCalculatorPage = new AwardCalculatorPage();
 	private TGLWebUtil webUtil=TGLWebUtil.getObject();
 	static Logger log=Logger.getLogger("rootLogger");
@@ -36,7 +36,8 @@ public class GroupCalculationFieldValidationTest extends BaseTestMethods{
 	 **************************************************************************************************************
 	 */
 	@Test
-	public void tgl11123TestGroupCalculationFieldValidation() throws Exception {
+	public void tgl113GroupCalculationFieldTest() throws Exception {
+		
 	
 		/* Step 1 - Login to TGL portal */
 		LoginPageTgl loginPage = webUtil.openLoginPage();

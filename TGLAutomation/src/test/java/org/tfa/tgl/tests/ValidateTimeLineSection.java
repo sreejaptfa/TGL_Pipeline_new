@@ -7,18 +7,18 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.tfa.framework.core.BaseTestMethods;
 import org.tfa.framework.utilities.general.RandomUtil;
-import org.tfa.tgl.pages.SearchDetailsPageTGL;
-import org.tfa.tgl.pages.SearchPageTGL;
 import org.tfa.tgl.pages.common.LoginPageTgl;
+import org.tfa.tgl.pages.search.SearchPage;
+import org.tfa.tgl.pages.searchdetails.SearchDetailsPage;
 import org.tfa.tgl.utilities.web.TGLConstants;
 import org.tfa.tgl.utilities.web.TGLWebUtil;
 
-public class TimeLineTest extends BaseTestMethods{
+public class ValidateTimeLineSection extends BaseTestMethods{
 
 	private TGLWebUtil webUtil=TGLWebUtil.getObject();
 	private RandomUtil random=new RandomUtil();
-	private SearchPageTGL searchPage= new SearchPageTGL();
-	private SearchDetailsPageTGL searchDetailsPage = new SearchDetailsPageTGL();
+	private SearchPage searchPage= new SearchPage();
+	private SearchDetailsPage searchDetailsPage = new SearchDetailsPage();
 	
 	/**
 	 **************************************************************************************************************
@@ -29,7 +29,7 @@ public class TimeLineTest extends BaseTestMethods{
 	 **************************************************************************************************************
 	 */
 	@Test
-	public void tgl11125TestTimeLine() throws Exception {
+	public void tgl115TimeLineTest() throws Exception {
 		
 		/* Step 1 - Login to TGL portal */
 		LoginPageTgl loginPage = webUtil.openLoginPage();

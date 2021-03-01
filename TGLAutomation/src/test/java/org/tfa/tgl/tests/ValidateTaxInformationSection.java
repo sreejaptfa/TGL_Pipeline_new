@@ -4,16 +4,16 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 import org.tfa.framework.core.BaseTestMethods;
-import org.tfa.tgl.pages.SearchPageTGL;
-import org.tfa.tgl.pages.TaxInformationSection;
 import org.tfa.tgl.pages.common.LoginPageTgl;
+import org.tfa.tgl.pages.search.SearchPage;
+import org.tfa.tgl.pages.searchdetailsection.TaxInformationSection;
 import org.tfa.tgl.utilities.web.TGLConstants;
 import org.tfa.tgl.utilities.web.TGLWebUtil;
 
-public class TaxInformationSectionTest extends BaseTestMethods {
+public class ValidateTaxInformationSection extends BaseTestMethods {
 
 	private TGLWebUtil webUtil = TGLWebUtil.getObject();
-	private SearchPageTGL searchPage = new SearchPageTGL();
+	private SearchPage searchPage = new SearchPage();
 	private TaxInformationSection taxInfoSection = new TaxInformationSection();
 	SoftAssert soft = new SoftAssert();
 	
@@ -29,10 +29,10 @@ public class TaxInformationSectionTest extends BaseTestMethods {
 		searchPage.clickFirstRowColumnOnSearchResults();
 		
 		//Step 3 - verifyTaxInformationSection
-		soft.assertTrue(taxInfoSection.verifyDocumentInformationSection("TaxInformationSection"));
+		soft.assertTrue(webUtil.verifyDocumentInformationSection("TaxInformationSection"));
 
 		//Step 4 - Verify TaxInformation Documents - Applicant's tax return
-		soft.assertTrue(taxInfoSection.verifyDocumentInformationSection("ApplicantTaxReturn"));
+		soft.assertTrue(webUtil.verifyDocumentInformationSection("ApplicantTaxReturn"));
 		
 		//Step 5 - Add test comments to TaxInformation Documents - Applicant's tax return
 		String expTextComment =taxInfoSection.enterTextComment("Tgl_TaxInfoAppTaxReturnAppNotes_txt");
@@ -40,7 +40,7 @@ public class TaxInformationSectionTest extends BaseTestMethods {
 		Assert.assertTrue(actTextComment.contains(expTextComment));
 		
 		//Step 6 - Verify Tax Information Document section - W2 or Income Statement
-		soft.assertTrue(taxInfoSection.verifyDocumentInformationSection("W2IncomeStatement"));
+		soft.assertTrue(webUtil.verifyDocumentInformationSection("W2IncomeStatement"));
 		
 		//Step 7 - Add test comments to Tax Information Document section - W2 or Income Statement
 		expTextComment =taxInfoSection.enterTextComment("Tgl_TaxInfoIncomeAppNotes_txt");
@@ -48,7 +48,7 @@ public class TaxInformationSectionTest extends BaseTestMethods {
 		Assert.assertTrue(actTextComment.contains(expTextComment));
 
 		//Step 8 - Verify Tax Information Document section - Parent's Tax Return
-		soft.assertTrue(taxInfoSection.verifyDocumentInformationSection("ParentTaxReturn"));
+		soft.assertTrue(webUtil.verifyDocumentInformationSection("ParentTaxReturn"));
 		
 		//Step 9 - Add test comments to Tax Information Document section - Parent's Tax Return
 		expTextComment =taxInfoSection.enterTextComment("Tgl_TaxInfoPTRAppNotes_txt");
@@ -56,7 +56,7 @@ public class TaxInformationSectionTest extends BaseTestMethods {
 		Assert.assertTrue(actTextComment.contains(expTextComment));
 		
 		//Step 10 - Verify Tax Information Document section - Parent Income Statement
-		soft.assertTrue(taxInfoSection.verifyDocumentInformationSection("ParentIncomeStatement")); 
+		soft.assertTrue(webUtil.verifyDocumentInformationSection("ParentIncomeStatement")); 
 		
 		//Step 11 - Add test comments to Tax Information Document section - Parent's Tax Return
 		expTextComment =taxInfoSection.enterTextComment("Tgl_TaxInfoPISAppNotes_txt");

@@ -3,9 +3,9 @@ package org.tfa.tgl.tests;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.tfa.framework.core.BaseTestMethods;
-import org.tfa.tgl.pages.SearchDetailsPageTGL;
-import org.tfa.tgl.pages.SearchPageTGL;
 import org.tfa.tgl.pages.common.LoginPageTgl;
+import org.tfa.tgl.pages.search.SearchPage;
+import org.tfa.tgl.pages.searchdetails.SearchDetailsPage;
 import org.tfa.tgl.utilities.web.TGLConstants;
 import org.tfa.tgl.utilities.web.TGLWebUtil;
 
@@ -19,11 +19,11 @@ import org.tfa.tgl.utilities.web.TGLWebUtil;
  * @Author: Surya
  ************************************************************************************************************** 
  */
-public class EducationCostCalculationTest extends BaseTestMethods {
+public class ValidateEducationCostSection extends BaseTestMethods {
 
 	private TGLWebUtil webUtil = TGLWebUtil.getObject();
-	private SearchPageTGL searchPage = new SearchPageTGL();
-	private SearchDetailsPageTGL searchDetailsPage = new SearchDetailsPageTGL();
+	private SearchPage searchPage = new SearchPage();
+	private SearchDetailsPage searchDetailsPage = new SearchDetailsPage();
 
 	/**
 	 **************************************************************************************************************
@@ -36,7 +36,7 @@ public class EducationCostCalculationTest extends BaseTestMethods {
 	 */
 
 	@Test
-	public void tgl11127TestEducationCostCalculation() throws Exception {
+	public void tgl117EducationCostCalculationTest() throws Exception {
 
 		/*
 		 * Step 1 - Login to the TGL portal application using valid user id <

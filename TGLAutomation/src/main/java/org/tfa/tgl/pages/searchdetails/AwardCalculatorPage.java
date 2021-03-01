@@ -1,4 +1,4 @@
-package org.tfa.tgl.pages;
+package org.tfa.tgl.pages.searchdetails;
 
 import org.tfa.framework.core.WebDriverUtil;
 

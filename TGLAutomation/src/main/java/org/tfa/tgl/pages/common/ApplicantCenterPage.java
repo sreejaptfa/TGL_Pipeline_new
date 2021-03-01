@@ -1,5 +1,11 @@
 package org.tfa.tgl.pages.common;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 import org.tfa.tgl.utilities.web.TGLWebUtil;
 
 public class ApplicantCenterPage {
@@ -50,4 +56,40 @@ public class ApplicantCenterPage {
 		webUtil.holdOn(4);
 	}
 	
+	/* 
+	* This function will get the values from the Applicant center document table 
+	*/
+	public Map<String, String> getValuesFromApplicantCenter(String locatorName,String valueToCompare){
+		String getNotesText = null;
+		String documentValidCheck = null;
+		Map<String, String> objectMap=new HashMap<>();
+		Map<String, String> locatorValueMap=webUtil.getLocatorValueMap(locatorName);
+		String locatorValue=TGLWebUtil.getLocatorValue(locatorValueMap, locatorName);
+		List<WebElement> getValues = webUtil.getDriver().findElements(By.xpath(locatorValue));
+		int len= getValues.size();
+		for(int i = 1; i<=len; i++){
+			try {
+				boolean flag =  webUtil.getDriver().findElement(By.xpath(locatorValue +"["+i+"]/td")).isEnabled();
+				if (flag) {
+					WebElement sectionName = webUtil.getDriver().findElement(By.xpath(locatorValue +"["+i+"]/td"));
+					String getText = sectionName.getText();
+					if(getText.contains(valueToCompare)){
+						WebElement getNotes = webUtil.getDriver().findElement(By.xpath(locatorValue +"["+i+"]/td[3]"));
+						getNotesText = getNotes.getText();
+						WebElement getDocumentChecked = webUtil.getDriver().findElement(By.xpath(locatorValue +"["+i+"]/td[2]/input"));
+						documentValidCheck= getDocumentChecked.getAttribute("checked");
+						WebElement getDocument = webUtil.getDriver().findElement(By.xpath(locatorValue +"["+i+"]/td[4]"));
+						String getDocText = getDocument.getText();
+						objectMap.put("TransitionalFundingNotes",getNotesText);
+						objectMap.put("TransitionalFundingCheckBox",documentValidCheck);
+						objectMap.put("TransitionalFundingDocument",getDocText);
+						break;
+					}
+				}
+			}catch(Exception e) {
+							}
+		}
+		return objectMap;
+
+	}
 }

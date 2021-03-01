@@ -9,7 +9,7 @@ import org.tfa.tgl.pages.common.LoginPageTgl;
 import org.tfa.tgl.utilities.web.TGLConstants;
 import org.tfa.tgl.utilities.web.TGLWebUtil;
 
-public class IncomeAndTotalNoDependencyTest extends BaseTestMethods {
+public class ValidateIncomeAndTotalNoDependencySection extends BaseTestMethods {
 	
 	private TGLWebUtil webUtil = TGLWebUtil.getObject();
 	LoginPageTgl loginpage;
@@ -23,7 +23,7 @@ public class IncomeAndTotalNoDependencyTest extends BaseTestMethods {
 	 *@Author: Nitin Sharma 
 	 */
 	@Test
-	public void tgl109ValidateIncomeAndDependency() throws Exception	{	
+	public void tgl109IncomeAndDependencyTest() throws Exception	{	
 		IncomeAndTotalNoDependencySection income = new IncomeAndTotalNoDependencySection();
 		boolean result;
 		try{			

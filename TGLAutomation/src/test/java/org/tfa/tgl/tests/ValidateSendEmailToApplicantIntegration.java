@@ -5,8 +5,8 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.tfa.framework.core.BaseTestMethods;
 import org.tfa.framework.utilities.general.RandomUtil;
-import org.tfa.tgl.pages.SearchPageTGL;
 import org.tfa.tgl.pages.common.LoginPageTgl;
+import org.tfa.tgl.pages.search.SearchPage;
 import org.tfa.tgl.utilities.web.TGLConstants;
 import org.tfa.tgl.utilities.web.TGLWebUtil;
 
@@ -19,9 +19,9 @@ import org.tfa.tgl.utilities.web.TGLWebUtil;
  * @Author: Surya
  ************************************************************************************************************** 
  */
-public class SendNoteEmailToApplicantIntegrationTest extends BaseTestMethods{
+public class ValidateSendEmailToApplicantIntegration extends BaseTestMethods{
 
-	private SearchPageTGL searchPage= new SearchPageTGL();
+	private SearchPage searchPage= new SearchPage();
 	private TGLWebUtil webUtil=TGLWebUtil.getObject();
 	private RandomUtil random=new RandomUtil();
 	static Logger log=Logger.getLogger("rootLogger");
@@ -36,7 +36,8 @@ public class SendNoteEmailToApplicantIntegrationTest extends BaseTestMethods{
 	 */
 	
 	@Test
-	public void tgl11129TestSendNoteEmailToApplicantIntegrationPoint() throws Exception {
+	public void tgl119SendEmailToApplicantIntegrationTest() throws Exception {
+	
 		String host = testDataMap.get("Host");
 		String userEmail = testDataMap.get("userEmail");
 		String password = testDataMap.get("emailPassword");

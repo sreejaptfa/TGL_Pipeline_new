@@ -16,6 +16,7 @@ public class LoginPageTgl {
 	public boolean enterLoginInfo() {
 		boolean flag = false;
 		webUtil.waitUntilElementVisible(LOGINUSERNAME, 30);
+		webUtil.holdOn(5);
 		webUtil.setTextBoxValueTestData(LOGINUSERNAME, "Login_UserName");
 		webUtil.setTextBoxValueTestData(LOGINUSERPASSWORD, "Login_Password");
 		webUtil.click(LOGINSIGNBTN);
@@ -46,5 +47,4 @@ public class LoginPageTgl {
 		}
 		return flag;
 	}
-
 }

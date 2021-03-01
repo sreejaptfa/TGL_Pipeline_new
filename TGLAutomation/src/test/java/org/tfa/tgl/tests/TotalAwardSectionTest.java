@@ -4,9 +4,9 @@ import org.apache.log4j.Logger;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.tfa.framework.core.BaseTestMethods;
-import org.tfa.tgl.pages.SearchDetailsPageTGL;
-import org.tfa.tgl.pages.SearchPageTGL;
 import org.tfa.tgl.pages.common.LoginPageTgl;
+import org.tfa.tgl.pages.search.SearchPage;
+import org.tfa.tgl.pages.searchdetails.SearchDetailsPage;
 import org.tfa.tgl.utilities.web.TGLConstants;
 import org.tfa.tgl.utilities.web.TGLWebUtil;
 
@@ -22,8 +22,8 @@ import org.tfa.tgl.utilities.web.TGLWebUtil;
 public class TotalAwardSectionTest extends BaseTestMethods{
 
 	private TGLWebUtil webUtil=TGLWebUtil.getObject();
-	private SearchPageTGL searchPage= new SearchPageTGL();
-	private SearchDetailsPageTGL searchDetailsPage = new SearchDetailsPageTGL();
+	private SearchPage searchPage= new SearchPage();
+	private SearchDetailsPage searchDetailsPage = new SearchDetailsPage();
 	static Logger log=Logger.getLogger("rootLogger");
 	private static final String TGLLOADADJUSTMENTED="Tgl_LoanAdjustment_ED";
 	private static final String TGLADJUSTMENTCOMMENTED="Tgl_AdjustmentComment_ED";
@@ -46,7 +46,7 @@ public class TotalAwardSectionTest extends BaseTestMethods{
 	 */
 	
 	@Test
-	public void tgl106TestTotalAwardSection() throws Exception {
+	public void tgl106TotalAwardSectionTest() throws Exception {
 		
 		/* Step 1 - Login to the TGL  portal application using valid user id < https://qamerlin.teachforamerica.org/ada */
 		LoginPageTgl loginPage = webUtil.openLoginPage();

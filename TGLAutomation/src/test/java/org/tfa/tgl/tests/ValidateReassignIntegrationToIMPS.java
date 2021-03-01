@@ -3,10 +3,10 @@ package org.tfa.tgl.tests;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.tfa.framework.core.BaseTestMethods;
-import org.tfa.tgl.pages.SearchDetailsPageTGL;
-import org.tfa.tgl.pages.SearchPageTGL;
 import org.tfa.tgl.pages.common.IMPSPage;
 import org.tfa.tgl.pages.common.LoginPageTgl;
+import org.tfa.tgl.pages.search.SearchPage;
+import org.tfa.tgl.pages.searchdetails.SearchDetailsPage;
 import org.tfa.tgl.utilities.web.TGLConstants;
 import org.tfa.tgl.utilities.web.TGLWebUtil;
 
@@ -19,11 +19,11 @@ import org.tfa.tgl.utilities.web.TGLWebUtil;
  * @Author: Surya
  ************************************************************************************************************** 
  */
-public class ReassignmentTest extends BaseTestMethods {
+public class ValidateReassignIntegrationToIMPS extends BaseTestMethods {
 	
 	private TGLWebUtil webUtil=TGLWebUtil.getObject();
-	private SearchPageTGL searchPage= new SearchPageTGL();
-	private SearchDetailsPageTGL searchDetailsPage= new SearchDetailsPageTGL();
+	private SearchPage searchPage= new SearchPage();
+	private SearchDetailsPage searchDetailsPage= new SearchDetailsPage();
 	private IMPSPage impsPage = new IMPSPage();
 	String actualCalculatedTotalAmountBeforeCalculate;
 	String actualExpectedContributionAmountBeforeCalculate;
@@ -42,7 +42,7 @@ public class ReassignmentTest extends BaseTestMethods {
 	 */
 	
 	@Test
-	public void tgl11128TestReassignmentIntegrationPoint() throws Exception{
+	public void tgl118ReassignmentIntegrationIMPSTest() throws Exception{
 		
 		String selectedQualifiedPositon;
 		String impsURL = testDataMap.get("IMPSURL");

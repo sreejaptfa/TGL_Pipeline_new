@@ -22,8 +22,10 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
+import org.testng.asserts.SoftAssert;
 import org.tfa.framework.utilities.testdata.TestData;
 import org.tfa.tgl.pages.common.LoginPageTgl;
+import org.tfa.tgl.pages.search.SearchPage;
 
 @SuppressWarnings({ "squid:S4042", "squid:S899","squid:S134"})
 public class TGLWebUtil extends WebDriverUtil {
@@ -36,10 +38,10 @@ public class TGLWebUtil extends WebDriverUtil {
 	private static final String MAIL_POP3_PORT = "mail.pop3.port";
 	private static final String MAIL_POP3_STARTTLS_ENABLE = "mail.pop3.starttls.enable";
 	private static final String MAIL_FOLDER_INBOX = "INBOX";
-	private static final String TBODYTR = "//tbody/tr[";
 	Logger log = Logger.getLogger("rootLogger");
 	String downloadedFilePath;
 	protected LoginPageTgl loginPage;
+	SoftAssert soft = new SoftAssert();
 
 	/*
 	 * This function will upload the file.
@@ -86,18 +88,19 @@ public class TGLWebUtil extends WebDriverUtil {
 	 */
 	public WebElement getValuesFromDocumentsWebTable(String tableLocatorName, String refRowDataToSearch,
 			String expressionType) {
+		WebElement element = null;
 		Map<String, String> locatorValueMap = webUtil.getLocatorValueMap(tableLocatorName);
 		String locatorValue = getLocatorValue(locatorValueMap, tableLocatorName);
 		List<WebElement> tableRowValues = webUtil.getDriver().findElements(By.xpath(locatorValue));
-		for (int i = 1; i <= tableRowValues.size(); i++) {
+		for (int i = 1; i <= tableRowValues.size()-1; i++) {
 			String rowWiseCellData = tableRowValues.get(i).getText();
 			try {
 				if (rowWiseCellData.contains(refRowDataToSearch)) {
 					switch (expressionType) {
 					case "Review":
-						return webUtil.getDriver().findElement(By.xpath(locatorValue + TBODYTR + i + "]//a"));
+						return webUtil.getDriver().findElement(By.xpath(locatorValue + "["+ i+ "]//td[3]//a"));
 					case "Remove":
-						return webUtil.getDriver().findElement(By.xpath(locatorValue + TBODYTR + i + "]//button"));
+						return webUtil.getDriver().findElement(By.xpath(locatorValue + "["+ i+ "]//td[3]//button"));
 					default:
 						break;
 					}
@@ -106,7 +109,7 @@ public class TGLWebUtil extends WebDriverUtil {
 				logger.info(e);
 			}
 		}
-		return null;
+		return element;
 	}
 
 	/*
@@ -140,28 +143,32 @@ public class TGLWebUtil extends WebDriverUtil {
 	 * This function will verifies the object is visible on the Page
 	 */
 	public boolean objectIsVisible(String locatorName) {
+		boolean flag = false;
 		By locator = null;
-		locator = webUtil.getLocatorBy(locatorName);
 		try {
+			locator = webUtil.getLocatorBy(locatorName);
 			return (webUtil.getDriver().findElement(locator).isDisplayed());
 		} catch (Exception e) {
+			flag = false;
 			logger.info(e);
-			return false;
-		}
+			}
+		return flag;
 	}
 
 	/*
 	 * This function will verifies the object is enabled on the Page
 	 */
 	public boolean objectIsEnabled(String locatorName) {
+		boolean flag = false;
 		By locator = null;
-		locator = webUtil.getLocatorBy(locatorName);
 		try {
-			return (webUtil.getDriver().findElement(locator).isEnabled());
+			locator = webUtil.getLocatorBy(locatorName);
+			flag = (webUtil.getDriver().findElement(locator).isEnabled());
 		} catch (Exception e) {
+			flag = false;
 			logger.info(e);
-			return false;
 		}
+		return flag;
 	}
 
 	/*
@@ -265,5 +272,27 @@ public class TGLWebUtil extends WebDriverUtil {
 		webUtil.getDriver().get(url);
 		webUtil.holdOn(3);
 		webUtil.waitForBrowserToLoadCompletely();
+	}
+	
+	/**
+	 * this method is to verify the objects on Tax Information section
+	 */
+	public boolean verifyDocumentInformationSection(String sectionName) {
+		boolean flag = true;
+		String[] sectionObjects= data.getTestCaseDataMap().get(sectionName).split(":");
+		int len = sectionObjects.length;
+		try { 
+			for (int i = 0; i < len; i++) {
+				if((!objectIsEnabled(sectionObjects[i]))) {
+					soft.assertTrue(flag, sectionObjects[i]+" not exist on Section");
+				}
+			}
+		} catch (Exception e) {
+			soft.assertTrue(flag, "Object not found");
+			soft.fail();
+			log.info("Object not found");
+			
+		}
+		return flag;
 	}
 }

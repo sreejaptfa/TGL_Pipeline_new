@@ -4,9 +4,9 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.tfa.framework.core.BaseTestMethods;
 import org.tfa.framework.utilities.general.RandomUtil;
-import org.tfa.tgl.pages.SearchDetailsPageTGL;
-import org.tfa.tgl.pages.SearchPageTGL;
 import org.tfa.tgl.pages.common.LoginPageTgl;
+import org.tfa.tgl.pages.search.SearchPage;
+import org.tfa.tgl.pages.searchdetails.SearchDetailsPage;
 import org.tfa.tgl.utilities.web.TGLConstants;
 import org.tfa.tgl.utilities.web.TGLWebUtil;
 
@@ -20,9 +20,9 @@ import org.tfa.tgl.utilities.web.TGLWebUtil;
  ************************************************************************************************************** 
  */
 
-public class SendEmailTextboxTest extends BaseTestMethods{
-	private SearchPageTGL searchPage= new SearchPageTGL();
-	private SearchDetailsPageTGL searchDetailsPage = new SearchDetailsPageTGL();
+public class ValidateSendEmailSection extends BaseTestMethods{
+	private SearchPage searchPage= new SearchPage();
+	private SearchDetailsPage searchDetailsPage = new SearchDetailsPage();
 	private TGLWebUtil webUtil=TGLWebUtil.getObject();
 	private RandomUtil random=new RandomUtil();
 	private static final String TGLSENDEMAILPOPUPMESSAGE="Tgl_SendEmailPopupMessage_header";
@@ -39,14 +39,14 @@ public class SendEmailTextboxTest extends BaseTestMethods{
 	 */
 	
 	@Test
-	public void tgl11124TestSendEmailTextboxTest() throws Exception {
+	public void tgl114SendEmailSectionTest() {
+		
 		
 		/* Step 1 - Login to the TGL  portal application using valid user id < https://stageweb.tfanet.org/ada/login> */
 		LoginPageTgl loginPage = webUtil.openLoginPage();
 		loginPage.enterLoginInfo();
 		
 		/* Step 2 & 3 - Search for the applicants. Click on the search result row */
-		webUtil.waitForBrowserToLoadCompletely();
 		searchPage.clickOnSearchBtn();
 		searchPage.clickFirstRowColumnOnSearchResults();
 
@@ -64,7 +64,7 @@ public class SendEmailTextboxTest extends BaseTestMethods{
 		Assert.assertTrue(webUtil.objectIsVisible(TGLSENDEMAILPOPUPMESSAGE), CONFIRMATIONPOPUP);
 		
 		/* Step 7 - Now click on cancel */
-		searchDetailsPage.clickOnCancelButton("Tgl_Cancel_btn");
+		searchDetailsPage.clickOnCancelButton("Tgl_Cancel_btn_Last");
 		Assert.assertFalse(webUtil.objectIsVisible(TGLSENDEMAILPOPUPMESSAGE), CONFIRMATIONPOPUP);
 
 		/* Step 8 - Now again click on Send */
