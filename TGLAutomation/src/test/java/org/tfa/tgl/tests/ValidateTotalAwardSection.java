@@ -19,7 +19,7 @@ import org.tfa.tgl.utilities.web.TGLWebUtil;
  * @Author: Surya
  ************************************************************************************************************** 
  */
-public class TotalAwardSectionTest extends BaseTestMethods{
+public class ValidateTotalAwardSection extends BaseTestMethods{
 
 	private TGLWebUtil webUtil=TGLWebUtil.getObject();
 	private SearchPage searchPage= new SearchPage();

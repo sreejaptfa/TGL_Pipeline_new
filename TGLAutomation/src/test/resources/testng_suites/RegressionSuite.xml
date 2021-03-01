@@ -31,7 +31,7 @@
  			<class name="org.tfa.tgl.tests.ValidateReassignIntegrationToSelectorPortal" />
 			<class name="org.tfa.tgl.tests.ValidateSendEmailSection" />
 			<class name="org.tfa.tgl.tests.ValidateTimeLineSection" />			
-			<class name="org.tfa.tgl.tests.TotalAwardSectionTest" />
+			<class name="org.tfa.tgl.tests.ValidateTotalAwardSection" />
 			<class name="org.tfa.tgl.tests.ValidateReassignIntegrationToIMPS" />					  
 			<class name="org.tfa.tgl.tests.ValidateTGLAppCenterIntegration" />  
 			<class name="org.tfa.tgl.tests.ValidateDocumentUpload" />
