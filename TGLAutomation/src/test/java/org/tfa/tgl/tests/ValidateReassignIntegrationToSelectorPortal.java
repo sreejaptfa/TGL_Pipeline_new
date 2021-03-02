@@ -110,7 +110,8 @@ public class ValidateReassignIntegrationToSelectorPortal extends BaseTestMethods
 		String actualContributionAmountAfterCalculate = webUtil.getText("Tgl_ExpectedContribution_ST");
 		Assert.assertNotEquals(actualCalculatedTotalAmountAfterCalculate, "n/a", "Verify Calculated Total Amount is updated");
 		Assert.assertNotEquals(actualContributionAmountAfterCalculate,"n/a", "Verify Expected Contribution Amount is updated");
-		
+		searchDetailsPage.selectTGLStatusDD("Incomplete");
+
 		/* 
 		* Step 7 - End Script 
 		*/

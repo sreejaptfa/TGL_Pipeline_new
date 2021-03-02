@@ -107,6 +107,22 @@ public class SearchDetailsPage {
 		webUtil.holdOn(5);
 
 	}
+	
+	public void enterTotalNumberOfDependentsAndIncomeAmount(String totalDependents, String income) {
+	
+		WebElement element = webUtil.getElement("Tgl_TotalNoOfDependents_ED");
+		element.clear();
+		element.sendKeys(totalDependents);
+		element.sendKeys(Keys.ENTER);
+		webUtil.holdOn(5);
+
+		element = webUtil.getElement("Tgl_Income_ED");
+		element.clear();
+		element.sendKeys(income);
+		element.sendKeys(Keys.ENTER);
+		webUtil.holdOn(5);
+
+	}
 
 	// This function will get and verify values from the webTable on Education Costs. section returns true and false
 	public void verifyDocumentTypeList(String tbRowLocator, String tbColLocator,
@@ -160,19 +176,15 @@ public class SearchDetailsPage {
 	public void clickCompleteAndFixErrorMessages(String applicantID) {
 		this.selectTGLStatusDD("Complete");
 		webUtil.holdOn(5);
-		boolean iflag = webUtil.objectIsVisible(STATUSVALIDATIONMESSAGE);
-		if (iflag) {
-			String getErrorMessageText = webUtil.getText(STATUSVALIDATIONMESSAGE);
-			if ((getErrorMessageText.contains("Status cannot be changed"))
-					|| (getErrorMessageText.contains("Total # of Dependents is blank"))) {
-				enterTotalNumberOfDependentsAndIncomeAmount();
-				selectCheckBoxsForObjectValid("Tgl_SelectCheckBox_chk");
-				selectTGLStatusDD("Complete");
-				boolean iflag1 = webUtil.objectIsVisible(STATUSVALIDATIONMESSAGE);
-				if (iflag1) {
-					Assert.assertTrue(false,"PLEASE CHECK MANUALLY.... THERE ARE SOME MORE ERROR MESSAGES FOR THE PERSONID -> "
-									+ applicantID);
-				}
+		String getErrorMessageText = webUtil.getElement("Tgl_ApplicantValidMessage_Lk").getText();
+		if ((getErrorMessageText.contains("Status cannot be changed")) || (getErrorMessageText.contains("Total # of Dependents is blank"))) {
+			enterTotalNumberOfDependentsAndIncomeAmount();
+			selectCheckBoxsForObjectValid("Tgl_SelectCheckBox_chk");
+			selectTGLStatusDD("Complete");
+			getErrorMessageText = webUtil.getElement("Tgl_ApplicantValidMessage_Lk").getText();
+			if (getErrorMessageText.contains("Status cannot be changed to complete if Income or Total # of Dependents is blank.")){
+				Assert.assertTrue(false,"PLEASE CHECK MANUALLY.... THERE ARE SOME MORE ERROR MESSAGES FOR THE PERSONID -> "
+								+ applicantID);
 			}
 		}
 	}
@@ -180,7 +192,7 @@ public class SearchDetailsPage {
 	// This function Verifies that the required? object isSelected on TGL Detail page, and if the Valid? 
 	// checkbox is not selects it will selects the Valid? object on the page like Total # of 
 	// Dependents is blank and "Status cannot be changed
-	private void selectCheckBoxsForObjectValid(String locatorName) {
+	public void selectCheckBoxsForObjectValid(String locatorName) {
 		Map<String, String> locatorValueMap = webUtil.getLocatorValueMap(locatorName);
 		String locatorValue = TGLWebUtil.getLocatorValue(locatorValueMap, locatorName);
 		List<WebElement> getValues = webUtil.getDriver().findElements(By.xpath(locatorValue));
@@ -195,7 +207,8 @@ public class SearchDetailsPage {
 		}
 	}
 	
-	// This function checks that the required? and enter notes
+ 
+	// This function will click on the valid checkbox and enter the notes and return the locator element
 	public Map<String, String> checkValidCheckBoxAndEnterNotes(String[] sections, String selectType) {
 		String getlocatorValue;
 		String checkBoxValue;
@@ -265,6 +278,7 @@ public class SearchDetailsPage {
 		return objectMap;
 	}
 
+	//This function will returns the document section names return the getSectionName
 	public String getSectionName(String name) {
 		String getSectionName = null;
 		if (name.equals("Tgl_PrivateLoan_Section"))

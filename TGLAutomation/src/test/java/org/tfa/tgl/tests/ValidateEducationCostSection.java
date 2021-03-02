@@ -36,7 +36,7 @@ public class ValidateEducationCostSection extends BaseTestMethods {
 	 */
 
 	@Test
-	public void tgl117EducationCostCalculationTest() throws Exception {
+	public void tgl117EducationCostCalculationTest(){
 
 		/*
 		 * Step 1 - Login to the TGL portal application using valid user id <

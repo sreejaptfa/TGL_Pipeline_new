@@ -21,7 +21,7 @@ public class ValidateAdditionalInformationSection extends BaseTestMethods  {
 	 *@Author: Nitin Sharma 
 	 */
 	@Test
-	public void tgl103AdditionalInformationSectionTest() throws Exception	{	
+	public void tgl103AdditionalInformationSectionTest(){	
 		
 		//Step 1 - Login to TGL portal
 		LoginPageTgl loginPage = webUtil.openLoginPage();
@@ -36,8 +36,6 @@ public class ValidateAdditionalInformationSection extends BaseTestMethods  {
 		
 		//Step 4 & 5 - Verify Additional Information Section - Step 4, Step - 5
 		soft.assertTrue(webUtil.verifyDocumentInformationSection("AdditionalInformation"));
-		
-
 	}
 	@Override
 	public TGLConstants getConstants()	{

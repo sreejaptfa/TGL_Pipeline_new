@@ -36,7 +36,7 @@ public class ValidateGroupCalculationFields extends BaseTestMethods{
 	 **************************************************************************************************************
 	 */
 	@Test
-	public void tgl113GroupCalculationFieldTest() throws Exception {
+	public void tgl113GroupCalculationFieldTest(){
 		
 	
 		/* Step 1 - Login to TGL portal */

@@ -22,29 +22,19 @@ public class ValidateTglLoginFunctionality extends BaseTestMethods{
 		String invalidPassword= testDataMap.get("Login_UserName");
 		String wrongUserName=testDataMap.get("WrongUserName");
 		
-		/*
-		 * Step 1 - Open TGL
-		 */
+		// Step 1 - Open TGL
 		LoginPageTgl loginPage = webUtil.openLoginPage();
 
-		/*
-		 * Step 2 - User active but no Admin role | correct user name correct password
-		 */
+		// Step 2 - User active but no Admin role | correct user name correct password
 		Assert.assertTrue(loginPage.verifyInvalidLogin(noAdminToleUserName, validPassword), "Verify InvalidLogin method failed");
 		
-		/*
-		 * Step 3 - Right User name wrong password
-		 */
+		// Step 3 - Right User name wrong password
 		Assert.assertTrue(loginPage.verifyInvalidLogin(validUserName, invalidPassword), "Verify InvalidLogin method failed");
 		
-		/*
-		 * Step 4 - Wrong User name right password
-		 */
+		// Step 4 - Wrong User name right password
 		Assert.assertTrue(loginPage.verifyInvalidLogin(wrongUserName, validPassword), "Verify InvalidLogin method failed");
 		
-		/*
-		 * Step 5 - Right User name right password
-		 */
+		// Step 5 - Right User name right password
 		Assert.assertTrue(loginPage.enterLoginInfo(), "Verify Home Page landed");
 						
 	}

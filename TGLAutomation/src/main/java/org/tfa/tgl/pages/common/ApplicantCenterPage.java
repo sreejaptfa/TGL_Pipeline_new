@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.tfa.tgl.utilities.web.TGLWebUtil;
@@ -11,7 +12,7 @@ import org.tfa.tgl.utilities.web.TGLWebUtil;
 public class ApplicantCenterPage {
 
 	private TGLWebUtil webUtil=TGLWebUtil.getObject();
-	
+	Logger log = Logger.getLogger("rootLogger");
 
 	/**
 	 * This function will login to the Applicant Center application
@@ -62,7 +63,8 @@ public class ApplicantCenterPage {
 	public Map<String, String> getValuesFromApplicantCenter(String locatorName,String valueToCompare){
 		String getNotesText = null;
 		String documentValidCheck = null;
-		Map<String, String> objectMap=new HashMap<>();
+		Map<String, String> objectMap = null;
+
 		Map<String, String> locatorValueMap=webUtil.getLocatorValueMap(locatorName);
 		String locatorValue=TGLWebUtil.getLocatorValue(locatorValueMap, locatorName);
 		List<WebElement> getValues = webUtil.getDriver().findElements(By.xpath(locatorValue));
@@ -80,6 +82,7 @@ public class ApplicantCenterPage {
 						documentValidCheck= getDocumentChecked.getAttribute("checked");
 						WebElement getDocument = webUtil.getDriver().findElement(By.xpath(locatorValue +"["+i+"]/td[4]"));
 						String getDocText = getDocument.getText();
+						objectMap = new HashMap<>();
 						objectMap.put("TransitionalFundingNotes",getNotesText);
 						objectMap.put("TransitionalFundingCheckBox",documentValidCheck);
 						objectMap.put("TransitionalFundingDocument",getDocText);
@@ -87,7 +90,9 @@ public class ApplicantCenterPage {
 					}
 				}
 			}catch(Exception e) {
-							}
+				objectMap = null;
+				log.info("Unable to get the values from Applicant center");
+			}
 		}
 		return objectMap;
 

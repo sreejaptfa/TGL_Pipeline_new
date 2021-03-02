@@ -34,7 +34,7 @@ public class ValidateDecimalPlacesOnTextFields extends BaseTestMethods {
 	 **************************************************************************************************************
 	 */
 	@Test
-	public void tgl116DecimalPlacesTest() throws Exception {
+	public void tgl116DecimalPlacesTest(){
 		
 		/*
 		 * Step 1 - Login to the TGL portal application using valid user id <

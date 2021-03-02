@@ -40,7 +40,7 @@ public class ValidateDocumentUpload extends BaseTestMethods {
 	 **************************************************************************************************************
 	 */
 	@Test
-	public void tgl105DocumentUploadTest() throws Exception {
+	public void tgl105DocumentUploadTest(){
 		
 		String uploadedFileName=testDataMap.get(UPLOADPDFFILEPATH);
 

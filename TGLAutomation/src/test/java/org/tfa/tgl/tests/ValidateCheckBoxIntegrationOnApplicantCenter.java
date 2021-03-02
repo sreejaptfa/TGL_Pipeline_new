@@ -1,17 +1,13 @@
 package org.tfa.tgl.tests;
 
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.tfa.framework.core.BaseTestMethods;
 import org.tfa.framework.core.JavaScriptUtil;
-import org.tfa.framework.utilities.general.RandomUtil;
 import org.tfa.tgl.pages.common.ApplicantCenterPage;
 import org.tfa.tgl.pages.common.LoginPageTgl;
 import org.tfa.tgl.pages.search.SearchPage;
@@ -36,7 +32,6 @@ public class ValidateCheckBoxIntegrationOnApplicantCenter extends BaseTestMethod
 	private SearchPage searchPage = new SearchPage();
 	private ApplicantCenterPage applicantCenterPage = new ApplicantCenterPage();
 	private SearchDetailsPage searchDetailsPage = new SearchDetailsPage();
-	private RandomUtil random = new RandomUtil();
 	private JavaScriptUtil jsUtil = JavaScriptUtil.getObject();
 	Logger log;
 
@@ -51,7 +46,7 @@ public class ValidateCheckBoxIntegrationOnApplicantCenter extends BaseTestMethod
 	 */
 
 	@Test
-	public void tgl121ValidCheckBoxApplicantCenterIntegrationTest() throws Exception {
+	public void tgl121ValidCheckBoxApplicantCenterIntegrationTest(){
 		String applicantID = testDataMap.get("ApplicantID");
 		String navToTransFundingUrl = testDataMap.get("TransFundingUrl");
 
@@ -76,8 +71,9 @@ public class ValidateCheckBoxIntegrationOnApplicantCenter extends BaseTestMethod
 		* Step 4 - 		Click Valid check box  for any of the available doc type which has required check box checked 
 		* Enter Notes for same field
 		*/
-		String[] sectionsOnTGL = {"Tgl_PrivateLoan_Section","Tgl_OtherLoan_Section","Tgl_Savings_Section","Tgl_Credit_Section","Tgl_ApplicantTax_Section","Tgl_W2Income_Section","Tgl_ParentTax_section","Tgl_ParentIncome_Section"};
-		Map<String, String> objectMap = checkValidCheckBoxAndEnterNotes(sectionsOnTGL);
+		//String[] sectionsOnTGL = {"Tgl_PrivateLoan_Section","Tgl_OtherLoan_Section","Tgl_Savings_Section","Tgl_Credit_Section","Tgl_ApplicantTax_Section","Tgl_W2Income_Section","Tgl_ParentTax_section","Tgl_ParentIncome_Section"};
+		String[] sectionsOnTGL = {"Tgl_ApplicantTax_Section"};
+		Map<String, String> objectMap = searchDetailsPage.checkValidCheckBoxAndEnterNotes(sectionsOnTGL,"Check");
 		String getSelectedDocumentSectionFromTGL = objectMap.get("Section");
 		String getNotesFromTGL = objectMap.get("Notes");
 		String getSectionNameFromTGL = objectMap.get("SectionName");
@@ -123,81 +119,4 @@ public class ValidateCheckBoxIntegrationOnApplicantCenter extends BaseTestMethod
 	public TGLConstants getConstants(){
 		return new TGLConstants();
 	}
-	/* 
-	* This function will returns the document section names
-	* return the getSectionName
-	*/
-	private String getSectionName(String name){
-		String getSectionName= null;
-		if(name.equals("Tgl_PrivateLoan_Section")) getSectionName = "Private Loan";
-		if(name.equals("Tgl_OtherLoan_Section")) getSectionName = "Other Loan";
-		if(name.equals("Tgl_Savings_Section")) getSectionName = "Savings";
-		if(name.equals("Tgl_Credit_Section")) getSectionName = "Credit Card debt";
-		if(name.equals("Tgl_ApplicantTax_Section")) getSectionName = "Applicant's Tax Return";
-		if(name.equals("Tgl_W2Income_Section")) getSectionName = "W-2 or Income Statement";
-		if(name.equals("Tgl_ParentTax_section")) getSectionName = "Parent's Tax Return";
-		if(name.equals("Tgl_ParentIncome_Section")) getSectionName = "Parent Income Statement";
-		return getSectionName;
-	}
-
-	/* 
-	* This function will click on the valid checkbox and enter the notes
-	* return the locator
-	*/
-	
-	public Map<String, String> checkValidCheckBoxAndEnterNotes(String[] sections){
-		String getlocatorValue;
-		String checkBoxValue;
-		boolean checkValue = false;
-		String locatorValue = null;
-		String locatorValue1 = null;
-		String selectedSection = null;
-		String getSectionName = null;
-		String checkBoxChecked ="true";
-		String enterNotes="Checked Documentation Verified CheckBox-"+random.generateRandomNumber(5);
-		Map<String, String> objectMap=new HashMap<>();
-		int len = sections.length-1;
-		for(int i= 0; i<=len; i++){
-			Map<String, String> locatorValueMap=webUtil.getLocatorValueMap(sections[i]);
-			locatorValue=TGLWebUtil.getLocatorValue(locatorValueMap, sections[i]);
-			WebElement checkBoxRequired = webUtil.getDriver().findElement(By.xpath("("+ locatorValue +"/tbody/tr//input)[1]"));
-			if(checkBoxRequired.isSelected()){
-				WebElement checkBoxValid = webUtil.getDriver().findElement(By.xpath("("+ locatorValue+"/tbody/tr//input)[2]"));
-				locatorValue1=TGLWebUtil.getLocatorValue(locatorValueMap, sections[i]);
-				if(!checkBoxValid.isSelected()){
-					webUtil.click(checkBoxValid);
-					checkBoxChecked ="true";
-					selectedSection = sections[i];
-					getSectionName = getSectionName(selectedSection);
-					WebElement setApplicationNotesObject = webUtil.getDriver().findElement(By.xpath("("+ locatorValue1+"/tbody/tr//textarea)"));
-					setApplicationNotesObject.clear();
-					setApplicationNotesObject.sendKeys(enterNotes);
-					setApplicationNotesObject.sendKeys(Keys.ENTER);
-					webUtil.holdOn(10);
-					checkValue = true;
-					break;
-				}else{
-					selectedSection = sections[i];
-					getSectionName = getSectionName(selectedSection);
-					checkValue = false;
-				}
-			}	
-		}
-		if(!checkValue){
-			getlocatorValue =locatorValue1;
-			getSectionName = getSectionName(selectedSection);//NOSONAR
-			WebElement setApplicationNotesObject = webUtil.getDriver().findElement(By.xpath("("+ getlocatorValue+"/tbody/tr//textarea)"));
-			setApplicationNotesObject.clear();
-			setApplicationNotesObject.sendKeys(enterNotes);
-			setApplicationNotesObject.sendKeys(Keys.ENTER);
-			webUtil.holdOn(10);
-		}
-		checkBoxValue = selectedSection;
-		objectMap.put("Notes",enterNotes);
-		objectMap.put("Section",checkBoxValue);
-		objectMap.put("SectionName",getSectionName);
-		objectMap.put("ValidCheckBox",checkBoxChecked);
-		return objectMap;
-	}
-
 }

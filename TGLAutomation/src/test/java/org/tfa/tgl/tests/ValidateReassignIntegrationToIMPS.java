@@ -42,7 +42,7 @@ public class ValidateReassignIntegrationToIMPS extends BaseTestMethods {
 	 */
 	
 	@Test
-	public void tgl118ReassignmentIntegrationIMPSTest() throws Exception{
+	public void tgl118ReassignmentIntegrationIMPSTest(){
 		
 		String selectedQualifiedPositon;
 		String impsURL = testDataMap.get("IMPSURL");

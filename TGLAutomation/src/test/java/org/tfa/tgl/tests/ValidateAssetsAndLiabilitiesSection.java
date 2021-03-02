@@ -29,7 +29,7 @@ public class ValidateAssetsAndLiabilitiesSection extends BaseTestMethods{
 	 */
 	
 	@Test
-	public void tgl102AssetsAndLiabilitiesSectionTest() throws Exception	{	
+	public void tgl102AssetsAndLiabilitiesSectionTest(){	
 	
 		String adjustedAmount = data.getTestCaseDataMap().get("AdjustedAmount");
 	

@@ -15,7 +15,7 @@
 		  	<class name="org.tfa.tgl.tests.ValidateTglLoginFunctionality" /> 
 			<class name="org.tfa.tgl.tests.ValidateAdditionalInformationSection" />
 			<class name="org.tfa.tgl.tests.ValidateAssetsAndLiabilitiesSection" />	
-<!-- 			<class name="org.tfa.tgl.tests.ValidateIncomeAndTotalNoDependencySection" />		 -->
+			<class name="org.tfa.tgl.tests.ValidateIncomeAndTotalNoDependencySection" />
 		  	<class name="org.tfa.tgl.tests.ValidateEducationCostSection" />	
 			<class name="org.tfa.tgl.tests.ValidateGroupCalculationFields" />		  	
 		  	
