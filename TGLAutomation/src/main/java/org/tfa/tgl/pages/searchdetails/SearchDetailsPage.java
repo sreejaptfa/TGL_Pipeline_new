@@ -17,7 +17,6 @@ import org.tfa.tgl.utilities.web.TGLWebUtil;
 @SuppressWarnings({"squid:S3776"})
 public class SearchDetailsPage {
 	private TGLWebUtil webUtil = TGLWebUtil.getObject();
-	private static final String STATUSVALIDATIONMESSAGE = "Tgl_StatusValidationMessage_ST";
 	private RandomUtil random = new RandomUtil();
 	private static final String CHECK="Check";
 

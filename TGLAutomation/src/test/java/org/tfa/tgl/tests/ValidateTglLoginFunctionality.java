@@ -1,6 +1,5 @@
 package org.tfa.tgl.tests;
 
-import org.apache.log4j.Logger;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.tfa.framework.core.BaseTestMethods;
@@ -10,7 +9,6 @@ import org.tfa.tgl.utilities.web.TGLWebUtil;
 
 public class ValidateTglLoginFunctionality extends BaseTestMethods{
 	
-	Logger log=Logger.getLogger("rootLogger");
 	private TGLWebUtil webUtil = TGLWebUtil.getObject();
 	
 	@Test

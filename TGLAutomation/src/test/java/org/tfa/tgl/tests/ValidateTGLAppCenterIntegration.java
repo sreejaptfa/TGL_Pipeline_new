@@ -1,7 +1,6 @@
 package org.tfa.tgl.tests;
 
 import java.util.Map;
-import org.apache.log4j.Logger;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.tfa.framework.core.BaseTestMethods;
@@ -14,7 +13,6 @@ import org.tfa.tgl.utilities.web.TGLWebUtil;
 
 public class ValidateTGLAppCenterIntegration extends BaseTestMethods {
 
-	Logger log = Logger.getLogger("rootLogger");
 	private TGLWebUtil webUtil = TGLWebUtil.getObject();
 	private TGLAppCenterIntergrationPoints integrationpoints = new TGLAppCenterIntergrationPoints();
 	private SearchPage searchPage = new SearchPage();
@@ -27,7 +25,7 @@ public class ValidateTGLAppCenterIntegration extends BaseTestMethods {
 	 * TestData
 	 * @Author: Nitin Sharma
 	 */
-	@Test(priority = 1, enabled = true)
+	@Test
 	public void tgl108IntegrationPointsTest() {
 
 		String applicantID = testDataMap.get("PIDIntegation");
@@ -72,7 +70,7 @@ public class ValidateTGLAppCenterIntegration extends BaseTestMethods {
 	 * TestData
 	 * @Author: Nitin Sharma
 	 */
-	@Test(priority = 2, enabled = true)
+	@Test
 	public void tgl110IntegrationPointsTest() {
 
 		String applicantID = testDataMap.get("PIDIntegation");
@@ -109,7 +107,7 @@ public class ValidateTGLAppCenterIntegration extends BaseTestMethods {
 	 * TestData
 	 * @Author: Nitin Sharma
 	 */
-	@Test(priority = 3, enabled = true)
+	@Test
 	public void tgl111IntegrationPointsTest() {
 
 		String applicantID = testDataMap.get("PIDIntegation");
@@ -142,7 +140,7 @@ public class ValidateTGLAppCenterIntegration extends BaseTestMethods {
 	 * TestData
 	 * @Author: Nitin Sharma
 	 */
-	@Test(priority = 4, enabled = true)
+	@Test
 	public void tgl112IntegrationPointsTest() {
 
 		String applicantID = testDataMap.get("PIDIntegation");

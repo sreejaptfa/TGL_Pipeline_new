@@ -1,7 +1,6 @@
 package org.tfa.tgl.tests;
 
 import java.util.Map;
-import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
@@ -33,7 +32,6 @@ public class ValidateCheckBoxIntegrationOnApplicantCenter extends BaseTestMethod
 	private ApplicantCenterPage applicantCenterPage = new ApplicantCenterPage();
 	private SearchDetailsPage searchDetailsPage = new SearchDetailsPage();
 	private JavaScriptUtil jsUtil = JavaScriptUtil.getObject();
-	Logger log;
 
 	/**
 	 **************************************************************************************************************

@@ -1,6 +1,6 @@
 package org.tfa.tgl.tests;
 
-import org.apache.log4j.Logger;
+
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.tfa.framework.core.BaseTestMethods;
@@ -24,7 +24,6 @@ public class ValidateGroupCalculationFields extends BaseTestMethods{
 	private SearchPage searchPage= new SearchPage();
 	private AwardCalculatorPage awardCalculatorPage = new AwardCalculatorPage();
 	private TGLWebUtil webUtil=TGLWebUtil.getObject();
-	static Logger log=Logger.getLogger("rootLogger");
 	private static final String TGLOFFERDEADLINEDD="Tgl_OfferDeadline_DD";
 	
 	/**

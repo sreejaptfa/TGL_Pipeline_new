@@ -1,9 +1,7 @@
 package org.tfa.tgl.tests;
 
-import org.apache.log4j.Logger;
 import org.testng.Assert;
 import org.testng.annotations.Test;
-import org.testng.asserts.SoftAssert;
 import org.tfa.framework.core.BaseTestMethods;
 import org.tfa.tgl.pages.common.LoginPageTgl;
 import org.tfa.tgl.pages.search.SearchPage;
@@ -18,10 +16,6 @@ public class ValidateIncomeAndTotalNoDependencySection extends BaseTestMethods {
 	private SearchPage searchPage = new SearchPage();
 	private SearchDetailsPage searchDetailsPage = new SearchDetailsPage();
 	private IncomeAndTotalNoDependencySection income = new IncomeAndTotalNoDependencySection();
-	
-	LoginPageTgl loginpage;
-	Logger log=Logger.getLogger("rootLogger");
-	SoftAssert soft = new SoftAssert();
 	
 	/*@Desc: This test verifies No Of Dependents section and relevant error messages 
 	 *@Parameters: Login credential with admin role 

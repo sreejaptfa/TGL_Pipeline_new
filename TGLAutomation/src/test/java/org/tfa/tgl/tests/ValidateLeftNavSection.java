@@ -1,6 +1,5 @@
 package org.tfa.tgl.tests;
 
-import org.apache.log4j.Logger;
 import org.testng.annotations.Test;
 import org.tfa.framework.core.BaseTestMethods;
 import org.tfa.tgl.pages.common.LoginPageTgl;
@@ -12,7 +11,6 @@ public class ValidateLeftNavSection extends BaseTestMethods{
 
 	private TGLWebUtil webUtil = TGLWebUtil.getObject();
 	private LeftNavSection nav = new LeftNavSection();
-	Logger log=Logger.getLogger("rootLogger");
 	
 	/*@Desc: This test verifies Left Nav section (Top Section), refer to testcase for more details - LeftNav - Automatable
 	 *@Parameters: Login credential with admin role 

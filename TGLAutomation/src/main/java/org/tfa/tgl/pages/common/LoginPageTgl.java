@@ -36,6 +36,7 @@ public class LoginPageTgl {
 	public boolean verifyInvalidLogin(String userName, String userPassword) {
 		boolean flag = false;
 		webUtil.waitUntilElementVisible(LOGINUSERNAME, 10);
+		webUtil.holdOn(2);
 		webUtil.setTextBoxValue(LOGINUSERNAME, userName);
 		webUtil.setTextBoxValue(LOGINUSERPASSWORD, userPassword);
 		webUtil.click(LOGINSIGNBTN);

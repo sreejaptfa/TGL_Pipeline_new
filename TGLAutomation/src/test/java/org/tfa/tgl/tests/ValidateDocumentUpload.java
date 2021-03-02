@@ -2,7 +2,6 @@ package org.tfa.tgl.tests;
 
 
 import java.util.List;
-import org.apache.log4j.Logger;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -19,7 +18,6 @@ public class ValidateDocumentUpload extends BaseTestMethods {
 	private SearchPage searchPage= new SearchPage();
 	private SearchDetailsPage searchDetailsPage = new SearchDetailsPage();
 	private TGLWebUtil webUtil=TGLWebUtil.getObject();
-	static Logger log=Logger.getLogger("rootLogger");
 	private static final String TGLVALIDATIONERRORMSGWITHOUTENTRYANYDOC="Tgl_validationErrorMsgWitoutEnterAnyDoc_ST";
 	private static final String DOCUMENTUPLOADERROR="Verified the Document Upload error";
 	private static final String ERRORMSGVALIDATION1="errorMessage_Validation_1";

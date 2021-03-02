@@ -1,6 +1,5 @@
 package org.tfa.tgl.tests;
 
-import org.apache.log4j.Logger;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.tfa.framework.core.BaseTestMethods;
@@ -24,7 +23,6 @@ public class ValidateTotalAwardSection extends BaseTestMethods{
 	private TGLWebUtil webUtil=TGLWebUtil.getObject();
 	private SearchPage searchPage= new SearchPage();
 	private SearchDetailsPage searchDetailsPage = new SearchDetailsPage();
-	static Logger log=Logger.getLogger("rootLogger");
 	private static final String TGLLOADADJUSTMENTED="Tgl_LoanAdjustment_ED";
 	private static final String TGLADJUSTMENTCOMMENTED="Tgl_AdjustmentComment_ED";
 	private static final String TGLGRANTADJUSTMENTED="Tgl_GrantAdjustment_ED";
@@ -110,12 +108,13 @@ public class ValidateTotalAwardSection extends BaseTestMethods{
 		
 		Assert.assertTrue(actualAdjustedLoanAmount.contains("200"),"Verified the Adjusted Loan");
 		Assert.assertTrue(actualAdjustedGrantAmount.contains("100"),"Verified the Adjusted Grant");
-
+		
 		/* Step 13 - Now click on Remove Adjusted amount */
 		searchDetailsPage.clickOnRemoveAdjustmentButton();
 		searchDetailsPage.clickOnYesRemoveAdjustmentButton();
-		Assert.assertFalse(webUtil.objectIsVisible("Tgl_RemoveAdjustment_btn"),"verified Adjustment removed");
-
+		String getActualText =webUtil.getElement("Tgl_TotalAwardSection_TB").getText();
+		Assert.assertTrue(!getActualText.contains("remove the adjustment"),"verified Adjustment removed");
+	
 		/* Step 14 - Now again click on Manual Adjusted link again and enter invalid loan and grant amount(such as dfdfd */
 		searchDetailsPage.clickOnManuallyAdjustButton();
 		enterGrantAdjustAmountValue = testDataMap.get("InValidLoanAdjustmentAmount_1");

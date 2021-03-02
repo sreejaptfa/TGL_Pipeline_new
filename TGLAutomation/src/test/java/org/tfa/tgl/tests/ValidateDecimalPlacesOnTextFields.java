@@ -36,17 +36,12 @@ public class ValidateDecimalPlacesOnTextFields extends BaseTestMethods {
 	@Test
 	public void tgl116DecimalPlacesTest(){
 		
-		/*
-		 * Step 1 - Login to the TGL portal application using valid user id <
-		 * https://qamerlin.teachforamerica.org/ada
-		 */
+		
+		/* Step 1 - Login to the TGL portal application using valid user id */
 		LoginPageTgl loginPage = webUtil.openLoginPage();
 		loginPage.enterLoginInfo();
 		
-		/*
-		 * Step 2 - Search for Personid to verify Total award section who has already
-		 * cal award
-		 */
+		/* Step 2 - Search for Personid to verify Total award section who has already cal award */
 		searchPage.clickOnSearchBtn();
 		searchPage.clickFirstRowColumnOnSearchResults();
 

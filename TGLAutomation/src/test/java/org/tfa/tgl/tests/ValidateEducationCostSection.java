@@ -38,17 +38,13 @@ public class ValidateEducationCostSection extends BaseTestMethods {
 	@Test
 	public void tgl117EducationCostCalculationTest(){
 
-		/*
-		 * Step 1 - Login to the TGL portal application using valid user id <
-		 * https://qamerlin.teachforamerica.org/ada
-		 */
+		
+		/* Step 1 - Login to the TGL portal application using valid user id */
 		LoginPageTgl loginPage = webUtil.openLoginPage();
 		loginPage.enterLoginInfo();
 
-		/*
-		 * Step 2 - Search for the Person Id which is going to verify Education Cost
-		 * Click on Search button.
-		 */
+		
+		/* Step 2 - Search for the Person Id which is going to verify Education Cost */
 		webUtil.click("Tgl_TGLStatus_DD");
 		webUtil.click("Tgl_Complete_LK");
 		searchPage.clickOnSearchBtn();

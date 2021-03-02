@@ -1,6 +1,5 @@
 package org.tfa.tgl.tests;
 
-import org.apache.log4j.Logger;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
@@ -8,7 +7,6 @@ import org.tfa.framework.core.BaseTestMethods;
 import org.tfa.framework.utilities.testdata.TestData;
 import org.tfa.tgl.pages.common.LoginPageTgl;
 import org.tfa.tgl.pages.search.SearchPage;
-import org.tfa.tgl.pages.searchdetails.SearchDetailsPage;
 import org.tfa.tgl.pages.searchdetailsection.AssetsAndLiabilitiesSection;
 import org.tfa.tgl.utilities.web.TGLConstants;
 import org.tfa.tgl.utilities.web.TGLWebUtil;
@@ -19,7 +17,6 @@ public class ValidateAssetsAndLiabilitiesSection extends BaseTestMethods{
 	private SearchPage searchPage = new SearchPage();
 	private AssetsAndLiabilitiesSection assetsliabilities= new AssetsAndLiabilitiesSection();
 	private TestData data = TestData.getObject();
-	Logger log=Logger.getLogger("rootLogger");
 	SoftAssert soft = new SoftAssert();
 	private TGLWebUtil webUtil = TGLWebUtil.getObject();
 	
