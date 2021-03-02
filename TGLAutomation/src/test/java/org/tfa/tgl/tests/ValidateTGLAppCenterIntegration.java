@@ -68,10 +68,8 @@ public class ValidateTGLAppCenterIntegration extends BaseTestMethods {
 	/*
 	 * @Description: Below Test Verifies Applicant Notes removal and Applicant Tax
 	 * Return "Valid" Checkbox UNCHECKED between AppCenter and TGL
-	 * 
 	 * @Param: TGL Admin credentials and a valid applicant email and person id in
 	 * TestData
-	 * 
 	 * @Author: Nitin Sharma
 	 */
 	@Test(priority = 2, enabled = true)
@@ -107,10 +105,8 @@ public class ValidateTGLAppCenterIntegration extends BaseTestMethods {
 
 	/*
 	 * @Description: Below Test Verifies document removal, Applicant Notes removal
-	 * 
 	 * @Param: TGL Admin credentials and a valid applicant email and person id in
 	 * TestData
-	 * 
 	 * @Author: Nitin Sharma
 	 */
 	@Test(priority = 3, enabled = true)
@@ -142,10 +138,8 @@ public class ValidateTGLAppCenterIntegration extends BaseTestMethods {
 	/*
 	 * @Description: Below Test Verifies File Upload, Applicant Notes and Applicant
 	 * Tax Return "Valid" Checkbox checked between AppCenter and TGL
-	 * 
 	 * @Param: TGL Admin credentials and a valid applicant email and person id in
 	 * TestData
-	 * 
 	 * @Author: Nitin Sharma
 	 */
 	@Test(priority = 4, enabled = true)

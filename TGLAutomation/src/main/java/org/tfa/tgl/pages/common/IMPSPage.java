@@ -34,6 +34,8 @@ public class IMPSPage {
 	 * This function will enters the personID
 	 */
 	public void enterPersonID(String personID){
+		webUtil.waitUntilElementVisible("IMPS_PersonID_ED", 20);
+		webUtil.holdOn(2);
 		webUtil.setTextBoxValue("IMPS_PersonID_ED", personID);
 	}
 	/*
@@ -41,18 +43,16 @@ public class IMPSPage {
 	 */
 	public void clickOnSearchButton(){
 		webUtil.click("IMPS_Search_Btn");
+		webUtil.holdOn(2);
 	}
 	
 	/**
 	 * This function will clicks on the Person Applicant on the Admission Page. 
 	 * If the Applicant  not found it will search on Historical Search
 	 */
-	public boolean clickOnApplicantLink(String personID){
-		boolean iflag = webUtil.objectIsVisible(IMPSAPPLICANTLK);
-		if(iflag){
-			webUtil.click(IMPSAPPLICANTLK);
-			webUtil.holdOn(5);
-		}else{
+	public void clickOnApplicantLink(String personID){
+		String getApplicantName = webUtil.getElement("IMPS_TableRow_txt").getText();
+		if(getApplicantName.contains("Nothing found to display")){
 			webUtil.switchToWindowFromFrame();
 			webUtil.switchToFrameByFrameLocator(COMMONTOPFRAME);
 			webUtil.click("IMPS_HistoricalSearch_Btn");
@@ -62,8 +62,10 @@ public class IMPSPage {
 			clickOnSearchButton();
 			webUtil.click(IMPSAPPLICANTLK);
 			webUtil.holdOn(10);
+		}else{
+			webUtil.click(IMPSAPPLICANTLK);
+			webUtil.holdOn(5);
 		}
-		return iflag;
 	}
 	/*
 	 * This function click on Assignment Button

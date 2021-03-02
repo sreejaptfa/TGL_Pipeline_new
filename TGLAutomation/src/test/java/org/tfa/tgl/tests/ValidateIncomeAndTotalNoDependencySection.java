@@ -44,21 +44,21 @@ public class ValidateIncomeAndTotalNoDependencySection extends BaseTestMethods {
 		
 		//TestCase - Enter Income and NoOf Dependent and check all Valid Checkbox and change the Status to Complete 
 		//Verify there no error message Step - 3
-		searchDetailsPage.enterTotalNumberOfDependentsAndIncomeAmount("10","100");
-		searchDetailsPage.selectCheckBoxsForObjectValid("Tgl_SelectCheckBox_chk");
-		Assert.assertTrue(income.verifyValidationMessageForStatusChangeToComplete("No Message"), "Verify IncomeAndTotalNodependencySection Method failed");								
+		searchDetailsPage.enterTotalNumberOfDependentsAndIncomeAmount("10","2500");
+		searchDetailsPage.selectCheckBoxsForObjectValid("Tgl_SelectCheckBox_chk","Check");
+		Assert.assertTrue(income.verifyValidationMessageForStatusChangeToComplete("No Message","Complete"), "Verify IncomeAndTotalNodependencySection Method failed");								
 		
 		//TestCase - Clear Income and No of Dependent and change the Status to Complete 
 		//Verify there no error message Step - 4
 		searchDetailsPage.selectTGLStatusDD("In Progress");
 		searchDetailsPage.enterTotalNumberOfDependentsAndIncomeAmount(" "," ");
-		Assert.assertTrue(income.verifyValidationMessageForStatusChangeToComplete("Valid Message"), "Verify IncomeAndTotalNodependencySection Method failed");								
+		Assert.assertTrue(income.verifyValidationMessageForStatusChangeToComplete("Valid Message","Complete"), "Verify IncomeAndTotalNodependencySection Method failed");								
 
 		//TestCase - Enter Income and NoOf Dependent as Zero and change the Status to Complete 
 		//Verify there no error message Step - 4
 		searchDetailsPage.selectTGLStatusDD("In Progress");
 		searchDetailsPage.enterTotalNumberOfDependentsAndIncomeAmount("0","0");
-		Assert.assertTrue(income.verifyValidationMessageForStatusChangeToComplete("No Message"), "Verify IncomeAndTotalNodependencySection Method failed");								
+		Assert.assertTrue(income.verifyValidationMessageForStatusChangeToComplete("No Message","Complete"), "Verify IncomeAndTotalNodependencySection Method failed");								
 	}	
 	@Override
 	public TGLConstants getConstants()	{

@@ -1,42 +1,43 @@
 package org.tfa.tgl.tests;
 
 import org.apache.log4j.Logger;
-import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.tfa.framework.core.BaseTestMethods;
-import org.tfa.tgl.pages.LeftNavSection;
 import org.tfa.tgl.pages.common.LoginPageTgl;
+import org.tfa.tgl.pages.searchdetailsection.LeftNavSection;
 import org.tfa.tgl.utilities.web.TGLConstants;
 import org.tfa.tgl.utilities.web.TGLWebUtil;
 
 public class ValidateLeftNavSection extends BaseTestMethods{
-	LoginPageTgl loginpage;
-	Logger log=Logger.getLogger("rootLogger");
-	private TGLWebUtil webUtil = TGLWebUtil.getObject();
 
+	private TGLWebUtil webUtil = TGLWebUtil.getObject();
+	private LeftNavSection nav = new LeftNavSection();
+	Logger log=Logger.getLogger("rootLogger");
+	
 	/*@Desc: This test verifies Left Nav section (Top Section), refer to testcase for more details - LeftNav - Automatable
 	 *@Parameters: Login credential with admin role 
-	 *@
 	 *@Author: Nitin Sharma 
 	 */
+	
 	@Test
-	public void tgl107TopNavSectionTest() throws Exception	{	
-		LeftNavSection nav= new LeftNavSection();	
-		boolean result;
-		try{			
-			LoginPageTgl loginPage = webUtil.openLoginPage();
-			
-			// Below Assert ensures success login
-			result=loginPage.enterLoginInfo();
-			Assert.assertTrue(result, "EnterloginInfo method failed");			
-			// Below Assert ensures <to be added>
-			Assert.assertTrue(nav.verifyTopNavSection(), "verifyAdditionalInformation method failed");								
-		}catch(Exception e){
-			Assert.fail();	
-			log.error(e);
-		}finally{
-			log.info(this.getClass().getEnclosingMethod() + " Test Execution Completion - Success!");
-		}
+	public void tgl107TopNavSectionTest(){	
+		
+		String confirmedPID = testDataMap.get("PIDConfirmed");
+		String assignmentPID = testDataMap.get("PIDAssignment");
+		String deferAcceptPID = testDataMap.get("PIDDeferAccept");
+		
+		// Step 1 - Login to TGL portal
+		LoginPageTgl loginPage = webUtil.openLoginPage();
+		loginPage.enterLoginInfo();
+		
+		// Step 2 - Search for the Confirmed Person Id  and verify the TopNav Section
+		nav.verifyTopNavSection(confirmedPID);
+		
+		// Step 3 - Search for the Assignment Person Id  and verify the TopNav Section
+		nav.verifyTopNavSection(assignmentPID);
+		
+		// Step 4 - Search for DeferAccept Person Id and verify the TopNav Section
+		nav.verifyTopNavSection(deferAcceptPID);
 	}
 	@Override
 	public TGLConstants getConstants(){

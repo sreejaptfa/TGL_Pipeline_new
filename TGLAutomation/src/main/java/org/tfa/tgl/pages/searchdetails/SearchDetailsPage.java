@@ -19,6 +19,7 @@ public class SearchDetailsPage {
 	private TGLWebUtil webUtil = TGLWebUtil.getObject();
 	private static final String STATUSVALIDATIONMESSAGE = "Tgl_StatusValidationMessage_ST";
 	private RandomUtil random = new RandomUtil();
+	private static final String CHECK="Check";
 
 	// This function will clicks on Upload TGLDouments
 	public void clickOnUploadTGLDouments() {
@@ -93,21 +94,6 @@ public class SearchDetailsPage {
 
 	// This function will Enter the Income and TotalNumber of Dependents values for
 	// Tax Information Section returns true and false
-	public void enterTotalNumberOfDependentsAndIncomeAmount() {
-		WebElement element = webUtil.getElement("Tgl_TotalNoOfDependents_ED");
-		element.clear();
-		element.sendKeys("10");
-		element.sendKeys(Keys.ENTER);
-		webUtil.holdOn(5);
-
-		element = webUtil.getElement("Tgl_Income_ED");
-		element.clear();
-		element.sendKeys("100");
-		element.sendKeys(Keys.ENTER);
-		webUtil.holdOn(5);
-
-	}
-	
 	public void enterTotalNumberOfDependentsAndIncomeAmount(String totalDependents, String income) {
 	
 		WebElement element = webUtil.getElement("Tgl_TotalNoOfDependents_ED");
@@ -178,8 +164,8 @@ public class SearchDetailsPage {
 		webUtil.holdOn(5);
 		String getErrorMessageText = webUtil.getElement("Tgl_ApplicantValidMessage_Lk").getText();
 		if ((getErrorMessageText.contains("Status cannot be changed")) || (getErrorMessageText.contains("Total # of Dependents is blank"))) {
-			enterTotalNumberOfDependentsAndIncomeAmount();
-			selectCheckBoxsForObjectValid("Tgl_SelectCheckBox_chk");
+			enterTotalNumberOfDependentsAndIncomeAmount("10", "2500");
+			selectCheckBoxsForObjectValid("Tgl_SelectCheckBox_chk",CHECK);
 			selectTGLStatusDD("Complete");
 			getErrorMessageText = webUtil.getElement("Tgl_ApplicantValidMessage_Lk").getText();
 			if (getErrorMessageText.contains("Status cannot be changed to complete if Income or Total # of Dependents is blank.")){
@@ -192,7 +178,7 @@ public class SearchDetailsPage {
 	// This function Verifies that the required? object isSelected on TGL Detail page, and if the Valid? 
 	// checkbox is not selects it will selects the Valid? object on the page like Total # of 
 	// Dependents is blank and "Status cannot be changed
-	public void selectCheckBoxsForObjectValid(String locatorName) {
+	public void selectCheckBoxsForObjectValid(String locatorName, String selectValidChk) {
 		Map<String, String> locatorValueMap = webUtil.getLocatorValueMap(locatorName);
 		String locatorValue = TGLWebUtil.getLocatorValue(locatorValueMap, locatorName);
 		List<WebElement> getValues = webUtil.getDriver().findElements(By.xpath(locatorValue));
@@ -200,8 +186,15 @@ public class SearchDetailsPage {
 			WebElement checkBoxRequired = webUtil.getDriver().findElement(By.xpath("(" + locatorValue + "[" + i + "]//input)[1]"));
 			if (checkBoxRequired.isSelected()) {
 				WebElement checkBoxValid = webUtil.getDriver().findElement(By.xpath("(" + locatorValue + "[" + i + "]//input)[2]"));
-				if (!checkBoxValid.isSelected()) {
-					webUtil.click(checkBoxValid);
+				switch (selectValidChk) {
+					case "Uncheck":
+						if(checkBoxValid.isSelected()) webUtil.click(checkBoxValid);
+						break;
+					case CHECK:
+						if (!checkBoxValid.isSelected()) webUtil.click(checkBoxValid);
+						break;
+					default:
+						break;
 				}
 			}
 		}
@@ -241,7 +234,7 @@ public class SearchDetailsPage {
 					enterTestComment(locatorValue1, enterNotes);
 					checkValue = true;
 					break;
-				case "Check":
+				case CHECK:
 					if (!checkBoxValid.isSelected()) {
 						webUtil.click(checkBoxValid);
 						checkBoxChecked = "true";
