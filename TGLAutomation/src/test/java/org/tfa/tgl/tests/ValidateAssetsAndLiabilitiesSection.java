@@ -20,9 +20,13 @@ public class ValidateAssetsAndLiabilitiesSection extends BaseTestMethods{
 	SoftAssert soft = new SoftAssert();
 	private TGLWebUtil webUtil = TGLWebUtil.getObject();
 	
-	/*@Desc: This test verifies Assets and Liabilities section labels
-	 *@Parameters: Login credential with admin role 
-	 *@Author: Nitin Sharma 
+	/**
+	 **************************************************************************************************************
+	 * @Description : This test verifies Assets and Liabilities section labels
+	 * @Param: Login credential with admin role
+	 * @Return: No Return
+	 * @Author: Nitin Sharma 
+	 **************************************************************************************************************
 	 */
 	
 	@Test

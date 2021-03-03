@@ -17,6 +17,14 @@ public class ValidateTaxInformationSection extends BaseTestMethods {
 	private TaxInformationSection taxInfoSection = new TaxInformationSection();
 	SoftAssert soft = new SoftAssert();
 	
+	/**
+	 **************************************************************************************************************
+	 * @Description : This test verifies Tax Information Section
+	 * @Param: Login credential with admin role 
+	 * @Author: Nitin Sharma 
+	 **************************************************************************************************************
+	 */
+	
 	@Test
 	public void tgl104ValidateTaxlInformationSection() {
 		

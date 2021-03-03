@@ -9,16 +9,6 @@ import org.tfa.tgl.pages.searchdetails.SearchDetailsPage;
 import org.tfa.tgl.utilities.web.TGLConstants;
 import org.tfa.tgl.utilities.web.TGLWebUtil;
 
-/**
- **************************************************************************************************************
- * @Description : This class Validate to verify Education cost works
- * @parent: BaseTestMethods class has been extended that has basic methods those
- *          will run before suite, before class, before method, after class,
- *          after method etc.
- * @TestCase : TGL11127TestEducationCostCalculation()
- * @Author: Surya
- ************************************************************************************************************** 
- */
 public class ValidateEducationCostSection extends BaseTestMethods {
 
 	private TGLWebUtil webUtil = TGLWebUtil.getObject();

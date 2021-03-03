@@ -13,7 +13,7 @@
 		<classes>
 		
 			<class name="org.tfa.tgl.tests.ValidateTglLoginFunctionality" /> 
-<!-- 	 	<class name="org.tfa.tgl.tests.ValidateSearchPage" />	 -->
+ 	 		<class name="org.tfa.tgl.tests.ValidateSearchPage" />	
 			<class name="org.tfa.tgl.tests.ValidateAssetsAndLiabilitiesSection" />	
 			<class name="org.tfa.tgl.tests.ValidateAdditionalInformationSection" />
 			<class name="org.tfa.tgl.tests.ValidateTaxInformationSection" />

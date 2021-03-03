@@ -10,15 +10,6 @@ import org.tfa.tgl.pages.search.SearchPage;
 import org.tfa.tgl.utilities.web.TGLConstants;
 import org.tfa.tgl.utilities.web.TGLWebUtil;
 
-/**
- **************************************************************************************************************
- * @Description  : This class Validate to verify that the TGL associate able to send an email to an applicant so that they know what needs to happen next. 
- * @parent: BaseTestMethods class has been extended that has basic methods those will run before suite, before class,
- *          before method, after class, after method etc. 
- * @TestCase     :  TGL11124TestSendEmailTextboxTest()
- * @Author: Surya
- ************************************************************************************************************** 
- */
 public class ValidateSendEmailToApplicantIntegration extends BaseTestMethods{
 
 	private SearchPage searchPage= new SearchPage();
@@ -73,20 +64,17 @@ public class ValidateSendEmailToApplicantIntegration extends BaseTestMethods{
 		String actualEmailSendMessage = webUtil.getText("Tgl_EmailSent_Msg");
 		String expectedEmailSendMessage = testDataMap.get("EmailSendMessage");
 		Assert.assertEquals(actualEmailSendMessage, expectedEmailSendMessage,"Verify you are able to send the message and confimation message display on TGL detail page that your message is send");
+		webUtil.holdOn(60);
 		
-		//Commenting below test since this fails on Pipeline because the email Portal is turned Off
-		//webUtil.downloadFile(uploadedFileName);
-//		webUtil.holdOn(60);
-//		
-//		/* 
-//		 * Step 5 - Login to mailbox for test email account and verify the email content match with Email template
-//		 */
-//		boolean flag = webUtil.checkEmailContentFromTestEmailAccount(host, userEmail, password, enterSendEmailNotesValue);
-//		if(!flag){
-//			Assert.assertTrue(false, "Email Content not found in Test Email Account -> "+enterSendEmailNotesValue);
-//		}else{
-//			log.info(enterSendEmailNotesValue +" - Email Content found in Test Email Account");
-//		}
+		/* 
+		 * Step 5 - Login to mailbox for test email account and verify the email content match with Email template
+		 */
+		boolean flag = webUtil.checkEmailContentFromTestEmailAccount(host, userEmail, password, enterSendEmailNotesValue);
+		if(!flag){
+			Assert.assertTrue(false, "Email Content not found in Test Email Account -> "+enterSendEmailNotesValue);
+		}else{
+			log.info(enterSendEmailNotesValue +" - Email Content found in Test Email Account");
+		}
 	}
 	
 	

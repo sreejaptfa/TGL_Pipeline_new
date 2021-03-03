@@ -9,15 +9,6 @@ import org.tfa.tgl.pages.searchdetails.SearchDetailsPage;
 import org.tfa.tgl.utilities.web.TGLConstants;
 import org.tfa.tgl.utilities.web.TGLWebUtil;
 
-/**
- **************************************************************************************************************
- * @Description  : This class Validate to verify for total award
- * @parent: BaseTestMethods class has been extended that has basic methods those will run before suite, before class,
- *          before method, after class, after method etc. 
- * @TestCase     :  TGL102TGLPortalUpload()
- * @Author: Surya
- ************************************************************************************************************** 
- */
 public class ValidateTotalAwardSection extends BaseTestMethods{
 
 	private TGLWebUtil webUtil=TGLWebUtil.getObject();
@@ -27,12 +18,7 @@ public class ValidateTotalAwardSection extends BaseTestMethods{
 	private static final String TGLADJUSTMENTCOMMENTED="Tgl_AdjustmentComment_ED";
 	private static final String TGLGRANTADJUSTMENTED="Tgl_GrantAdjustment_ED";
 	private static final String TGLADJUSTMENTSAVEBTN="Tgl_AdjustmentSave_btn";
-	String getActualValue;
-	String enterLoanAdjustAmountValue;
-	String enterGrantAdjustAmountValue;
-	String enterAdjustmentCommentValue;
-	String expectedValidationMessage;
-	String actualValidationMessage;
+
 	
 	/**
 	 **************************************************************************************************************
@@ -45,6 +31,12 @@ public class ValidateTotalAwardSection extends BaseTestMethods{
 	
 	@Test
 	public void tgl106TotalAwardSectionTest() throws Exception {
+		String getActualValue;
+		String enterLoanAdjustAmountValue;
+		String enterGrantAdjustAmountValue;
+		String enterAdjustmentCommentValue;
+		String expectedValidationMessage;
+		String actualValidationMessage;
 		
 		/* Step 1 - Login to the TGL  portal application using valid user id < https://qamerlin.teachforamerica.org/ada */
 		LoginPageTgl loginPage = webUtil.openLoginPage();

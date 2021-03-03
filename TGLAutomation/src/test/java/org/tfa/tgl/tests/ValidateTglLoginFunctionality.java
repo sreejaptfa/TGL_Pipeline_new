@@ -11,6 +11,14 @@ public class ValidateTglLoginFunctionality extends BaseTestMethods{
 	
 	private TGLWebUtil webUtil = TGLWebUtil.getObject();
 	
+	/**
+	 **************************************************************************************************************
+	 * @Description : Below Test Verifies Login functionality
+	 * @Param: Login functionality
+	 * @Author: Nitin Sharma 
+	 **************************************************************************************************************
+	 */
+	
 	@Test
 	public void tgl100TglLoginTest() throws Exception	{	
 		

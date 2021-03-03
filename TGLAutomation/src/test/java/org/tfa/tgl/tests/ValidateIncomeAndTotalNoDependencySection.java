@@ -17,10 +17,15 @@ public class ValidateIncomeAndTotalNoDependencySection extends BaseTestMethods {
 	private SearchDetailsPage searchDetailsPage = new SearchDetailsPage();
 	private IncomeAndTotalNoDependencySection income = new IncomeAndTotalNoDependencySection();
 	
-	/*@Desc: This test verifies No Of Dependents section and relevant error messages 
-	 *@Parameters: Login credential with admin role 
-	 *@Author: Nitin Sharma 
+	/**
+	 **************************************************************************************************************
+	 * @Description : This test verifies No Of Dependents section and relevant error messages 
+	 * @Param: Login credential with admin role 
+	 * @Return: No Return
+	 * @Author: Nitin Sharma 
+	 **************************************************************************************************************
 	 */
+
 	@Test
 	public void tgl109IncomeAndDependencyTest() throws Exception	{	
 		

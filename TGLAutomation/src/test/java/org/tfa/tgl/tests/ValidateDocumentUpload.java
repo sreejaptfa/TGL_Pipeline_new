@@ -42,7 +42,6 @@ public class ValidateDocumentUpload extends BaseTestMethods {
 		
 		String uploadedFileName=testDataMap.get(UPLOADPDFFILEPATH);
 
-		
 		/* Step 1 - Login to TGL Portal >  Search for any applicant and than click on any applicant */
 		LoginPageTgl loginPage = webUtil.openLoginPage();
 		loginPage.enterLoginInfo();

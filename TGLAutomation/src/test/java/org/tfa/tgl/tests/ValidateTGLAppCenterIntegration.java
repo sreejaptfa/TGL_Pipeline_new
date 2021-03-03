@@ -18,13 +18,15 @@ public class ValidateTGLAppCenterIntegration extends BaseTestMethods {
 	private SearchPage searchPage = new SearchPage();
 	private SearchDetailsPage searchDetailsPage= new SearchDetailsPage();
 
-	/*
-	 * @Description: Below Test Verifies File Upload, Applicant Notes and Applicant
+	/**
+	 **************************************************************************************************************
+	 * @Description : Below Test Verifies File Upload, Applicant Notes and Applicant
 	 * Tax Return "Valid" Checkbox checked between AppCenter and TGL
-	 * @Param: TGL Admin credentials and a valid applicant email and person id in
-	 * TestData
-	 * @Author: Nitin Sharma
+	 * @Param: Login credential with admin role 
+	 * @Author: Nitin Sharma 
+	 **************************************************************************************************************
 	 */
+
 	@Test
 	public void tgl108IntegrationPointsTest() {
 

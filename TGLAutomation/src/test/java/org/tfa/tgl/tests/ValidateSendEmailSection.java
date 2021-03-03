@@ -10,16 +10,6 @@ import org.tfa.tgl.pages.searchdetails.SearchDetailsPage;
 import org.tfa.tgl.utilities.web.TGLConstants;
 import org.tfa.tgl.utilities.web.TGLWebUtil;
 
-/**
- **************************************************************************************************************
- * @Description  : This class Validate to verify that the TGL associate is able to enter text under send email text box and data is saved
- * @parent: BaseTestMethods class has been extended that has basic methods those will run before suite, before class,
- *          before method, after class, after method etc. 
- * @TestCase     :  TGL11124TestSendEmailTextboxTest()
- * @Author: Surya
- ************************************************************************************************************** 
- */
-
 public class ValidateSendEmailSection extends BaseTestMethods{
 	private SearchPage searchPage= new SearchPage();
 	private SearchDetailsPage searchDetailsPage = new SearchDetailsPage();

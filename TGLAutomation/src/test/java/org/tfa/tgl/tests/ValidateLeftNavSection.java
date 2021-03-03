@@ -12,9 +12,12 @@ public class ValidateLeftNavSection extends BaseTestMethods{
 	private TGLWebUtil webUtil = TGLWebUtil.getObject();
 	private LeftNavSection nav = new LeftNavSection();
 	
-	/*@Desc: This test verifies Left Nav section (Top Section), refer to testcase for more details - LeftNav - Automatable
-	 *@Parameters: Login credential with admin role 
-	 *@Author: Nitin Sharma 
+	/**
+	 **************************************************************************************************************
+	 * @Description : This test verifies Left Nav section (Top Section), refer to testcase for more details - LeftNav - Automatable
+	 * @Param: Login credential with admin role 
+	 * @Author: Nitin Sharma 
+	 **************************************************************************************************************
 	 */
 	
 	@Test

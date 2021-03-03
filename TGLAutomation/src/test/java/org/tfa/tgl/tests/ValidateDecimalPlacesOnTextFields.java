@@ -8,21 +8,9 @@ import org.tfa.tgl.pages.search.SearchPage;
 import org.tfa.tgl.utilities.web.TGLConstants;
 import org.tfa.tgl.utilities.web.TGLWebUtil;
 
-/**
- **************************************************************************************************************
- * @Description : This class Validate to verify Decimal Places In Text Fields
- * @parent: BaseTestMethods class has been extended that has basic methods those
- *          will run before suite, before class, before method, after class,
- *          after method etc.
- * @TestCase : TGL11126TestDecimalPlacesInTextFields()
- * @Author: Surya
- ************************************************************************************************************** 
- */
 public class ValidateDecimalPlacesOnTextFields extends BaseTestMethods {
 	private TGLWebUtil webUtil = TGLWebUtil.getObject();
 	private SearchPage searchPage = new SearchPage();
-	String actualPromptMessage;
-	String expectedPromptMessage;
 
 	/**
 	 **************************************************************************************************************
@@ -35,7 +23,9 @@ public class ValidateDecimalPlacesOnTextFields extends BaseTestMethods {
 	 */
 	@Test
 	public void tgl116DecimalPlacesTest(){
-		
+		String actualPromptMessage;
+		String expectedPromptMessage;
+	
 		
 		/* Step 1 - Login to the TGL portal application using valid user id */
 		LoginPageTgl loginPage = webUtil.openLoginPage();

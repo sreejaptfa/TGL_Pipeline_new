@@ -24,6 +24,7 @@ import org.tfa.tgl.pages.search.SearchPage;
 import org.tfa.tgl.utilities.web.TGLWebUtil;
 import com.google.common.io.PatternFilenameFilter;
 
+@SuppressWarnings({"squid:S4042", "squid:S1192"})
 public class TGLAppCenterIntergrationPoints extends WebDriverUtil {
 	private SearchPage searchPage= new SearchPage();
 	private SearchDetailsPage searchDetailsPage= new SearchDetailsPage();
@@ -94,7 +95,7 @@ public class TGLAppCenterIntergrationPoints extends WebDriverUtil {
 		return objectMap;
 	}
 
-	public boolean verifyFileDownload() throws Exception {
+	public boolean verifyFileDownload(){
 		boolean flag = false;
 		// This link is clicking Reports Tab
 		try {
@@ -180,7 +181,7 @@ public class TGLAppCenterIntergrationPoints extends WebDriverUtil {
 		if (SystemUtils.IS_OS_LINUX) {
 			options.addArguments("--headless"); // this options is for linux environment on docker
 		}
-		HashMap<String, Object> chromePrefs = new HashMap<String, Object>();
+		HashMap<String, Object> chromePrefs = new HashMap<>();
 		chromePrefs.put("profile.default_content_settings.popups", 0);
 		// Setting the file download location for Chrome
 		log.info("setting chrome download path:" + downloadFilepath);

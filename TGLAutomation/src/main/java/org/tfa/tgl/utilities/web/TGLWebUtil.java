@@ -2,8 +2,10 @@ package org.tfa.tgl.utilities.web;
 
 import org.tfa.framework.core.WebDriverUtil;
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
@@ -25,9 +27,8 @@ import org.testng.Assert;
 import org.testng.asserts.SoftAssert;
 import org.tfa.framework.utilities.testdata.TestData;
 import org.tfa.tgl.pages.common.LoginPageTgl;
-import org.tfa.tgl.pages.search.SearchPage;
 
-@SuppressWarnings({ "squid:S4042", "squid:S899","squid:S134"})
+@SuppressWarnings({ "squid:S4042", "squid:S899","squid:S134","squid:S1319"})
 public class TGLWebUtil extends WebDriverUtil {
 	private static final Logger logger = Logger.getLogger(TGLWebUtil.class);
 	private TestData data = TestData.getObject();
@@ -294,5 +295,22 @@ public class TGLWebUtil extends WebDriverUtil {
 			
 		}
 		return flag;
+	}
+	
+	//this method is to verify the sorted Order
+	public boolean isSorted(ArrayList<String> sort) {
+		Iterator<String> iter = sort.iterator();
+		String current;
+		String previous = iter.next();
+		previous = previous.toLowerCase();
+		while (iter.hasNext()) {
+			current = iter.next();
+			current = current.toLowerCase();
+			if (previous.compareTo(current) > 0) {
+				return false;
+			}
+			previous = current;
+		}
+		return true;
 	}
 }

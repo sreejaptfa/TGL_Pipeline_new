@@ -13,15 +13,6 @@ import org.tfa.tgl.pages.searchdetails.SearchDetailsPage;
 import org.tfa.tgl.utilities.web.TGLConstants;
 import org.tfa.tgl.utilities.web.TGLWebUtil;
 
-/**
- **************************************************************************************************************
- * @Description  : This class Validate to verify Assign link in Assignment page in SelectorPortal
- * @parent: BaseTestMethods class has been extended that has basic methods those will run before suite, before class,
- *          before method, after class, after method etc. 
- * @TestCase     :  TGL11130TestReassignmentSelectorPortalIntegrationPoint()
- * @Author: Surya
- ************************************************************************************************************** 
- */
 public class ValidateReassignIntegrationToSelectorPortal extends BaseTestMethods {
 	
 	private TGLWebUtil webUtil=TGLWebUtil.getObject();
@@ -34,7 +25,6 @@ public class ValidateReassignIntegrationToSelectorPortal extends BaseTestMethods
 
 	/**
 	 **************************************************************************************************************
-	 * @throws Exception 
 	 * @Description  : This function is to verify Assign link in Assignment page in SelectorPortal
   	 * @Param: No Parameter
 	 * @Return: No Return 

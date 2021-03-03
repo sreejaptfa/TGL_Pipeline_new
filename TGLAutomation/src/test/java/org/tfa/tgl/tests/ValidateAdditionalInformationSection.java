@@ -16,10 +16,15 @@ public class ValidateAdditionalInformationSection extends BaseTestMethods  {
 	private TGLWebUtil webUtil = TGLWebUtil.getObject();
 	private SearchPage searchPage = new SearchPage();
 	
-	/*@Desc: This test verifies addition information section labels
-	 *@Parameters: Login credential with admin role 
-	 *@Author: Nitin Sharma 
+	/**
+	 **************************************************************************************************************
+	 * @Description : This test verifies addition information section labels
+	 * @Param: Login credential with admin role 
+	 * @Return: No Return
+	 * @Author: Nitin Sharma 
+	 **************************************************************************************************************
 	 */
+
 	@Test
 	public void tgl103AdditionalInformationSectionTest(){	
 		
