@@ -23,6 +23,8 @@ import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.asserts.SoftAssert;
 import org.tfa.framework.utilities.testdata.TestData;
@@ -33,7 +35,7 @@ public class TGLWebUtil extends WebDriverUtil {
 	private static final Logger logger = Logger.getLogger(TGLWebUtil.class);
 	private TestData data = TestData.getObject();
 	private static TGLWebUtil webUtil;
-
+	WebDriverWait localwait;
 	private static final String TRUE = "true";
 	private static final String MAIL_POP3_HOST = "mail.pop3.host";
 	private static final String MAIL_POP3_PORT = "mail.pop3.port";
@@ -63,6 +65,11 @@ public class TGLWebUtil extends WebDriverUtil {
 		return new LoginPageTgl();
 	}
 	
+	public void waitUntilElementVisible(String locatorName){
+		localwait = new WebDriverWait(webUtil.getDriver(), 15);
+		By locatorValue = webUtil.getLocatorBy(locatorName);
+		localwait.until(ExpectedConditions.visibilityOfElementLocated(locatorValue));
+	}
 	/*
 	 * This function will download the file.
 	 */
@@ -276,23 +283,28 @@ public class TGLWebUtil extends WebDriverUtil {
 	}
 	
 	/**
-	 * this method is to verify the objects on Tax Information section
+	 * this method is to verify the objects on Document Information section
 	 */
 	public boolean verifyDocumentInformationSection(String sectionName) {
-		boolean flag = true;
+		boolean flag = false;
 		String[] sectionObjects= data.getTestCaseDataMap().get(sectionName).split(":");
 		int len = sectionObjects.length;
-		try { 
+		try {
 			for (int i = 0; i < len; i++) {
-				if((!objectIsEnabled(sectionObjects[i]))) {
-					soft.assertTrue(flag, sectionObjects[i]+" not exist on Section");
+				if ((objectIsEnabled(sectionObjects[i])) || (objectIsVisible(sectionObjects[i])) ) {
+					flag = true;
+					soft.assertTrue(true);
+				} else {
+					soft.assertTrue(false, "Object Not found ->" + sectionObjects[i]);
 				}
 			}
 		} catch (Exception e) {
-			soft.assertTrue(flag, "Object not found");
+			soft.assertTrue(false, "Object not found");
 			soft.fail();
 			log.info("Object not found");
-			
+		} 
+		finally {
+			soft.assertAll();
 		}
 		return flag;
 	}

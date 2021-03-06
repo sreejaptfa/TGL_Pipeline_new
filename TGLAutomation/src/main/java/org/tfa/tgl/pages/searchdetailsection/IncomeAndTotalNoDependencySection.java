@@ -8,7 +8,7 @@ public class IncomeAndTotalNoDependencySection{
 	private TGLWebUtil webUtil = TGLWebUtil.getObject();
 	private SearchDetailsPage searchDetailsPage = new SearchDetailsPage();
 	
-	public boolean verifyValidationMessageForStatusChangeToComplete(String selectType,String selectStatus) {
+	public boolean verifyValidationMessageForStatusChange(String selectType,String selectStatus) {
 		boolean flag = false;
 		searchDetailsPage.selectTGLStatusDD(selectStatus);
 		webUtil.holdOn(1);

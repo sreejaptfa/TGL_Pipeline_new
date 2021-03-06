@@ -39,7 +39,7 @@ public class ValidateAssetsAndLiabilitiesSection extends BaseTestMethods{
 		loginPage.enterLoginInfo();
 		
 		//Step 2 - Click on the Search Button
-		webUtil.waitUntilElementVisible("Tgl_Search_btn", 10);
+		webUtil.waitUntilElementVisible("Tgl_Search_btn");
 		searchPage.clickOnSearchBtn();
 		
 		//Step 3 - Click on the Applicant
@@ -54,9 +54,9 @@ public class ValidateAssetsAndLiabilitiesSection extends BaseTestMethods{
 		Assert.assertTrue(actOriginalValue.contains(webUtil.getElement("Tgl_SavingsOriginal_lbl").getText()));
 		
 		//Step 6  - verify "original" values dont change Credit card
-		actOriginalValue = assetsliabilities.getOrignalValue("Tgl_CreaditOriginal_lbl");
-		assetsliabilities.enterAdjustedAmount("Tgl_CreaditAdjusted_text", adjustedAmount);
-		Assert.assertTrue(actOriginalValue.contains(webUtil.getElement("Tgl_CreaditOriginal_lbl").getText()));
+		actOriginalValue = assetsliabilities.getOrignalValue("Tgl_CreditOriginal_lbl");
+		assetsliabilities.enterAdjustedAmount("Tgl_CreditAdjusted_text", adjustedAmount);
+		Assert.assertTrue(actOriginalValue.contains(webUtil.getElement("Tgl_CreditOriginal_lbl").getText()));
 	}
 	
 	@Override

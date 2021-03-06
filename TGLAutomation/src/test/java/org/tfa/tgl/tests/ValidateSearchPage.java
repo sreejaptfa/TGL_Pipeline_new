@@ -17,6 +17,7 @@ public class ValidateSearchPage extends BaseTestMethods {
 	
 	/**
 	 **************************************************************************************************************
+	 * @throws InterruptedException 
 	 * @Description : below test verifies filters and ensures search results are expected
 	 * Verify when TGL Admin searches for the data it displays based on the search criteria and validate the data is displaying correctly
 	 * @Param: Login credential with admin role 
@@ -27,7 +28,7 @@ public class ValidateSearchPage extends BaseTestMethods {
 	 */
 	
 	@Test
-	public void tgl101verifySearchResultsTest(){
+	public void tgl101verifySearchResultsTest() throws InterruptedException{
 			
 		/* Step 1 - Login to TGL portal */
 		LoginPageTgl loginPage = webUtil.openLoginPage();
@@ -51,10 +52,8 @@ public class ValidateSearchPage extends BaseTestMethods {
 		// Below assert ensures that clicking on search result row, opens the details for the given record
 		Assert.assertTrue(search.verifyRowIsLinked(), "Row link test failed");
 		
-		
-		//We need to fix this functionality
 		// Below assert ensures that each Filter is working as expected
-		//Assert.assertTrue(search.verifyEachFilter());
+		Assert.assertTrue(search.verifyEachFilter());
 			
 	}
 	

@@ -33,7 +33,7 @@ public class ValidateAdditionalInformationSection extends BaseTestMethods  {
 		loginPage.enterLoginInfo();
 		
 		//Step 2 - Click on the Search Button
-		webUtil.waitUntilElementVisible("Tgl_Search_btn", 10);
+		webUtil.waitUntilElementVisible("Tgl_Search_btn");
 		searchPage.clickOnSearchBtn();
 		
 		//Step 3 - Click on the Applicant

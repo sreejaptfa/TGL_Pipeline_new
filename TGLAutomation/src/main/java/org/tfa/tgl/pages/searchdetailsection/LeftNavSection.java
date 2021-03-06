@@ -24,22 +24,22 @@ public class LeftNavSection {
 		searchDetailsPage.enterTotalNumberOfDependentsAndIncomeAmount(" ", " ");
 
 		// Verify there is no validation when the Status is updated as New
-		Assert.assertTrue(income.verifyValidationMessageForStatusChangeToComplete(NOMESSAGE,"New"));
+		Assert.assertTrue(income.verifyValidationMessageForStatusChange(NOMESSAGE,"New"));
 
 		// Verify there is no validation when the Status is updated as In Progress
-		Assert.assertTrue(income.verifyValidationMessageForStatusChangeToComplete(NOMESSAGE,"In Progress"));
+		Assert.assertTrue(income.verifyValidationMessageForStatusChange(NOMESSAGE,"In Progress"));
 
 		// Verify there is no validation when the Status is updated as Review
-		Assert.assertTrue(income.verifyValidationMessageForStatusChangeToComplete(NOMESSAGE,"Manager Review"));
+		Assert.assertTrue(income.verifyValidationMessageForStatusChange(NOMESSAGE,"Manager Review"));
 
 		// Verify there is no validation when the Status is updated as Incomplete
-		Assert.assertTrue(income.verifyValidationMessageForStatusChangeToComplete(NOMESSAGE,"Incomplete"));
+		Assert.assertTrue(income.verifyValidationMessageForStatusChange(NOMESSAGE,"Incomplete"));
 
 		// Verify there is no validation when the Status is updated as Recheck
-		Assert.assertTrue(income.verifyValidationMessageForStatusChangeToComplete(NOMESSAGE,"Recheck"));
+		Assert.assertTrue(income.verifyValidationMessageForStatusChange(NOMESSAGE,"Recheck"));
 
 		// Verify there Are validation when the Status is updated as Complete
-		Assert.assertTrue(income.verifyValidationMessageForStatusChangeToComplete("Valid Message","Complete"));
+		Assert.assertTrue(income.verifyValidationMessageForStatusChange("Valid Message","Complete"));
 	}
 
 }

@@ -39,18 +39,23 @@ public class TaxInformationSection{
 				WebElement element2 = webUtil.getElement(closeButtons[i]);
 				webUtil.click(element1);
 				flag = webUtil.getElement(modalLabels[i]).getText().contains(textContains[i]);
-				if(!flag) {
-					soft.assertTrue(flag, textContains[i]+" windows NOT displayed");
+				if(flag) {
+					flag = true;
+					soft.assertTrue(true);
+				}else {
+					soft.assertTrue(false, textContains[i]+" windows NOT displayed");
 				}
 				webUtil.click(element2);
 				webUtil.holdOn(2);
-				
-				}
+			}
 		} catch (Exception e) {
 			flag = false;
 			soft.assertTrue(flag, "Object not found");
 			log.info("Object not found");
 			soft.fail();
+		}
+		finally {
+			soft.assertAll();
 		}
 		return flag;
 	}

@@ -34,7 +34,7 @@ public class ValidateIncomeAndTotalNoDependencySection extends BaseTestMethods {
 		loginPage.enterLoginInfo();
 		
 		webUtil.waitForBrowserToLoadCompletely();
-		webUtil.waitUntilElementVisible("Tgl_Clear_btn", 10);
+		webUtil.waitUntilElementVisible("Tgl_Clear_btn");
 		webUtil.click("Tgl_Clear_btn");
 		searchPage.selectTGLStatusDD("Tgl_InComplete_LK");
 		searchPage.selectTGLStatusDD("Tgl_InProgress_LK");
@@ -45,19 +45,19 @@ public class ValidateIncomeAndTotalNoDependencySection extends BaseTestMethods {
 		//Verify there no error message Step - 3
 		searchDetailsPage.enterTotalNumberOfDependentsAndIncomeAmount("10","2500");
 		searchDetailsPage.selectCheckBoxsForObjectValid("Tgl_SelectCheckBox_chk","Check");
-		Assert.assertTrue(income.verifyValidationMessageForStatusChangeToComplete("No Message","Complete"), "Verify IncomeAndTotalNodependencySection Method failed");								
+		Assert.assertTrue(income.verifyValidationMessageForStatusChange("No Message","Complete"), "Verify IncomeAndTotalNodependencySection Method failed");								
 		
 		//TestCase - Clear Income and No of Dependent and change the Status to Complete 
 		//Verify there no error message Step - 4
 		searchDetailsPage.selectTGLStatusDD("In Progress");
 		searchDetailsPage.enterTotalNumberOfDependentsAndIncomeAmount(" "," ");
-		Assert.assertTrue(income.verifyValidationMessageForStatusChangeToComplete("Valid Message","Complete"), "Verify IncomeAndTotalNodependencySection Method failed");								
+		Assert.assertTrue(income.verifyValidationMessageForStatusChange("Valid Message","Complete"), "Verify IncomeAndTotalNodependencySection Method failed");								
 
 		//TestCase - Enter Income and NoOf Dependent as Zero and change the Status to Complete 
 		//Verify there no error message Step - 4
 		searchDetailsPage.selectTGLStatusDD("In Progress");
 		searchDetailsPage.enterTotalNumberOfDependentsAndIncomeAmount("0","0");
-		Assert.assertTrue(income.verifyValidationMessageForStatusChangeToComplete("No Message","Complete"), "Verify IncomeAndTotalNodependencySection Method failed");								
+		Assert.assertTrue(income.verifyValidationMessageForStatusChange("No Message","Complete"), "Verify IncomeAndTotalNodependencySection Method failed");								
 	}	
 	@Override
 	public TGLConstants getConstants()	{
