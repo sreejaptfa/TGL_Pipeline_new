@@ -2,8 +2,10 @@ package org.tfa.tgl.utilities.web;
 
 import org.tfa.framework.core.WebDriverUtil;
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
@@ -21,25 +23,28 @@ import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
+import org.testng.asserts.SoftAssert;
 import org.tfa.framework.utilities.testdata.TestData;
-import org.tfa.tgl.pages.LoginPageTgl;
+import org.tfa.tgl.pages.common.LoginPageTgl;
 
-@SuppressWarnings({ "squid:S4042", "squid:S899","squid:S134"})
+@SuppressWarnings({ "squid:S4042", "squid:S899","squid:S134","squid:S1319"})
 public class TGLWebUtil extends WebDriverUtil {
 	private static final Logger logger = Logger.getLogger(TGLWebUtil.class);
 	private TestData data = TestData.getObject();
 	private static TGLWebUtil webUtil;
-
+	WebDriverWait localwait;
 	private static final String TRUE = "true";
 	private static final String MAIL_POP3_HOST = "mail.pop3.host";
 	private static final String MAIL_POP3_PORT = "mail.pop3.port";
 	private static final String MAIL_POP3_STARTTLS_ENABLE = "mail.pop3.starttls.enable";
 	private static final String MAIL_FOLDER_INBOX = "INBOX";
-	private static final String TBODYTR = "//tbody/tr[";
 	Logger log = Logger.getLogger("rootLogger");
 	String downloadedFilePath;
 	protected LoginPageTgl loginPage;
+	SoftAssert soft = new SoftAssert();
 
 	/*
 	 * This function will upload the file.
@@ -60,6 +65,11 @@ public class TGLWebUtil extends WebDriverUtil {
 		return new LoginPageTgl();
 	}
 	
+	public void waitUntilElementVisible(String locatorName){
+		localwait = new WebDriverWait(webUtil.getDriver(), 15);
+		By locatorValue = webUtil.getLocatorBy(locatorName);
+		localwait.until(ExpectedConditions.visibilityOfElementLocated(locatorValue));
+	}
 	/*
 	 * This function will download the file.
 	 */
@@ -86,18 +96,19 @@ public class TGLWebUtil extends WebDriverUtil {
 	 */
 	public WebElement getValuesFromDocumentsWebTable(String tableLocatorName, String refRowDataToSearch,
 			String expressionType) {
+		WebElement element = null;
 		Map<String, String> locatorValueMap = webUtil.getLocatorValueMap(tableLocatorName);
 		String locatorValue = getLocatorValue(locatorValueMap, tableLocatorName);
 		List<WebElement> tableRowValues = webUtil.getDriver().findElements(By.xpath(locatorValue));
-		for (int i = 1; i <= tableRowValues.size(); i++) {
+		for (int i = 1; i <= tableRowValues.size()-1; i++) {
 			String rowWiseCellData = tableRowValues.get(i).getText();
 			try {
 				if (rowWiseCellData.contains(refRowDataToSearch)) {
 					switch (expressionType) {
 					case "Review":
-						return webUtil.getDriver().findElement(By.xpath(locatorValue + TBODYTR + i + "]//a"));
+						return webUtil.getDriver().findElement(By.xpath(locatorValue + "["+ i+ "]//td[3]//a"));
 					case "Remove":
-						return webUtil.getDriver().findElement(By.xpath(locatorValue + TBODYTR + i + "]//button"));
+						return webUtil.getDriver().findElement(By.xpath(locatorValue + "["+ i+ "]//td[3]//button"));
 					default:
 						break;
 					}
@@ -106,7 +117,7 @@ public class TGLWebUtil extends WebDriverUtil {
 				logger.info(e);
 			}
 		}
-		return null;
+		return element;
 	}
 
 	/*
@@ -140,28 +151,32 @@ public class TGLWebUtil extends WebDriverUtil {
 	 * This function will verifies the object is visible on the Page
 	 */
 	public boolean objectIsVisible(String locatorName) {
+		boolean flag = false;
 		By locator = null;
-		locator = webUtil.getLocatorBy(locatorName);
 		try {
+			locator = webUtil.getLocatorBy(locatorName);
 			return (webUtil.getDriver().findElement(locator).isDisplayed());
 		} catch (Exception e) {
+			flag = false;
 			logger.info(e);
-			return false;
-		}
+			}
+		return flag;
 	}
 
 	/*
 	 * This function will verifies the object is enabled on the Page
 	 */
 	public boolean objectIsEnabled(String locatorName) {
+		boolean flag = false;
 		By locator = null;
-		locator = webUtil.getLocatorBy(locatorName);
 		try {
-			return (webUtil.getDriver().findElement(locator).isEnabled());
+			locator = webUtil.getLocatorBy(locatorName);
+			flag = (webUtil.getDriver().findElement(locator).isEnabled());
 		} catch (Exception e) {
+			flag = false;
 			logger.info(e);
-			return false;
 		}
+		return flag;
 	}
 
 	/*
@@ -265,5 +280,49 @@ public class TGLWebUtil extends WebDriverUtil {
 		webUtil.getDriver().get(url);
 		webUtil.holdOn(3);
 		webUtil.waitForBrowserToLoadCompletely();
+	}
+	
+	/**
+	 * this method is to verify the objects on Document Information section
+	 */
+	public boolean verifyDocumentInformationSection(String sectionName) {
+		boolean flag = false;
+		String[] sectionObjects= data.getTestCaseDataMap().get(sectionName).split(":");
+		int len = sectionObjects.length;
+		try {
+			for (int i = 0; i < len; i++) {
+				if ((objectIsEnabled(sectionObjects[i])) || (objectIsVisible(sectionObjects[i])) ) {
+					flag = true;
+					soft.assertTrue(true);
+				} else {
+					soft.assertTrue(false, "Object Not found ->" + sectionObjects[i]);
+				}
+			}
+		} catch (Exception e) {
+			soft.assertTrue(false, "Object not found");
+			soft.fail();
+			log.info("Object not found");
+		} 
+		finally {
+			soft.assertAll();
+		}
+		return flag;
+	}
+	
+	//this method is to verify the sorted Order
+	public boolean isSorted(ArrayList<String> sort) {
+		Iterator<String> iter = sort.iterator();
+		String current;
+		String previous = iter.next();
+		previous = previous.toLowerCase();
+		while (iter.hasNext()) {
+			current = iter.next();
+			current = current.toLowerCase();
+			if (previous.compareTo(current) > 0) {
+				return false;
+			}
+			previous = current;
+		}
+		return true;
 	}
 }
