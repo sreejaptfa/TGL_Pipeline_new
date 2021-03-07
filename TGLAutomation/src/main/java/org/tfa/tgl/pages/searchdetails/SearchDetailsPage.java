@@ -6,18 +6,19 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.tfa.framework.utilities.general.RandomUtil;
+import org.tfa.framework.utilities.testdata.TestData;
 import org.tfa.tgl.utilities.web.TGLWebUtil;
 
-@SuppressWarnings({"squid:S3776"})
+@SuppressWarnings({"squid:S3776","squid:S135","squid:S1132","squid:S134","squid:S1151"})
 public class SearchDetailsPage {
 	private TGLWebUtil webUtil = TGLWebUtil.getObject();
 	private RandomUtil random = new RandomUtil();
+	private TestData data = TestData.getObject();
 	private static final String CHECK="Check";
 
 	// This function will clicks on Upload TGLDouments
@@ -174,9 +175,6 @@ public class SearchDetailsPage {
 		}
 	}
 
-	// This function Verifies that the required? object isSelected on TGL Detail page, and if the Valid? 
-	// checkbox is not selects it will selects the Valid? object on the page like Total # of 
-	// Dependents is blank and "Status cannot be changed
 	public void selectCheckBoxsForObjectValid(String locatorName, String selectValidChk) {
 		Map<String, String> locatorValueMap = webUtil.getLocatorValueMap(locatorName);
 		String locatorValue = TGLWebUtil.getLocatorValue(locatorValueMap, locatorName);
@@ -271,24 +269,16 @@ public class SearchDetailsPage {
 	}
 
 	//This function will returns the document section names return the getSectionName
-	public String getSectionName(String name) {
+	public String getSectionName(String expSectionName) {
+		String[] name = data.getTestCaseDataMap().get("Section").split(":");
+		String[] sectionName =data.getTestCaseDataMap().get("SectionName").split(":");
 		String getSectionName = null;
-		if (name.equals("Tgl_PrivateLoan_Section"))
-			getSectionName = "Private Loan";
-		if (name.equals("Tgl_OtherLoan_Section"))
-			getSectionName = "Other Loan";
-		if (name.equals("Tgl_Savings_Section"))
-			getSectionName = "Savings";
-		if (name.equals("Tgl_Credit_Section"))
-			getSectionName = "Credit Card debt";
-		if (name.equals("Tgl_ApplicantTax_Section"))
-			getSectionName = "Applicant's Tax Return";
-		if (name.equals("Tgl_W2Income_Section"))
-			getSectionName = "W-2 or Income Statement";
-		if (name.equals("Tgl_ParentTax_section"))
-			getSectionName = "Parent's Tax Return";
-		if (name.equals("Tgl_ParentIncome_Section"))
-			getSectionName = "Parent Income Statement";
+		for (int i = 0; i <= name.length-1; i++) {
+			if (name[i].equals(expSectionName)) {
+				getSectionName = sectionName[i];
+				break;
+			}
+		}
 		return getSectionName;
 	}
 

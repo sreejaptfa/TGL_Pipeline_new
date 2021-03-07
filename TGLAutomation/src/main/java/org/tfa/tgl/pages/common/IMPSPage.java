@@ -111,7 +111,7 @@ public class IMPSPage {
 	public String assignNewQualifiedPosition(){
 		String getQualifiedPosition = webUtil.getText("IMPS_QualifiedFirstPosition_LK");
 		String getAssignStatus = webUtil.getText("IMPS_QualifiedFirstPositionAssign_LK");
-		if(getAssignStatus.equals("Unassign")){
+		if("Unassign".equals(getAssignStatus)){
 			if(getQualifiedPosition.contains("Bay Area")){
 				webUtil.click("IMPS_NewYorkAssign_LK");
 				webUtil.holdOn(2);

@@ -14,7 +14,8 @@ import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.asserts.SoftAssert;
 
-@SuppressWarnings({ "squid:S117","squid:S1192","squid:S1153","squid:S1854"})
+@SuppressWarnings({ "squid:S117","squid:S1192","squid:S1153","squid:S1854","squid:MethodCyclomaticComplexity","squid:S134","squid:S3626"})
+
 public class SearchPage {
 	
 	Logger log = Logger.getLogger("rootLogger");
@@ -159,6 +160,7 @@ public class SearchPage {
 						continue;
 					}
 				} catch (Exception e) {
+					log.info(e);
 					log.info("Exception occured in results for status selection:" + statusselection);
 					continue;
 				}
@@ -260,6 +262,7 @@ public class SearchPage {
 				}
 			}
 		} catch (Exception e) {
+			log.info(e);	
 			log.info("No records found");
 			flag = false;
 		}

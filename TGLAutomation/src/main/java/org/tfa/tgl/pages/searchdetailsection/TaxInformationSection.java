@@ -1,6 +1,7 @@
 package org.tfa.tgl.pages.searchdetailsection;
 
 import org.apache.log4j.Logger;
+import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
 import org.testng.asserts.SoftAssert;
 import org.tfa.framework.utilities.general.RandomUtil;
@@ -48,7 +49,8 @@ public class TaxInformationSection{
 				webUtil.click(element2);
 				webUtil.holdOn(2);
 			}
-		} catch (Exception e) {
+		} catch (WebDriverException e) {
+			log.info(e);
 			flag = false;
 			soft.assertTrue(flag, "Object not found");
 			log.info("Object not found");

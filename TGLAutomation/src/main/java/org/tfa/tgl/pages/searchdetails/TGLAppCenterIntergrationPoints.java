@@ -24,7 +24,7 @@ import org.tfa.tgl.pages.search.SearchPage;
 import org.tfa.tgl.utilities.web.TGLWebUtil;
 import com.google.common.io.PatternFilenameFilter;
 
-@SuppressWarnings({"squid:S4042", "squid:S1192"})
+@SuppressWarnings({"squid:S4042", "squid:S1192","squid:S1854"})
 public class TGLAppCenterIntergrationPoints extends WebDriverUtil {
 	private SearchPage searchPage= new SearchPage();
 	private SearchDetailsPage searchDetailsPage= new SearchDetailsPage();
@@ -89,6 +89,7 @@ public class TGLAppCenterIntergrationPoints extends WebDriverUtil {
 			objectMap.put("AppCenterValidCheckBox",getValidCheckBoxValueFromAppCenter);
 			objectMap.put("AppCenterDocument",getDocumentFromAppCenter);
 		} catch (Exception e) {
+			log.info(e);
 			objectMap = null;
 			log.info("Unable to get the values from Applicant center");
 		}

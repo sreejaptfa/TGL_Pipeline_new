@@ -3,6 +3,7 @@ package org.tfa.tgl.pages.common;
 import org.apache.log4j.Logger;
 import org.tfa.framework.core.WebDriverUtil;
 
+@SuppressWarnings("squid:S2068")
 public class LoginPageTgl {
 
 	private WebDriverUtil webUtil= WebDriverUtil.getObject();
