@@ -14,7 +14,8 @@ import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.asserts.SoftAssert;
 
-@SuppressWarnings({ "squid:S117","squid:S1192","squid:S1153","squid:S1854","squid:MethodCyclomaticComplexity","squid:S134","squid:S3626"})
+@SuppressWarnings({ "squid:S117","squid:S1192","squid:S1153","squid:S1854","squid:MethodCyclomaticComplexity",
+	"squid:S134","squid:S135","squid:S3626","squid:S2696"})
 
 public class SearchPage {
 	
@@ -24,7 +25,7 @@ public class SearchPage {
 	private TestData data = TestData.getObject();
 	private static final String CLEARBTN ="Tgl_Clear_btn";
 	WebDriverWait localwait;
-	protected static String randompersonid;
+	private static String randompersonid= null;
 	
 	//***********************************************************************************************************
 	//***********************************************************************************************************
@@ -66,7 +67,7 @@ public class SearchPage {
 			webUtil.waitForBrowserToLoadCompletely();
 			webUtil.selectByIndex("Tgl_appyear_dd", 0);
 			webUtil.getElement("Tgl_InterviewDeadlinefilter_txt").click();
-			while (validofferdeadline == true) {
+			while (validofferdeadline) {
 				random = r.nextInt(5);
 				random++;
 				Thread.sleep(500);
@@ -88,7 +89,7 @@ public class SearchPage {
 				if (size < 2)
 					continue;
 			} catch (Exception e) {
-				log.info("No records found with Interview Deadline:" + intvwdeadlineselection);
+				log.info("No records found with Interview Deadline:" + intvwdeadlineselection,e);
 				exit++;
 				if (exit > 8) {
 					log.info("No data (or Insufficiet data) found against the available deadlines");
@@ -122,7 +123,7 @@ public class SearchPage {
 							break;
 
 					} catch (Exception e) {
-						log.info("Exception occured in results for status selection:" + statusselection);
+						log.info("Exception occured in results for status selection:" + statusselection,e);
 					}
 					webUtil.getDriver().navigate().refresh();
 					webUtil.waitForBrowserToLoadCompletely();
@@ -160,8 +161,7 @@ public class SearchPage {
 						continue;
 					}
 				} catch (Exception e) {
-					log.info(e);
-					log.info("Exception occured in results for status selection:" + statusselection);
+					log.info("Exception occured in results for status selection:" + statusselection,e);
 					continue;
 				}
 			}
@@ -175,7 +175,7 @@ public class SearchPage {
 			s = rowstatus.getText();
 			deadline = rowdeadline.getText();
 
-			if (statusselection.equals("MANAGER REVIEW"))
+			if ("MANAGER REVIEW".equals(statusselection))
 				statusselection = "MGRREVIEW";
 			if (s.contains(statusselection) && deadline.contains(intvwdeadlineselection))
 				flag = true;
@@ -212,14 +212,14 @@ public class SearchPage {
 			flag = true;
 		else {
 			log.info("Search result doesnot match for Name");
-			return flag = false;
+			flag = false;
 		}
 
 		if (personid.equals(personidresult))
 			flag = true;
 		else {
 			log.info("Search result doesnot match for PersonId");
-			return flag = false;
+			flag = false;
 		}
 
 		log.info("Searched for name:" + fullname + " and personid:" + personid);
@@ -262,8 +262,7 @@ public class SearchPage {
 				}
 			}
 		} catch (Exception e) {
-			log.info(e);	
-			log.info("No records found");
+			log.info("No records found",e);
 			flag = false;
 		}
 		if(flag) webUtil.isSorted(subNames);
