@@ -11,29 +11,34 @@
 	<test name="Regression Testing" preserve-order="true">
 	
 		<classes>
-			
-			<class name="org.tfa.tgl.tests.AdditionalInformationSectionTest" />
-			<class name="org.tfa.tgl.tests.AssetsAndLiabilitiesTest" />	
-			<class name="org.tfa.tgl.tests.IncomeAndTotalNoDependencyTest" />		
-		  	<class name="org.tfa.tgl.tests.TglLoginTest" /> 
-		  	 
-			<class name="org.tfa.tgl.tests.DecimalPlacesInTextFieldsTest" />	
-			<class name="org.tfa.tgl.tests.EducationCostCalculationTest" />	
-			<class name="org.tfa.tgl.tests.LeftNavTest" />
-			<class name="org.tfa.tgl.tests.SearchPageTest" />	
-			<class name="org.tfa.tgl.tests.TaxInformationSectionTest" />
-			<class name="org.tfa.tgl.tests.ValidCheckBoxIntegrationTest" />	
-			
-			<class name="org.tfa.tgl.tests.GroupCalculationFieldValidationTest" />
- 			<class name="org.tfa.tgl.tests.ReassignmentSelectorPortalIntegrationTest" />
-			<class name="org.tfa.tgl.tests.SendEmailTextboxTest" />
-			<class name="org.tfa.tgl.tests.TimeLineTest" />			
-			<class name="org.tfa.tgl.tests.TotalAwardSectionTest" />
-			<class name="org.tfa.tgl.tests.ReassignmentTest" />					  
-			<class name="org.tfa.tgl.tests.TGLAppCenterIntegrationPointTest" />  
-			
-<!-- 			<class name="org.tfa.tgl.tests.SendNoteEmailToApplicantIntegrationTest" />	 -->
-<!-- 			<class name="org.tfa.tgl.tests.TGLPortalUploadTest" /> -->
+		
+			<class name="org.tfa.tgl.tests.ValidateTglLoginFunctionality" /> 
+ 	 		<class name="org.tfa.tgl.tests.ValidateSearchPage" />	
+			<class name="org.tfa.tgl.tests.ValidateAssetsAndLiabilitiesSection" />	
+			<class name="org.tfa.tgl.tests.ValidateAdditionalInformationSection" />
+			<class name="org.tfa.tgl.tests.ValidateTaxInformationSection" />
+			<class name="org.tfa.tgl.tests.ValidateDocumentUpload" />
+			<class name="org.tfa.tgl.tests.ValidateTotalAwardSection" />
+			<class name="org.tfa.tgl.tests.ValidateTGLAppCenterIntegration">
+				<methods>
+	                <include name = "tgl108IntegrationPointsTest"/> 
+	                <include name = "tgl110IntegrationPointsTest"/> 
+	                <include name = "tgl111IntegrationPointsTest"/> 
+	                <include name = "tgl112IntegrationPointsTest"/> 
+	            </methods>
+			</class> 
+			<class name="org.tfa.tgl.tests.ValidateLeftNavSection" />
+			<class name="org.tfa.tgl.tests.ValidateIncomeAndTotalNoDependencySection" />
+			<class name="org.tfa.tgl.tests.ValidateGroupCalculationFields" />
+			<class name="org.tfa.tgl.tests.ValidateSendEmailSection" />
+			<class name="org.tfa.tgl.tests.ValidateTimeLineSection" />			
+			<class name="org.tfa.tgl.tests.ValidateDecimalPlacesOnTextFields" />	
+		  	<class name="org.tfa.tgl.tests.ValidateEducationCostSection" />	
+			<class name="org.tfa.tgl.tests.ValidateReassignIntegrationToIMPS" />					  
+			<class name="org.tfa.tgl.tests.ValidateReassignIntegrationToSelectorPortal" />
+			<class name="org.tfa.tgl.tests.ValidateCheckBoxIntegrationOnApplicantCenter" />	
+ 			
+<!-- 		<class name="org.tfa.tgl.tests.ValidateSendEmailToApplicantIntegration" />	 -->
 
 		</classes>
 
