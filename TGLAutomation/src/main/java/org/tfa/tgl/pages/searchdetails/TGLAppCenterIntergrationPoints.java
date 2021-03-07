@@ -89,9 +89,8 @@ public class TGLAppCenterIntergrationPoints extends WebDriverUtil {
 			objectMap.put("AppCenterValidCheckBox",getValidCheckBoxValueFromAppCenter);
 			objectMap.put("AppCenterDocument",getDocumentFromAppCenter);
 		} catch (Exception e) {
-			log.info(e);
+			log.info("Unable to get the values from Applicant center",e);
 			objectMap = null;
-			log.info("Unable to get the values from Applicant center");
 		}
 		return objectMap;
 	}

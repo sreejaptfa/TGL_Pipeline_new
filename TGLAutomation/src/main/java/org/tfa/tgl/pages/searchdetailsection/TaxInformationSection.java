@@ -50,10 +50,9 @@ public class TaxInformationSection{
 				webUtil.holdOn(2);
 			}
 		} catch (WebDriverException e) {
-			log.info(e);
+			log.info("Object not found",e);
 			flag = false;
 			soft.assertTrue(flag, "Object not found");
-			log.info("Object not found");
 			soft.fail();
 		}
 		finally {

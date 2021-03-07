@@ -301,7 +301,7 @@ public class TGLWebUtil extends WebDriverUtil {
 		} catch (WebDriverException e) {
 			soft.assertTrue(false, "Object not found");
 			soft.fail();
-			log.info("Object not found");
+			log.info("Object not found",e);
 		} 
 		finally {
 			soft.assertAll();

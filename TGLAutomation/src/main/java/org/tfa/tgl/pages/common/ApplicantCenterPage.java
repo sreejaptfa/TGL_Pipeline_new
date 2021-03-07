@@ -92,8 +92,7 @@ public class ApplicantCenterPage {
 					}
 				}
 			}catch(WebDriverException e) {
-				log.info(e);
-				log.info("Unable to get the values from Applicant center");
+				log.info("Unable to get the values from Applicant center",e);
 				objectMap = null;
 			}
 		}
