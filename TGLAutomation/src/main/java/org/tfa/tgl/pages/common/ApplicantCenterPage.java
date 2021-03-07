@@ -6,9 +6,11 @@ import java.util.Map;
 
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
 import org.tfa.tgl.utilities.web.TGLWebUtil;
 
+@SuppressWarnings({"squid:S134","squid:S1141"})
 public class ApplicantCenterPage {
 
 	private TGLWebUtil webUtil=TGLWebUtil.getObject();
@@ -89,9 +91,9 @@ public class ApplicantCenterPage {
 						break;
 					}
 				}
-			}catch(Exception e) {
+			}catch(WebDriverException e) {
+				log.info("Unable to get the values from Applicant center",e);
 				objectMap = null;
-				log.info("Unable to get the values from Applicant center");
 			}
 		}
 		return objectMap;
