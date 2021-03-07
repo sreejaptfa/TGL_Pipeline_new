@@ -67,7 +67,7 @@ public class SearchPage {
 			webUtil.waitForBrowserToLoadCompletely();
 			webUtil.selectByIndex("Tgl_appyear_dd", 0);
 			webUtil.getElement("Tgl_InterviewDeadlinefilter_txt").click();
-			while (validofferdeadline == true) {
+			while (validofferdeadline) {
 				random = r.nextInt(5);
 				random++;
 				Thread.sleep(500);
@@ -161,8 +161,7 @@ public class SearchPage {
 						continue;
 					}
 				} catch (Exception e) {
-					log.info(e);
-					log.info("Exception occured in results for status selection:" + statusselection);
+					log.info("Exception occured in results for status selection:" + statusselection,e);
 					continue;
 				}
 			}
@@ -263,8 +262,7 @@ public class SearchPage {
 				}
 			}
 		} catch (Exception e) {
-			log.info(e);	
-			log.info("No records found");
+			log.info("No records found",e);
 			flag = false;
 		}
 		if(flag) webUtil.isSorted(subNames);
