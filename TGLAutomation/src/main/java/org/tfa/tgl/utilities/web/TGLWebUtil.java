@@ -53,7 +53,6 @@ public class TGLWebUtil extends WebDriverUtil {
 		String relativeFilePath = data.getTestCaseDataMap().get(filePathKeyName);
 		WebElement el = webUtil.getElement(locatorName);
 		el.clear();
-		String abc = (new File(relativeFilePath).getAbsolutePath());
 		el.sendKeys(new File(relativeFilePath).getAbsolutePath());
 		webUtil.holdOn(5);
 	}
