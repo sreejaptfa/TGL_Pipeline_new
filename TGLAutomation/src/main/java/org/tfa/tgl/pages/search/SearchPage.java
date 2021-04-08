@@ -1,17 +1,17 @@
 package org.tfa.tgl.pages.search;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
-import java.util.Random;
-
+import java.util.Map;
 import org.apache.log4j.Logger;
+import org.tfa.framework.utilities.general.RandomUtil;
 import org.tfa.framework.utilities.testdata.TestData;
 import org.tfa.tgl.utilities.web.TGLWebUtil;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
-import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.Assert;
 import org.testng.asserts.SoftAssert;
 
 @SuppressWarnings({ "squid:S117","squid:S1192","squid:S1153","squid:S1854","squid:MethodCyclomaticComplexity",
@@ -19,222 +19,152 @@ import org.testng.asserts.SoftAssert;
 
 public class SearchPage {
 	
-	Logger log = Logger.getLogger("rootLogger");
-	SoftAssert soft = new SoftAssert();
+	private static final Logger log = Logger.getLogger(SearchPage.class);
 	private TGLWebUtil webUtil = TGLWebUtil.getObject();
 	private TestData data = TestData.getObject();
-	private static final String CLEARBTN ="Tgl_Clear_btn";
-	WebDriverWait localwait;
-	private static String randompersonid= null;
-	
-	//***********************************************************************************************************
-	//***********************************************************************************************************
-	// WE NEED TO FIX THIS FOLLOWING FUNCTIOANLITY
-	// WE NEED TO FIX THIS FOLLOWING FUNCTIOANLITY
-	//***********************************************************************************************************
-	//***********************************************************************************************************
-	//***********************************************************************************************************
+	SoftAssert soft = new SoftAssert();
+	private RandomUtil randomUtil = new RandomUtil();
 
+
+	private static final String CLEARBTN ="Tgl_Clear_btn";
+	String intvDeadLineSelection;
+	List<WebElement> intrDeadLineDD = null;
+	int rndDeadLineNmb = 1;
 
 	// TestCase - SearchPage - Step 11, 12, 13
-	public boolean verifyEachFilter() throws InterruptedException{
-		Random r = new Random();
-		By firstrowfullnamelocator = By.xpath("//tbody[@data-hook='results']/tr[1]/td[1]/a");
-		By firstrowpersonidlocator = By.xpath("//tbody[@data-hook='results']/tr[1]/td[2]/a");
-		By searchresultstable = By.xpath("//tbody[@data-hook='results']//tr");
-
+	public boolean verifySearchFilter() {
+		String statusSelection = null;
+		int deadLineSize = 0; 
+		int deadLineCnt = 0;
+		int statusSize =0;
+		int statusCnt = 0;
 		boolean flag = false;
-		boolean validofferdeadline = true;
-		String s; 
-		String deadline;
-		int size = 0; 
-		int i = 1;
-		int random = 0;
-		int randomStatus = 0;
-		localwait = new WebDriverWait(webUtil.getDriver(), 15);
-		String intvwdeadlineselection;
-		List<WebElement> searchresults;
-		String statusselection = "";
-		By rowdetailxpath;
+		boolean validOfferDeadline = true;
 		webUtil.getDriver().navigate().to(data.getEnvironmentDataMap().get("ApplicationURL")) ;
-		webUtil.waitForBrowserToLoadCompletely();
-		WebElement InterviewDeadlinedd = webUtil.getElement("Tgl_InterviewDeadlinefilter_txt");
-		rowdetailxpath = By.xpath("//tbody[@data-hook='results']/tr[1]");
-		int exit = 0;
 		do {
-			validofferdeadline = true;
-			webUtil.getDriver().navigate().refresh();
-			webUtil.waitForBrowserToLoadCompletely();
-			webUtil.selectByIndex("Tgl_appyear_dd", 0);
-			webUtil.getElement("Tgl_InterviewDeadlinefilter_txt").click();
-			while (validofferdeadline) {
-				random = r.nextInt(5);
-				random++;
-				Thread.sleep(500);
-				InterviewDeadlinedd = webUtil.getDriver().findElement(
-						By.xpath("//div[@class='selectize-dropdown-content']/div[" + String.valueOf(random) + "]"));
-				if (!InterviewDeadlinedd.getText().contains("2045"))
-					validofferdeadline = false;
-			}
-			InterviewDeadlinedd.click();
-			Thread.sleep(500);
-			webUtil.click("Home_Tgl_Search2_btn");
-			intvwdeadlineselection = webUtil.getDriver()
-					.findElement(By.xpath("//div[@class='selectize-control multi']/div/div"))
-					.getAttribute("data-value");
-			try {
-				localwait.until(ExpectedConditions.visibilityOfElementLocated(rowdetailxpath));
-				searchresults = webUtil.getDriver().findElements(searchresultstable);
-				size = searchresults.size();
-				if (size < 2)
-					continue;
-			} catch (Exception e) {
-				log.info("No records found with Interview Deadline:" + intvwdeadlineselection,e);
-				exit++;
-				if (exit > 8) {
-					log.info("No data (or Insufficiet data) found against the available deadlines");
-					return false;
-				}
-				continue;
-			}
-			int sizefirstfilter = size;
-			if (sizefirstfilter > 15) {
-				do {
-					webUtil.getElement("Tgl_TGLStatus_txt").click();
-					Thread.sleep(500);
-					randomStatus = r.nextInt(5);
-					randomStatus++;
-					webUtil.getDriver().findElement(By.xpath("(//div[@class='selectize-dropdown-content'])[2]/div["
-							+ String.valueOf(randomStatus) + "]")).click();
-					Thread.sleep(500);
-					webUtil.click("Home_Tgl_Search2_btn");
-					statusselection = webUtil.getDriver()
-							.findElement(By.xpath(
-									"(//div[@class='selectize-input items not-full has-options has-items'])[2]/div"))
-							.getText();
-					try {
-						size = 0;
-						searchresults = webUtil.getDriver().findElements(searchresultstable);
-						size = searchresults.size();
-						if (size < 2) {
-							log.info(size + " no of records searched for interview deadline : " + intvwdeadlineselection
-									+ " and application status: " + statusselection);
-						} else
-							break;
-
-					} catch (Exception e) {
-						log.info("Exception occured in results for status selection:" + statusselection,e);
-					}
-					webUtil.getDriver().navigate().refresh();
-					webUtil.waitForBrowserToLoadCompletely();
-					webUtil.selectByIndex("Tgl_appyear_dd", 0);
-					webUtil.getElement("Tgl_InterviewDeadlinefilter_txt").click();
-					InterviewDeadlinedd = webUtil.getDriver().findElement(
-							By.xpath("//div[@class='selectize-dropdown-content']/div[" + String.valueOf(random) + "]"));
-					InterviewDeadlinedd.click();
-					Thread.sleep(500);
-					webUtil.waitForBrowserToLoadCompletely();
-				} while (size < 2);
-			} else {
-				webUtil.waitForBrowserToLoadCompletely();
-				webUtil.getElement("Tgl_TGLStatus_txt").click();
-				Thread.sleep(500);
-				random = r.nextInt(5);
-				random++;
-				webUtil.getDriver()
-						.findElement(By.xpath(
-								"(//div[@class='selectize-dropdown-content'])[2]/div[" + String.valueOf(random) + "]"))
-						.click();
-				Thread.sleep(500);
-				webUtil.click("Home_Tgl_Search2_btn");
-				statusselection = webUtil.getDriver()
-						.findElement(By
-								.xpath("(//div[@class='selectize-input items not-full has-options has-items'])[2]/div"))
-						.getText();
-				try {
-					size = 0;
-					searchresults = webUtil.getDriver().findElements(searchresultstable);
-					size = searchresults.size();
-					if (size < 2) {
-						log.info("Less than two ro no records for Status:" + statusselection + " and deadline"
-								+ intvwdeadlineselection);
-						continue;
-					}
-				} catch (Exception e) {
-					log.info("Exception occured in results for status selection:" + statusselection,e);
-					continue;
+			deadLineCnt = deadLineCnt+1;
+			validOfferDeadline = true;
+			webUtil.click(CLEARBTN);
+			webUtil.holdOn(2);
+			Map<String, String> deadLineDD = this.selectDropDownValue("Tgl_InterviewDeadlinefilter_txt", "Tgl_InterviewDeadLineSize_DD");
+			intvDeadLineSelection = deadLineDD.get("SelectionType");
+			deadLineSize = Integer.parseInt(deadLineDD.get("Size"));
+			while (validOfferDeadline) {
+					if(!intvDeadLineSelection.contains("2045")) {
+					validOfferDeadline = false;
 				}
 			}
-
-		} while (size < 2);
-		for (i = 1; i <= size; i++) {
-			WebElement rowstatus = webUtil.getDriver()
-					.findElement(By.xpath("//tbody[@data-hook='results']/tr[" + String.valueOf(i) + "]/td[3]/a"));
-			WebElement rowdeadline = webUtil.getDriver()
-					.findElement(By.xpath("//tbody[@data-hook='results']/tr[" + String.valueOf(i) + "]/td[4]/a"));
-			s = rowstatus.getText();
-			deadline = rowdeadline.getText();
-
-			if ("MANAGER REVIEW".equals(statusselection))
-				statusselection = "MGRREVIEW";
-			if (s.contains(statusselection) && deadline.contains(intvwdeadlineselection))
+			log.info(deadLineSize +" no of records found with Interview Deadline:" + intvDeadLineSelection);
+			if (deadLineSize >= 15) {
 				flag = true;
-			else
-				flag = false;
+				do {
+					flag = false;
+					statusCnt = statusCnt+1;
+					Map<String, String> statusDD = this.selectDropDownValue("Tgl_TGLStatus_DD", "Tgl_TGLStatusSize_DD");
+					statusSelection = statusDD.get("SelectionType");
+					statusSize = Integer.parseInt(statusDD.get("Size"));
+					if(statusCnt >= 10) {
+						this.selectTGLStatusDD("Tgl_Complete_LK");
+						statusSelection = "Complete";
+						webUtil.click("Home_Tgl_Search2_btn");
+						webUtil.holdOn(2);
+						List<WebElement> searchResults = webUtil.getElementsList("Tgl_SearchResults_TB");
+						statusSize = searchResults.size();
 
-		}
-
-		log.info(size + " no of records searched for interview deadline : " + intvwdeadlineselection
-				+ " and application status: " + statusselection);
-		random = r.nextInt(size);
-		random++;
-		String fullname = webUtil.getDriver()
-				.findElement(By.xpath("//tbody[@data-hook='results']/tr[" + String.valueOf(random) + "]/td[1]/a"))
-				.getText();
-		String personid = webUtil.getDriver()
-				.findElement(By.xpath("//tbody[@data-hook='results']/tr[" + String.valueOf(random) + "]/td[2]/a"))
-				.getText();
-		String[] name = fullname.split(",");
-		name[0] = name[0].trim();
-		name[1] = name[1].trim();
-		webUtil.click("Tgl_moreSearchOptionsLink");
-		webUtil.waitUntilElementVisible("Home_Tgl_Search2_btn", 20);
-		webUtil.setTextBoxValue("Tgl_firstname", name[1]);
-		webUtil.setTextBoxValue("Tgl_lastname", name[0]);
-		webUtil.setTextBoxValue("Tgl_personid", personid);
-		webUtil.click("Home_Tgl_Search2_btn");
-
-		String fullnameresult = webUtil.getDriver().findElement(firstrowfullnamelocator).getText();
-		String personidresult = webUtil.getDriver().findElement(firstrowpersonidlocator).getText();
-		randompersonid = personidresult;
-
-		if (fullname.equals(fullnameresult))
-			flag = true;
-		else {
-			log.info("Search result doesnot match for Name");
-			flag = false;
-		}
-
-		if (personid.equals(personidresult))
-			flag = true;
-		else {
-			log.info("Search result doesnot match for PersonId");
-			flag = false;
-		}
-
-		log.info("Searched for name:" + fullname + " and personid:" + personid);
+					}
+					if (statusSize < 2) log.info(statusSize+" no of records searched for interview deadline : " + intvDeadLineSelection
+								+ " and application status: " + statusSelection);
+					if(statusSize < 2) {
+						webUtil.click(CLEARBTN);
+						webUtil.holdOn(1);
+						webUtil.getElement("Tgl_InterviewDeadlinefilter_txt").click();
+						intrDeadLineDD = webUtil.getElementsList("Tgl_InterviewDeadLineSize1_DD");
+						intrDeadLineDD.get(rndDeadLineNmb).click();
+						webUtil.holdOn(2);
+					}else {
+						flag = true;
+					}
+				if(statusCnt >=10) break;
+				} while (statusSize<2);
+			}
+			if(deadLineCnt >=10) break;
+		} while (deadLineSize<15);
+		log.info(statusSize+" no of records searched for interview deadline : " + intvDeadLineSelection
+				+ " and application status: " + statusSelection);
+		Map<String, String> getSearchValues = enterSearhValues();
+		String actualFullName = getSearchValues.get("ActualFullName");
+		String expFullName = getSearchValues.get("ExpectedFullName");
+		String actualPersonId = getSearchValues.get("ActualPersonalId");
+		String expPersonId = getSearchValues.get("ExpectedPersonalId");
+		if(!(actualFullName.equals(expFullName)) && !(actualPersonId.equals(expPersonId))) flag = false;
+		Assert.assertEquals(actualFullName, expFullName, "Search result doesnot match for Name");
+		Assert.assertEquals(actualPersonId, expPersonId, "Search result doesnot match for PersonId");
+			log.info("Searched for name:" + actualFullName + " and personid:" + actualPersonId);
 		return flag;
 	}
+	
+	public Map<String, String> enterSearhValues(){
+		Map<String,String> getSearchValues = new HashMap<>();
+		List<WebElement> searchResults = webUtil.getElementsList("Tgl_SearchResults_TB");
+		int sizeResults = searchResults.size();
+		int rndResultsNmb = randomUtil.generateRandomNumber(1, sizeResults);
 
-	public static String getpersonid() {
+		String expFullName = webUtil.getDriver()
+				.findElement(By.xpath("//tbody[@data-hook='results']/tr[" + String.valueOf(rndResultsNmb) + "]/td[1]/a"))
+				.getText();
+		String expPersonId = webUtil.getDriver()
+				.findElement(By.xpath("//tbody[@data-hook='results']/tr[" + String.valueOf(rndResultsNmb) + "]/td[2]/a"))
+				.getText();
+		String[] splitFullName = expFullName.split(",");
+		String firstName = splitFullName[1].trim();
+		String lastName = splitFullName[0].trim();	
+		webUtil.click("Tgl_moreSearchOptionsLink");	
+		webUtil.setTextBoxValue("Tgl_firstname", firstName);
+		webUtil.setTextBoxValue("Tgl_lastname", lastName);
+		webUtil.setTextBoxValue("Tgl_personid", expPersonId);
+		webUtil.click("Home_Tgl_Search2_btn");
+		
+		searchResults = webUtil.getElementsList("Tgl_firstrow_name");
+		String actualFullName = searchResults.get(0).getText();
+		String actualPersonId = searchResults.get(1).getText();
+		
+		getSearchValues.put("ActualFullName", actualFullName);
+		getSearchValues.put("ExpectedFullName", expFullName);
+		getSearchValues.put("ActualPersonalId", actualPersonId);
+		getSearchValues.put("ExpectedPersonalId", expPersonId);
+		return getSearchValues;
 
-		return randompersonid;
 	}
-	//***********************************************************************************************************
-	//***********************************************************************************************************
-	//***********************************************************************************************************
-	
-	
+	public Map<String, String> selectDropDownValue(String typeDD, String typeSize) {
+		Map<String,String> getValuesMap = new HashMap<>();
+		String typeCount = "0";
+		webUtil.holdOn(2);
+		webUtil.getElement(typeDD).click();
+		webUtil.holdOn(2);
+		List<WebElement> tglStatusDD = webUtil.getElementsList(typeSize);
+		int sizeStatus = tglStatusDD.size();
+		int rndStatusNmb = randomUtil.generateRandomNumber(0, sizeStatus);
+		String selectionType = tglStatusDD.get(rndStatusNmb).getText();
+		if (!selectionType.isEmpty()) {
+			tglStatusDD.get(rndStatusNmb).click();
+		}else {
+			tglStatusDD.get(1).click();	
+		}
+		log.debug(selectionType);
+		webUtil.holdOn(2);
+		webUtil.click("Home_Tgl_Search2_btn");
+		webUtil.holdOn(2);
+		String getResultTableValue= webUtil.getElement("Tgl_SearchResultsTable_TB").getText();
+		if (getResultTableValue.contains("APPLICANT")) {
+			List<WebElement> searchResults = webUtil.getElementsList("Tgl_SearchResults_TB");
+			typeCount = String.valueOf(searchResults.size());
+		}
+		getValuesMap.put("SelectionType", selectionType);
+		getValuesMap.put("Size", typeCount);
+		return getValuesMap;
+
+		
+	}
 	// This function is to verify default sort on the name field
 	public boolean verifydefaultsort(){
 		boolean flag = false;
@@ -274,6 +204,9 @@ public class SearchPage {
 		return appYearDD.getFirstSelectedOption().getText().contains("2021");
 	}
 
+	public void setAppYearBlank() {
+		webUtil.selectByIndex("Tgl_appyear_dd", 0);
+	}
 	// This method is to verify ensures right fields show up on click of "more search options"
 	public boolean verifymorelinkclick() {
 		boolean flag = false;
@@ -341,6 +274,7 @@ public class SearchPage {
 		webUtil.waitForBrowserToLoadCompletely();
 		webUtil.waitUntilElementVisible("Tgl_Search_btn");
 		webUtil.click("Tgl_Search_btn");
+		webUtil.holdOn(2);
 	}
 
 	/*

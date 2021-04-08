@@ -11,12 +11,14 @@ import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.openqa.selenium.WebElement;
+import org.tfa.tgl.pages.search.SearchPage;
 import org.tfa.tgl.utilities.web.TGLWebUtil;
 
 public class SelectorPortalPage {
 
 	private TGLWebUtil webUtil=TGLWebUtil.getObject();
-	Logger log=Logger.getLogger("rootLogger");
+	private static final Logger log = Logger.getLogger(SelectorPortalPage.class);
+	
 	/**
 	 * This function will login to the IMPS application
 	 */
