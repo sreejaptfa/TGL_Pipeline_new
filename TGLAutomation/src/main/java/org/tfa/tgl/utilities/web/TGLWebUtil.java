@@ -41,7 +41,7 @@ public class TGLWebUtil extends WebDriverUtil {
 	private static final String MAIL_POP3_PORT = "mail.pop3.port";
 	private static final String MAIL_POP3_STARTTLS_ENABLE = "mail.pop3.starttls.enable";
 	private static final String MAIL_FOLDER_INBOX = "INBOX";
-	Logger log = Logger.getLogger("rootLogger");
+//	Logger log = Logger.getLogger("rootLogger");
 	String downloadedFilePath;
 	protected LoginPageTgl loginPage;
 	SoftAssert soft = new SoftAssert();
@@ -60,7 +60,7 @@ public class TGLWebUtil extends WebDriverUtil {
 	public LoginPageTgl openLoginPage(){
 		this.getDriver().manage().timeouts().implicitlyWait(120, TimeUnit.SECONDS);
 		String url=data.getEnvironmentDataMap().get("ApplicationURL");
-		log.debug("url -  "+url);
+		logger.debug("url -  "+url);
 		openURL(url);
 		return new LoginPageTgl();
 	}
@@ -261,7 +261,7 @@ public class TGLWebUtil extends WebDriverUtil {
 				}
 			}
 		} catch (Exception e) {
-			log.error("email not found ", e);
+			logger.error("email not found ", e);
 		}
 		return false;
 	}
@@ -301,7 +301,7 @@ public class TGLWebUtil extends WebDriverUtil {
 		} catch (WebDriverException e) {
 			soft.assertTrue(false, "Object not found");
 			soft.fail();
-			log.info("Object not found",e);
+			logger.info("Object not found",e);
 		} 
 		finally {
 			soft.assertAll();
