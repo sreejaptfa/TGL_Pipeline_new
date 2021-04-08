@@ -41,7 +41,6 @@ public class TGLWebUtil extends WebDriverUtil {
 	private static final String MAIL_POP3_PORT = "mail.pop3.port";
 	private static final String MAIL_POP3_STARTTLS_ENABLE = "mail.pop3.starttls.enable";
 	private static final String MAIL_FOLDER_INBOX = "INBOX";
-//	Logger log = Logger.getLogger("rootLogger");
 	String downloadedFilePath;
 	protected LoginPageTgl loginPage;
 	SoftAssert soft = new SoftAssert();
