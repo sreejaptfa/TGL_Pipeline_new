@@ -59,7 +59,7 @@ dependencies {
     compile group: 'org.testng', name: 'testng', version: '6.13.1'
     
     //TFA Repository
-    compile group: 'org.tfa', name: 'TFASeleniumCore', version: '+'
+    //compile group: 'org.tfa', name: 'TFASeleniumCore', version: '+'
    
     // https://mvnrepository.com/artifact/org.apache.poi/poi
     compile group: 'org.apache.poi', name: 'poi', version: '3.17'
@@ -99,6 +99,8 @@ dependencies {
 	
 	// https://mvnrepository.com/artifact/javax.mail/mail
 	compile group: 'javax.mail', name: 'mail', version: '1.5.0-b01'
+	
+	compile group: 'com.opencsv', name: 'opencsv', version: '5.3'
     
 }
 
