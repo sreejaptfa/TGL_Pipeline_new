@@ -1,0 +1,31 @@
+# Created by https://www.gitignore.io/api/java
+
+### Java ###
+# Compiled class file
+*.class
+/Automation_Report.html
+/test-output/
+*.html
+*.bin
+*.lock
+*.html.xml
+*failed.xml
+*result.xml
+# Log file
+*.log
+
+# Package Files #
+*.jar
+*.war
+*.ear
+*.zip
+*.tar.gz
+*.rar
+hs_err_pid*
+/.gradle/
+/build/
+
+/bin
+
+### excluding gradle jar file ###
+!gradle-wrapper.jar
