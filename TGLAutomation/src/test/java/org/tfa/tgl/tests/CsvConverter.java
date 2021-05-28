@@ -11,11 +11,15 @@ import java.util.ArrayList;
 import java.util.List;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellType;
+import org.apache.poi.ss.usermodel.DataFormatter;
+import org.apache.poi.ss.usermodel.FormulaEvaluator;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Row.MissingCellPolicy;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFFormulaEvaluator;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.tfa.framework.utilities.testdata.ExcelPoiUtility;
 
 import com.opencsv.CSVWriter;
 
@@ -26,7 +30,15 @@ public class CsvConverter {
 		convertExcelToCsv( "src/test/resources/TestData/MasterSheet.xlsx",  "src/test/resources/TestData");
 		convertExcelToCsv( "src/test/resources/TestData/TestData.xlsx",  "src/test/resources/TestData/PageData");
 	}
-    
+	public static String getCellData(Row dataRow, int columnNumber){
+		Cell curCell = dataRow.getCell(columnNumber, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
+        if(CellType.NUMERIC==curCell.getCellTypeEnum()){
+			Double dbl=curCell.getNumericCellValue();
+			return dbl.toString();	 
+		}else{
+			return curCell.getStringCellValue();
+		}
+	}
     public static void convertExcelToCsv(String xlFilePath, String csvFileFolderPath) {
 
 
@@ -42,8 +54,7 @@ public class CsvConverter {
 			int columnCount=columnRowObj.getLastCellNum();
 			String[] arrColumn=new String[columnCount];
 			for(int c=0; c<=columnCount-1;c++) {			
-				Cell columnCell=columnRowObj.getCell(c, MissingCellPolicy.CREATE_NULL_AS_BLANK);
-				String columnName=columnCell.getStringCellValue();			
+				String columnName=getCellData(columnRowObj, c);
 				arrColumn[c]=columnName;
 			}    			
 			listData.add(arrColumn);
@@ -54,8 +65,7 @@ public class CsvConverter {
 				for(int k=0; k<=columnCount-1;k++) {
 
 					try {
-						Cell cellObj=dataRowObj.getCell(k,  MissingCellPolicy.CREATE_NULL_AS_BLANK);
-						String dataValue=getCellData(cellObj);						
+						String dataValue=getCellData(dataRowObj, k);					
 						arrValues[k]=escapeSpecialCharacters(dataValue);
 					}catch(Exception e) {
 						System.out.println( "Problem At "+sheetName+" Sheet and Row-"+j+" and Column-"+k);
