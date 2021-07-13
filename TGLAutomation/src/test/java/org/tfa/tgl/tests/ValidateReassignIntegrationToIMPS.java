@@ -3,6 +3,8 @@ package org.tfa.tgl.tests;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.tfa.framework.core.BaseTestMethods;
+import org.tfa.framework.utilities.general.CryptoUtil;
+import org.tfa.framework.utilities.testdata.TestData;
 import org.tfa.tgl.pages.common.IMPSPage;
 import org.tfa.tgl.pages.common.LoginPageTgl;
 import org.tfa.tgl.pages.search.SearchPage;
@@ -25,6 +27,7 @@ public class ValidateReassignIntegrationToIMPS extends BaseTestMethods {
 	private SearchPage searchPage= new SearchPage();
 	private SearchDetailsPage searchDetailsPage= new SearchDetailsPage();
 	private IMPSPage impsPage = new IMPSPage();
+	private TestData data=TestData.getObject();
 	String actualCalculatedTotalAmountBeforeCalculate;
 	String actualExpectedContributionAmountBeforeCalculate;
 	String actualAdjustedLoanAmountBeforeCalculate;
@@ -47,7 +50,7 @@ public class ValidateReassignIntegrationToIMPS extends BaseTestMethods {
 		String selectedQualifiedPositon;
 		String impsURL = testDataMap.get("IMPSURL");
 		String userNameIMPS = testDataMap.get("IMPSUserName");
-		String passwordIMPS = testDataMap.get("IMPSPassword");
+		String passwordIMPS = new CryptoUtil().decrypt(data.getTestCaseDataMap().get("IMPSPassword"));
 		String applicantID;
 		/* 
 		* Step 1 - Login to TGL portal and pickup one applicant whose application is not completed  and click on applicant

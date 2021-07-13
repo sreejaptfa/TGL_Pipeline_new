@@ -6,6 +6,7 @@ import java.util.Map;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.tfa.framework.core.BaseTestMethods;
+import org.tfa.framework.utilities.general.CryptoUtil;
 import org.tfa.tgl.pages.common.LoginPageTgl;
 import org.tfa.tgl.pages.common.SelectorPortalPage;
 import org.tfa.tgl.pages.search.SearchPage;
@@ -35,7 +36,7 @@ public class ValidateReassignIntegrationToSelectorPortal extends BaseTestMethods
 	public void tgl120ReassignmentSelectorPortalIntegrationTest() throws Exception {
 		String selectorPortalURL = testDataMap.get("SelectorPortalURL");
 		String userNameSelectorPortal = testDataMap.get("SelectorPortalUserName");
-		String passwordSelectorPortal = testDataMap.get("SelectorPortalPassword");
+		String passwordSelectorPortal = new CryptoUtil().decrypt(testDataMap.get("SelectorPortalPassword"));
 		String uploadedFileName=testDataMap.get("uploadUploadTemplateFilePath");
 		String expAssignment=testDataMap.get("expectedAssignment");
 	
@@ -45,9 +46,13 @@ public class ValidateReassignIntegrationToSelectorPortal extends BaseTestMethods
 		LoginPageTgl loginPage = webUtil.openLoginPage();
 		loginPage.enterLoginInfo();
 		
-		searchPage.selectTGLStatusDD("Tgl_InComplete_LK");
- 		searchPage.clickOnSearchBtn();
- 		String applicantID = searchPage.clickApplicantNameOnSearchResults();
+		//searchPage.selectTGLStatusDD("Tgl_InComplete_LK");
+ 		//searchPage.clickOnSearchBtn();
+ 		//String applicantID = searchPage.clickApplicantNameOnSearchResults();
+ 		String applicantID ="4111644";
+ 		searchPage.enterPersonIDAndClickOnSearchButton(applicantID);
+ 		
+ 		
 		Assert.assertNotNull(applicantID, "Not returned any related data on Search results");
 		webUtil.holdOn(5);
 			 
