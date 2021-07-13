@@ -6,6 +6,7 @@ import java.util.Map;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.tfa.framework.core.BaseTestMethods;
+import org.tfa.framework.utilities.general.CryptoUtil;
 import org.tfa.tgl.pages.common.LoginPageTgl;
 import org.tfa.tgl.pages.common.SelectorPortalPage;
 import org.tfa.tgl.pages.search.SearchPage;
@@ -35,7 +36,7 @@ public class ValidateReassignIntegrationToSelectorPortal extends BaseTestMethods
 	public void tgl120ReassignmentSelectorPortalIntegrationTest() throws Exception {
 		String selectorPortalURL = testDataMap.get("SelectorPortalURL");
 		String userNameSelectorPortal = testDataMap.get("SelectorPortalUserName");
-		String passwordSelectorPortal = testDataMap.get("SelectorPortalPassword");
+		String passwordSelectorPortal = new CryptoUtil().decrypt(testDataMap.get("SelectorPortalPassword"));
 		String uploadedFileName=testDataMap.get("uploadUploadTemplateFilePath");
 		String expAssignment=testDataMap.get("expectedAssignment");
 	

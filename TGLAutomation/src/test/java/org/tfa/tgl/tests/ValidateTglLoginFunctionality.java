@@ -3,6 +3,7 @@ package org.tfa.tgl.tests;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.tfa.framework.core.BaseTestMethods;
+import org.tfa.framework.utilities.general.CryptoUtil;
 import org.tfa.tgl.pages.common.LoginPageTgl;
 import org.tfa.tgl.utilities.web.TGLConstants;
 import org.tfa.tgl.utilities.web.TGLWebUtil;
@@ -21,9 +22,9 @@ public class ValidateTglLoginFunctionality extends BaseTestMethods{
 	
 	@Test
 	public void tgl100TglLoginTest() throws Exception	{	
-		
+				
 		String noAdminToleUserName = testDataMap.get("InvalidUserName");
-		String validPassword = testDataMap.get("Login_Password");
+		//String validPassword = testDataMap.get("Login_Password");
 		String validUserName = testDataMap.get("Login_UserName");
 		String invalidPassword= testDataMap.get("Login_UserName");
 		String wrongUserName=testDataMap.get("WrongUserName");
@@ -32,6 +33,7 @@ public class ValidateTglLoginFunctionality extends BaseTestMethods{
 		LoginPageTgl loginPage = webUtil.openLoginPage();
 
 		// Step 2 - User active but no Admin role | correct user name correct password
+		String validPassword = new CryptoUtil().decrypt(testDataMap.get("Login_Password"));
 		Assert.assertTrue(loginPage.verifyInvalidLogin(noAdminToleUserName, validPassword), "Verify InvalidLogin method failed");
 		
 		// Step 3 - Right User name wrong password

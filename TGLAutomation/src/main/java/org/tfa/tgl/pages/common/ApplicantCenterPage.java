@@ -8,6 +8,8 @@ import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
+import org.tfa.framework.utilities.general.CryptoUtil;
+import org.tfa.framework.utilities.testdata.TestData;
 import org.tfa.tgl.utilities.web.TGLWebUtil;
 
 @SuppressWarnings({"squid:S134","squid:S1141"})
@@ -15,6 +17,7 @@ public class ApplicantCenterPage {
 
 	private TGLWebUtil webUtil=TGLWebUtil.getObject();
 	Logger log = Logger.getLogger("rootLogger");
+	private TestData data=TestData.getObject();
 
 	/**
 	 * This function will login to the Applicant Center application
@@ -53,8 +56,10 @@ public class ApplicantCenterPage {
 	}
 
 	public void enterLoginInfo() {
+		String passwordOnline = new CryptoUtil().decrypt(data.getTestCaseDataMap().get("Login_PasswordOnline"));
+		
 		webUtil.setTextBoxValueTestData("Login_UserName_ED", "Login_UserNameOnline");
-		webUtil.setTextBoxValueTestData("Login_Password_ED", "Login_PasswordOnline");
+		webUtil.setTextBoxValue("Login_Password_ED", passwordOnline);
 		webUtil.click("Login_SignIn");
 		webUtil.holdOn(4);
 	}
