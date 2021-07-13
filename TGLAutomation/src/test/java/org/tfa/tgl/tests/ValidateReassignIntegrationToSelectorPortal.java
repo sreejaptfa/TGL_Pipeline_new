@@ -46,9 +46,13 @@ public class ValidateReassignIntegrationToSelectorPortal extends BaseTestMethods
 		LoginPageTgl loginPage = webUtil.openLoginPage();
 		loginPage.enterLoginInfo();
 		
-		searchPage.selectTGLStatusDD("Tgl_InComplete_LK");
- 		searchPage.clickOnSearchBtn();
- 		String applicantID = searchPage.clickApplicantNameOnSearchResults();
+		//searchPage.selectTGLStatusDD("Tgl_InComplete_LK");
+ 		//searchPage.clickOnSearchBtn();
+ 		//String applicantID = searchPage.clickApplicantNameOnSearchResults();
+ 		String applicantID ="4111644";
+ 		searchPage.enterPersonIDAndClickOnSearchButton(applicantID);
+ 		
+ 		
 		Assert.assertNotNull(applicantID, "Not returned any related data on Search results");
 		webUtil.holdOn(5);
 			 
