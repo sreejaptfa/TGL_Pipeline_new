@@ -1,5 +1,6 @@
 package org.tfa.tgl.pages.search;
 
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -87,19 +88,22 @@ public class SearchPage {
 				if(statusCnt >=10) break;
 				} while (statusSize<2);
 			}
-			if(deadLineCnt >=10) break;
+			if(deadLineCnt >=7) break;
 		} while (deadLineSize<15);
-		log.info(statusSize+" no of records searched for interview deadline : " + intvDeadLineSelection
-				+ " and application status: " + statusSelection);
-		Map<String, String> getSearchValues = enterSearhValues();
-		String actualFullName = getSearchValues.get("ActualFullName");
-		String expFullName = getSearchValues.get("ExpectedFullName");
-		String actualPersonId = getSearchValues.get("ActualPersonalId");
-		String expPersonId = getSearchValues.get("ExpectedPersonalId");
-		if(!(actualFullName.equals(expFullName)) && !(actualPersonId.equals(expPersonId))) flag = false;
-		Assert.assertEquals(actualFullName, expFullName, "Search result doesnot match for Name");
-		Assert.assertEquals(actualPersonId, expPersonId, "Search result doesnot match for PersonId");
-			log.info("Searched for name:" + actualFullName + " and personid:" + actualPersonId);
+		
+		if (statusSize > 2) {
+			log.info(statusSize+" no of records searched for interview deadline : " + intvDeadLineSelection
+					+ " and application status: " + statusSelection);
+			Map<String, String> getSearchValues = enterSearhValues();
+			String actualFullName = getSearchValues.get("ActualFullName");
+			String expFullName = getSearchValues.get("ExpectedFullName");
+			String actualPersonId = getSearchValues.get("ActualPersonalId");
+			String expPersonId = getSearchValues.get("ExpectedPersonalId");
+			if(!(actualFullName.equals(expFullName)) && !(actualPersonId.equals(expPersonId))) flag = false;
+			Assert.assertEquals(actualFullName, expFullName, "Search result doesnot match for Name");
+			Assert.assertEquals(actualPersonId, expPersonId, "Search result doesnot match for PersonId");
+				log.info("Searched for name:" + actualFullName + " and personid:" + actualPersonId);
+		}
 		return flag;
 	}
 	
@@ -201,7 +205,7 @@ public class SearchPage {
 	// This method verify the default appyear selection 
 	public boolean verifyAppYearDefaultSelection() {
 		Select appYearDD= new Select(webUtil.getElement("Tgl_appyear_dd"));
-		return appYearDD.getFirstSelectedOption().getText().contains("2021");
+		return appYearDD.getFirstSelectedOption().getText().contains("2022");
 	}
 
 	public void setAppYearBlank() {
