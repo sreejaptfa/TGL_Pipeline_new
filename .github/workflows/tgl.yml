@@ -29,3 +29,8 @@ jobs:
       run: chmod +x TGLAutomation/gradlew
     - name: Build with Gradle
       run: ./TGLAutomation/gradlew build
+    - name: run tests
+      run: |  
+          echo "Regression Suite: ${{github.event.inputs.testsuite }}"
+          cd ./TGLAutomation  
+          ./gradlew test --info # Run our tests using Gradle
