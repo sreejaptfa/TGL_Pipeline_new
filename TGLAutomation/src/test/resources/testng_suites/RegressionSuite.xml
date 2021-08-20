@@ -13,7 +13,7 @@
 		<classes>
 		
 			<class name="org.tfa.tgl.tests.ValidateTglLoginFunctionality" /> 
- 	 		<class name="org.tfa.tgl.tests.ValidateSearchPage" />	
+ 	 		<!--  <class name="org.tfa.tgl.tests.ValidateSearchPage" />	
 			<class name="org.tfa.tgl.tests.ValidateAssetsAndLiabilitiesSection" />	
 			<class name="org.tfa.tgl.tests.ValidateAdditionalInformationSection" />
 			<class name="org.tfa.tgl.tests.ValidateTaxInformationSection" />
@@ -36,7 +36,7 @@
 		  	<class name="org.tfa.tgl.tests.ValidateEducationCostSection" />	
 			<class name="org.tfa.tgl.tests.ValidateReassignIntegrationToIMPS" />					  
 			<class name="org.tfa.tgl.tests.ValidateReassignIntegrationToSelectorPortal" />
-			<class name="org.tfa.tgl.tests.ValidateCheckBoxIntegrationOnApplicantCenter" />	
+			<class name="org.tfa.tgl.tests.ValidateCheckBoxIntegrationOnApplicantCenter" />	-->
  			
 <!-- 		<class name="org.tfa.tgl.tests.ValidateSendEmailToApplicantIntegration" />	 -->
 
