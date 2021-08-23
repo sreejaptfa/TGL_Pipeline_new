@@ -64,7 +64,7 @@ public abstract class TestData {
 		if(testData==null && "excel".equalsIgnoreCase(prop.getProperty(Constants.CONFIG_TESTDATA_TYPE).trim())){
 			testData=new ExcelTestData();
 		}else if(testData==null && "csv".equalsIgnoreCase(prop.getProperty(Constants.CONFIG_TESTDATA_TYPE).trim())) {
-			testData=new CsvTestData();
+			// testData=new CsvTestData();
 		}	
 		return testData;
 	}		
