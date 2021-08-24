@@ -4,10 +4,14 @@
 name: Java CI with Gradle
 
 on:
-  push:
-    branches: [ PasswordEncryptDecrypt ]
-  pull_request:
-    branches: [ PasswordEncryptDecrypt ]
+  workflow_dispatch:
+      inputs:
+          testsuite:
+            description: 'test suite name'
+            required: true
+            default: 'master'
+          gitRepo:
+             description: 'this is git repo'
 
 jobs:
   build:
