@@ -9,7 +9,7 @@ on:
           testsuite:
             description: 'test suite name'
             required: true
-            default: 'master'
+            default: 'PasswordEncryptDecrypt'
           gitRepo:
              description: 'this is git repo'
 
